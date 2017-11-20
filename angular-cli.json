@@ -9,7 +9,8 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "json"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,7 +19,7 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.less"
+        "../node_modules/patternfly/dist/css/patternfly.min.css"
       ],
       "scripts": [],
       "environments": {

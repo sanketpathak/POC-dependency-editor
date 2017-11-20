@@ -5,12 +5,16 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class NaturalLanguageService {
+export class DependencyCheckService {
+
+    private static inputs: Array<string> = [];
+
     constructor(private http: Http) {}
 
-    public getPackages(userInput: string): Observable<any> {
+    public checkPackages(inputs: Array<string>): Observable<any> {
         let url: string = 'https://jsonplaceholder.typicode.com/posts';
         let body: any = {};
+        DependencyCheckService.inputs = inputs;
         return this    .http
                 .post(url, body)
                 .map(this.extractData)
@@ -20,16 +24,11 @@ export class NaturalLanguageService {
     private extractData(res: Response) {
         let body = res.json() || {};
         body = {};
-        body['dependencies'] = [{
-            "name": "package1",
-            "other information1": ""
-        }, {
-            "name": "package2",
-            "other information2": ""
-        }, {
-            "name": "package3",
-            "other information3": ""
-        }];
+        let newInput: Array<any> = [];
+        DependencyCheckService.inputs.forEach((i) => {
+            newInput.push({name: i});
+        });
+        body['validation'] = newInput;
 
         body['statusCode'] = res.status;
         body['statusText'] = res.statusText;
