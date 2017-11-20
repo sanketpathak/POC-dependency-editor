@@ -71,37 +71,6 @@ export class DrawingBoardComponent implements AfterViewInit {
         }
     }
 
-    private checkWhich(event: MouseEvent): Function {
-        return () => {
-            const x: number = event.offsetX;
-            const y: number = event.offsetY;
-
-            for (const i in this.positionMap) {
-                if (this.positionMap.hasOwnProperty(i)) {
-                    const element: any = this.positionMap[i];
-                    const position: any = element['position'];
-                    
-                    if (x >= position['x1'] && x <= position['x2']) {
-                        if (y >= position['y1'] && y <= position['y2']) {
-                            console.log('Yes');
-                            console.log(event);
-                            console.log(element);
-                            this.handleCallback('click', element, i);
-                        }
-                    }
-                }
-            }
-        };
-    }
-
-    private handleEvent(): void {
-        if (this.canvas) {
-            this.canvas.addEventListener('click', (event) => {
-                this.checkWhich(event)();
-            });
-        }
-    }
-
     private initBoard(): void {
         const config: any = {
             'square': {
@@ -145,6 +114,7 @@ export class DrawingBoardComponent implements AfterViewInit {
             .attr('class', 'rectangle')
             .attr('width', width)
             .attr('height', height)
+            .attr('id', 'arrow')
             .attr('fill', '#fff')
             .attr('stroke', config.options.stroke)
             .on('click', () => {
@@ -155,7 +125,7 @@ export class DrawingBoardComponent implements AfterViewInit {
             .on('dblclick', function () {
                 event.preventDefault();
                 g   .append('text')
-                    .attr('x', x1 + (x1 / 2))
+                    .attr('x', d3.event.x)
                     .attr('y', height / 2)
                     .attr('contentEditable', true)
                     .attr('dy', '.35em')
@@ -169,7 +139,9 @@ export class DrawingBoardComponent implements AfterViewInit {
                 .on('drag', function(d) {
                     console.log(d3.event.x);
                     this.setAttribute('x', d3.event.x);
-                    g.select('text').attr('x', d3.event.x);
+                    this.setAttribute('y', d3.event.y);
+                    g.select('text').attr('x', d3.event.x + width / 2);
+                    g.select('text').attr('y', d3.event.y + height / 2);
                 })
             );
     }
@@ -182,6 +154,7 @@ export class DrawingBoardComponent implements AfterViewInit {
              .attr('y2', y2)
              .attr('stroke', config.options.stroke)
              .attr('stroke-width', 2)
+             .attr('marker-end', 'url(#arrow)')
              .on('click', () => {
                 if (config.type === 'indicator') {
                     this.handleCallback('click', config, config.name);
@@ -193,10 +166,14 @@ export class DrawingBoardComponent implements AfterViewInit {
                 })
                 .on('drag', function(d) {
                     console.log(d3.event.x);
-                    const current = d3.event.x;
+                    const currentX = d3.event.x;
+                    const currentY = d3.event.y;
 
-                    this.setAttribute('x1', current);
-                    this.setAttribute('x2', current + (x2 - x1));
+                    this.setAttribute('x1', currentX);
+                    this.setAttribute('x2', currentX + (x2 - x1));
+
+                    this.setAttribute('y1', currentY);
+                    this.setAttribute('y2', currentY + (y2 - y1));
                 })
             );
     }
