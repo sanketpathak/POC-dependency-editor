@@ -9,28 +9,17 @@ export class NaturalLanguageService {
     constructor(private http: Http) {}
 
     public getPackages(userInput: string): Observable<any> {
-        let url: string = 'https://jsonplaceholder.typicode.com/posts';
+        let url: string = 'https://gist.githubusercontent.com/arunkumars08/cbabd0a40f177cb359c7315d428ebe01/raw/dd147bb24a1802368755fbe0f42312cdfd175c21/natural-language.mock.json';
         let body: any = {};
+        // Change to POST once integrated with service
         return this    .http
-                .post(url, body)
+                .get(url, body)
                 .map(this.extractData)
                 .catch(this.handleError);
     }
 
     private extractData(res: Response) {
         let body = res.json() || {};
-        body = {};
-        body['dependencies'] = [{
-            "name": "package1",
-            "other information1": ""
-        }, {
-            "name": "package2",
-            "other information2": ""
-        }, {
-            "name": "package3",
-            "other information3": ""
-        }];
-
         body['statusCode'] = res.status;
         body['statusText'] = res.statusText;
         return body;

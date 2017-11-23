@@ -4,13 +4,40 @@
 </div>
 
 <div *ngIf="dependencies && dependencies.length > 0" class="dependencies-section">
-    <div *ngFor="let dependency of dependencies" class="dependency col-xs-3">
-        <span class="">{{dependency.name}}</span>
-        <span class="fa fa-check"></span>
-    </div>
-    <button (click)="counter.push(1); addMore = true" *ngIf="dependencies && dependencies.length > 0" class="add-more col-xs-3">Add more</button>
+    <h3>Possible dependencies for your query are shown below!</h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Package Name</th>
+                <th>Latest Version</th>
+                <th>Security Issues</th>
+                <th>OSIO Usage</th>
+                <th>Licenses</th>
+                <th>Categories</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dependency of dependencies">
+                <td>{{dependency.name}}</td>
+                <td>{{dependency.insights && dependency.insights.latest_version}}</td>
+                <td>{{dependency.insights && dependency.insights.security && dependency.insights.security.length > 0}}</td>
+                <td>{{dependency.insights && dependency.insights.osio_user_count && dependency.insights.osio_user_count}}</td>
+                <td>{{dependency.insights && dependency.insights.licenses && dependency.insights.licenses.length > 0 && dependency.insights.licenses.join(', ')}}</td>
+                <td>{{dependency.insights && dependency.insights.topic_list && dependency.insights.topic_list.length > 0 && dependency.insights.topic_list.join(', ')}}</td>
+                <td><input type="checkbox" value="" (change)="dependency.checked = !dependency.checked" [checked]="dependency.checked" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <button (click)="counter.push(1); addMore = true" *ngIf="dependencies && dependencies.length > 0" class="add-more btn btn-primary">Add your known package</button>
     <div *ngIf="addMore" class="add-more-section col-xs-12">
         <input type="text" value="" [(ngModel)]="inputs[i]" *ngFor="let in of counter; let i = index;" />
-        <button (click)="handleAddMore()">Add</button>
+        <button class="btn btn-primary" (click)="handleAddMore()">Add</button>
     </div>
+    (or) <button (click)="addTag = true" *ngIf="dependencies && dependencies.length > 0" class="add-more btn btn-primary">Search by tag</button>
+    <div *ngIf="addTag" class="add-more-section col-xs-12">
+        <input type="text" value="" [(ngModel)]="tags" />
+         <button class="btn btn-primary" (click)="handleAddTag()">Add</button>
+    </div>
+    (or) <button (click)="handleSubmit()" *ngIf="dependencies && dependencies.length > 0" class="add-more btn btn-primary">Submit to generate your stack</button>
 </div>

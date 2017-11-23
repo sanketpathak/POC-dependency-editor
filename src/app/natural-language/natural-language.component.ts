@@ -20,6 +20,9 @@ export class NaturalLanguageComponent implements OnInit {
     public addMore = false;
     public inputs: Array<string> = [];
 
+    public tags = '';
+    public addTag = false;
+
     constructor(private naturalLanguageService: NaturalLanguageService, 
                 private dependencyCheckService: DependencyCheckService) {}
 
@@ -28,6 +31,7 @@ export class NaturalLanguageComponent implements OnInit {
         naturalLanguage.subscribe((data) => {
             console.log(data);
             if (data) {
+                data['dependencies'].map((d) => d['checked'] = true);
                 this.dependencies = data['dependencies'];
             }
         });
@@ -35,11 +39,33 @@ export class NaturalLanguageComponent implements OnInit {
 
     handleAddMore(): void {
         if (this.inputs && this.inputs.length > 0) {
-            let dep: Observable<any> = this.dependencyCheckService.checkPackages(this.inputs);
+            const dep: Observable<any> = this.dependencyCheckService.checkPackages(this.inputs);
             dep.subscribe((data) => {
                 if (data) {
                     if (data['validation'] && data['validation'].length > 0) {
+                        data['validation'].map((d) => d['checked'] = false);
                         this.dependencies.push(...data['validation']);
+                    }
+                }
+            });
+        }
+    }
+
+    handleSubmit(): void {
+        if (this.dependencies && this.dependencies.length > 0) {
+            const final: Array<any> = this.dependencies.filter((d) => d['checked'] === true);
+            console.log(final);
+        }
+    }
+
+    handleAddTag(): void {
+        if (this.tags) {
+            const dep: Observable<any> = this.dependencyCheckService.findByTag(this.tags);
+            dep.subscribe((data) => {
+                if (data) {
+                    if (data['dependencies'] && data['dependencies'].length > 0) {
+                        data['dependencies'].map((d) => d['checked'] = false);
+                        this.dependencies.push(...data['dependencies']);
                     }
                 }
             });

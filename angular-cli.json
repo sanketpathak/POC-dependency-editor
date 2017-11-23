@@ -10,7 +10,7 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "json"
+        "natural-language.mock.json"
       ],
       "index": "index.html",
       "main": "main.ts",
