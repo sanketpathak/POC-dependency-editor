@@ -38,9 +38,12 @@
     "@angular/router": "^3.3.1",
     "core-js": "^2.4.1",
     "d3": "^4.11.0",
+    "jointjs": "^2.0.1",
+    "jsplumb": "^2.5.7",
     "less": "^2.7.3",
     "less-plugin-autoprefix": "^1.5.1",
     "patternfly-ng": "^0.13.7",
+    "raphael": "^2.2.7",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"

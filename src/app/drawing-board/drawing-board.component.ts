@@ -1,5 +1,8 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import * as d3 from 'd3';
+import * as Raphael from 'raphael';
+
+import * as joint from 'jointjs/dist/joint.js';
+import * as $ from 'jquery';
 
 @Component ({
     selector: 'drawing-board',
@@ -12,11 +15,15 @@ export class DrawingBoardComponent implements AfterViewInit {
     private context: CanvasRenderingContext2D;
 
     private positionMap: any = {};
+    private objectMap: any = {};
 
     private svg: any;
+    private board: Raphael;
+
+    private increment = 1;
 
     // @ViewChild('canvasElement') canvasEl: ElementRef;
-    @ViewChild('svgElement') svgEl: ElementRef;
+    @ViewChild('boardContainer') boardContainer: ElementRef;
     constructor() {}
 
     ngAfterViewInit(): void {
@@ -29,8 +36,15 @@ export class DrawingBoardComponent implements AfterViewInit {
         //     this.initBoard();
         // }
 
-        this.svg = d3.select('#svg');
-        console.log(this.svg);
+        // this.board = new Raphael(this.boardContainer.nativeElement, 1000, 500);
+        const graph = new joint.dia.Graph;
+        this.board = new joint.dia.Paper({
+            width: 400,
+            height: 400,
+            gridSize: 1,
+            interactive: false
+        });
+           
         this.initBoard();
     }
 
@@ -46,7 +60,7 @@ export class DrawingBoardComponent implements AfterViewInit {
                         options: {
                             stroke: '#000'
                         },
-                        name: 'sq',
+                        name: 'sq-' + this.increment ++,
                         type: 'element',
                         shape: 'square'
                     };
@@ -81,7 +95,7 @@ export class DrawingBoardComponent implements AfterViewInit {
                 options: {
                     stroke: '#000'
                 },
-                name: 'sq-1',
+                name: 'sq-ind',
                 type: 'indicator',
                 shape: 'square'
             },
@@ -91,7 +105,7 @@ export class DrawingBoardComponent implements AfterViewInit {
                 x2: 70,
                 y2: 10,
                 direction: 'right',
-                name: 'ar-1',
+                name: 'ar-ind',
                 type: 'indicator',
                 options: {
                     stroke: '#000',
@@ -101,81 +115,62 @@ export class DrawingBoardComponent implements AfterViewInit {
             }
         };
         this.drawShape(config['square']);
-        this.drawShape(config['arrow']);
+        // this.drawShape(config['arrow']);
     }
 
     private square(x1: number, y1: number, width: number, height: number, config?: any): void {
-        let g = this.svg
-            .append('g')
-            .classed('dragging', true);
-
-        g   .append('rect')
-            .attr('name', config.name)
-            .attr('class', 'rectangle')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('id', 'arrow')
-            .attr('fill', '#fff')
-            .attr('stroke', config.options.stroke)
-            .on('click', () => {
-                if (config.type === 'indicator') {
-                    this.handleCallback('click', config, config.name);
-                }
-            })
-            .on('dblclick', function () {
-                event.preventDefault();
-                g   .append('text')
-                    .attr('x', d3.event.x)
-                    .attr('y', height / 2)
-                    .attr('contentEditable', true)
-                    .attr('dy', '.35em')
-                    .text('Text here')
-                    .on('keyup', function() { this.text = d3.select(this).text(); });
-            })
-            .call(d3 .drag()
-                .on('start', function() {
-                    console.log('start');
-                })
-                .on('drag', function(d) {
-                    console.log(d3.event.x);
-                    this.setAttribute('x', d3.event.x);
-                    this.setAttribute('y', d3.event.y);
-                    g.select('text').attr('x', d3.event.x + width / 2);
-                    g.select('text').attr('y', d3.event.y + height / 2);
-                })
-            );
+        let rect = this.board.rect(x1, y1, width, height);
+        rect.attr({
+            'fill': '#fff',
+            'stroke': '#000',
+            'class': config.name
+        });
+        rect.id = config.name;
+        if (config.type === 'indicator') {
+            rect.click((event) => {
+                console.log(event);
+                this.handleCallback('click', config, config.name);
+            });
+        } else {
+            rect.drag(function(dx, dy) {
+                // Move
+                console.log('Move', dx, dy);
+                this.attr({x: this.ox + dx, y: this.oy + dy});
+            }, function() {
+                // Start
+                console.log('Start', this);
+                this.ox = this.attr('x');
+                this.oy = this.attr('y');
+            }, function() {
+                // Up
+                console.log('Up', this);
+            });
+            this.objectMap[config.name] = rect;
+            if (Object.keys(this.objectMap).length > 1) {
+                this.join('sq-1', 'sq-2');
+            }
+        }
     }
 
     private arrow(x1: number, y1: number, x2: number, y2: number, direction?: string, config?: any): void {
-        this.svg.append('line')
-             .attr('x1', x1)
-             .attr('y1', y1)
-             .attr('x2', x2)
-             .attr('y2', y2)
-             .attr('stroke', config.options.stroke)
-             .attr('stroke-width', 2)
-             .attr('marker-end', 'url(#arrow)')
-             .on('click', () => {
-                if (config.type === 'indicator') {
-                    this.handleCallback('click', config, config.name);
+        
+    }
+
+    private join(from: string, to: string): void {
+        const first = this.objectMap[from];
+        const second = this.objectMap[to];
+
+        if (first && second) {
+            const link1 = new joint.dia.Link({
+                source: first,
+                target: second,
+                attrs:  {
+                    '.connection': { 'stroke-width': 2 },
+                    '.marker-source': { d: 'M 0 0 a 5 5 0 1 0 0 1', 'stroke-width': 0, fill: '#232E78' },
+                    '.marker-target': { d: 'M 10 -5 10 5 0 0 z', 'stroke-width': 0, fill: '#232E78' }
                 }
-            })
-            .call(d3 .drag()
-                .on('start', function() {
-                    console.log('start');
-                })
-                .on('drag', function(d) {
-                    console.log(d3.event.x);
-                    const currentX = d3.event.x;
-                    const currentY = d3.event.y;
-
-                    this.setAttribute('x1', currentX);
-                    this.setAttribute('x2', currentX + (x2 - x1));
-
-                    this.setAttribute('y1', currentY);
-                    this.setAttribute('y2', currentY + (y2 - y1));
-                })
-            );
+            });
+        }
     }
 
     drawShape(config: any): void {
