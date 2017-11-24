@@ -1,2 +1,10 @@
-<natural-language></natural-language>
-<drawing-board></drawing-board>
+<drawing-board (dblclick)="handleDblClick($event)"></drawing-board>
+
+<modal #naturalLanguageModal title="Create your own stack" modalClass="modal-lg modal-fullscreen modal-width-class" (onClose)="handleModalClose();">
+    <modal-header>
+        {{modalHeader}}
+    </modal-header>
+    <modal-content>
+        <natural-language></natural-language>
+    </modal-content>
+</modal>

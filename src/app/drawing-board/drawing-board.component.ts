@@ -1,8 +1,6 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import * as Raphael from 'raphael';
+import { Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 
-import * as joint from 'jointjs/dist/joint.js';
-import * as $ from 'jquery';
+import * as joint from 'jointjs';
 
 @Component ({
     selector: 'drawing-board',
@@ -14,16 +12,21 @@ export class DrawingBoardComponent implements AfterViewInit {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
 
+    private dblclick = new EventEmitter();
+
     private positionMap: any = {};
     private objectMap: any = {};
 
     private svg: any;
-    private board: Raphael;
+    private board: any;
 
     private increment = 1;
 
     // @ViewChild('canvasElement') canvasEl: ElementRef;
     @ViewChild('boardContainer') boardContainer: ElementRef;
+
+    private graph: joint.dia.Graph;
+    private paper: joint.dia.Paper;
     constructor() {}
 
     ngAfterViewInit(): void {
@@ -37,13 +40,58 @@ export class DrawingBoardComponent implements AfterViewInit {
         // }
 
         // this.board = new Raphael(this.boardContainer.nativeElement, 1000, 500);
-        const graph = new joint.dia.Graph;
-        this.board = new joint.dia.Paper({
-            width: 400,
-            height: 400,
+        this.graph = new joint.dia.Graph;
+        this.paper = new joint.dia.Paper({
+            el: this.boardContainer.nativeElement,
+            width: 500,
+            height: 500,
             gridSize: 1,
-            interactive: false
+            model: this.graph
         });
+
+        /** Trial */
+
+        this.graph.on('change:source change:target', function(link) {
+            const sourcePort = link.get('source').port;
+            var sourceId = link.get('source').id;
+            var targetPort = link.get('target').port;
+            var targetId = link.get('target').id;
+
+            var m = [
+                'The port <b>' + sourcePort,
+                '</b> of element with ID <b>' + sourceId,
+                '</b> is connected to port <b>' + targetPort,
+                '</b> of elemnt with ID <b>' + targetId + '</b>'
+            ].join('');
+
+            console.log(link.get('source'));
+            
+            console.log(m);
+        });
+
+        this.paper.on('cell:pointerdown', (event) => {
+            if (event && event.model && event.model.id) {
+                const config: any = this.objectMap[event.model.id];
+                if (config) {
+                    if (config.type === 'indicator') {
+                        this.handleCallback('click', config, config.name);
+                    }
+                }
+            }
+        });
+        this.paper.on('cell:pointerdblclick', (event) => {
+            if (event && event.model && event.model.id) {
+                const config: any = this.objectMap[event.model.id];
+                if (config) {
+                    if (config.type === 'element') {
+                        config['modelId'] = event.model.id;
+                        this.handleCallback('dblclick', config, config.name);
+                    }
+                }
+            }
+        });
+        /** Trial */
+
            
         this.initBoard();
     }
@@ -82,6 +130,9 @@ export class DrawingBoardComponent implements AfterViewInit {
                     this.drawShape(a);
                     break;
             }
+        } else if (eventType === 'dblclick') {
+            console.log(config.modelId);
+            this.dblclick.emit(config.modelId);
         }
     }
 
@@ -119,36 +170,55 @@ export class DrawingBoardComponent implements AfterViewInit {
     }
 
     private square(x1: number, y1: number, width: number, height: number, config?: any): void {
-        let rect = this.board.rect(x1, y1, width, height);
-        rect.attr({
-            'fill': '#fff',
-            'stroke': '#000',
-            'class': config.name
-        });
-        rect.id = config.name;
         if (config.type === 'indicator') {
-            rect.click((event) => {
-                console.log(event);
-                this.handleCallback('click', config, config.name);
-            });
-        } else {
-            rect.drag(function(dx, dy) {
-                // Move
-                console.log('Move', dx, dy);
-                this.attr({x: this.ox + dx, y: this.oy + dy});
-            }, function() {
-                // Start
-                console.log('Start', this);
-                this.ox = this.attr('x');
-                this.oy = this.attr('y');
-            }, function() {
-                // Up
-                console.log('Up', this);
-            });
-            this.objectMap[config.name] = rect;
-            if (Object.keys(this.objectMap).length > 1) {
-                this.join('sq-1', 'sq-2');
+            if (config.shape === 'square') {
+                const rect = new joint.shapes.basic.Rect({
+                    position: { x: 10, y: 10 },
+                    size: { width: 30, height: 30 },
+                    attrs: { rect: { fill: '#fff', stroke: '#000' } },
+                    
+                });
+                this.objectMap[rect.id] = {
+                    type: config.type,
+                    name: config.name,
+                    shape: config.shape
+                };
+                this.graph.addCell(rect);
             }
+        } else {
+            const square = new joint.shapes.devs.Model({
+                position: { x: x1, y: y1 },
+                size: { width: width, height: height },
+                inPorts: ['in'],
+                outPorts: ['out'],
+                ports: {
+                    groups: {
+                        'in': {
+                            attrs: {
+                                '.port-body': {
+                                    fill: '#000'
+                                }
+                            }
+                        },
+                        'out': {
+                            attrs: {
+                                '.port-body': {
+                                    fill: '#000'
+                                }
+                            }
+                        }
+                    }
+                },
+                attrs: {
+                    rect: { fill: '#fff' }
+                }
+            });
+            this.graph.addCell(square);
+            this.objectMap[square.id] = {
+                type: config.type,
+                name: config.name,
+                shape: config.shape
+            };
         }
     }
 
