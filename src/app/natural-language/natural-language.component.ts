@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { NaturalLanguageService } from './natural-language.service';
@@ -14,6 +14,8 @@ import { DependencyCheckService } from './dependency-check.service';
 export class NaturalLanguageComponent implements OnInit {
     public userInput: string;
     public dependencies: Array<any> = [];
+
+    @Output('submit') submit = new EventEmitter();
 
     private masterTagsList: Array<string> = ['tag1', 'tag2', 'tag3'];
     private showTagSuggestions = false;
@@ -58,6 +60,7 @@ export class NaturalLanguageComponent implements OnInit {
         if (this.dependencies && this.dependencies.length > 0) {
             const final: Array<any> = this.dependencies.filter((d) => d['checked'] === true);
             console.log(final);
+            this.submit.emit({ results: final });
         }
     }
 
