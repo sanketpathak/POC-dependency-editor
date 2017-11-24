@@ -15,6 +15,9 @@ export class NaturalLanguageComponent implements OnInit {
     public userInput: string;
     public dependencies: Array<any> = [];
 
+    private masterTagsList: Array<string> = ['tag1', 'tag2', 'tag3'];
+    private showTagSuggestions = false;
+
     public counter: Array<number> = [];
 
     public addMore = false;
@@ -69,6 +72,14 @@ export class NaturalLanguageComponent implements OnInit {
                     }
                 }
             });
+        }
+    }
+
+    handleUserInputKeyPress(event: KeyboardEvent): void {
+        console.log(event);
+        const key: string = event.key;
+        if (key && key.trim() === '@') {
+            this.showTagSuggestions = true;
         }
     }
 
