@@ -19,7 +19,8 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/patternfly/dist/css/patternfly.min.css"
+        "../node_modules/patternfly/dist/css/patternfly.min.css",
+        "../node_modules/jointjs/css/layout.css"
       ],
       "scripts": [],
       "environments": {
@@ -55,6 +56,9 @@
     "inline": {
       "style": false,
       "template": false
+    },
+    "build": {
+      "preserveSymlinks": true
     },
     "spec": {
       "class": false,
