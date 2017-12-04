@@ -12,8 +12,8 @@
 </div>
 
 <div *ngIf="dependencies && dependencies.length > 0" class="dependencies-section">
-    <h3>Possible dependencies for your query are shown below!</h3>
-    <table class="table table-striped table-bordered">
+    <h3>Machine Generated Dependencies</h3>
+    <table class="table table-fix table-striped table-bordered">
         <thead>
             <tr>
                 <th>Package Name</th>
@@ -43,8 +43,8 @@
     </table>
 </div>
 <div *ngIf="newDepen && newDepen.length > 0" class="dependencies-section">
-<h3>Your own dependencies</h3>
-<table *ngIf="newDepen && newDepen.length > 0" class="table table-striped table-bordered">
+<h3>Your own selected dependencies</h3>
+<table *ngIf="newDepen && newDepen.length > 0" class="table table-fix table-striped table-bordered">
         <thead>
                 <tr>
                     <th>Package Name</th>
@@ -68,7 +68,7 @@
             </td>
             <td>{{dependency && dependency.licenses && dependency.licenses.length > 0 && dependency.licenses.join(', ')}}</td>
             <td [innerHTML]="getTags(dependency)"></td>
-            <td><input type="checkbox" value="" (change)="dependency.checked = !dependency.checked" [checked]="dependency.checked" /></td>
+            <td><input type="checkbox" value="" (change)="dependency.checked = !dependency.checked; dependencies.push(dependency); newDepen.splice(dependency, 1);" [checked]="dependency.checked" /></td>
         </tr>
     </tbody>
 </table>

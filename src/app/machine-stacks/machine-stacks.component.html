@@ -1,15 +1,3 @@
 <div class='machine-stacks'>
-<drawing-board (link)="handleLinks($event)" (dblclick)="handleDblClick($event)"></drawing-board>
-
-<modal #naturalLanguageModal title="Create your own stack" modalClass="modal-lg modal-fullscreen modal-width-class" (onClose)="handleModalClose();">
-    <modal-header>
-        {{modalHeader}}
-    </modal-header>
-    <modal-content>
-        <natural-language *ngIf="openNaturalLanguage" (submit)="handleModalInputSubmit($event)"></natural-language>
-    </modal-content>
-</modal>
-
-<button (click)="handleSubmitFChart()" *ngIf="showFinalButton">Submit FlowChart</button>
-<p *ngIf="doShowMessage" [innerHTML]="message"></p>
+    <natural-language (submit)="handleModalInputSubmit($event)"></natural-language>
 </div>

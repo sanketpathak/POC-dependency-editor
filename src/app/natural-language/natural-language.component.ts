@@ -1,9 +1,12 @@
+
+
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { NaturalLanguageService } from './natural-language.service';
 import { DependencyCheckService } from './dependency-check.service';
 import { waitForMap } from '@angular/router/src/utils/collection';
+
 
 @Component ({
     selector: 'natural-language',
@@ -19,7 +22,7 @@ export class NaturalLanguageComponent implements OnInit {
     public search_key = '';
     public selceted: string;
     public newDepen: Array<any> = [];
-
+    
     @Output('submit') submit = new EventEmitter();
 
     private masterTagsList: Array<string> = ['tag1', 'tag2', 'tag3'];

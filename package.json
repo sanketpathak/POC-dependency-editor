@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build:library": "gulp build-library",
-    "build:prod": "ng build --prod",
+    "build:prod": "ng build --prod --preserve-symlinks",
     "ng": "ng",
     "start": "ng serve --inline --progress --host 0.0.0.0 --port 8000",
     "test:unit": "ng test",
@@ -29,6 +29,7 @@
     "watch:library": "gulp watch"
   },
   "dependencies": {
+    "@angular/animations": "^4.1.3",
     "@angular/common": "4.0.1",
     "@angular/compiler": "4.0.1",
     "@angular/core": "4.0.1",
@@ -48,10 +49,14 @@
     "ngx-bootstrap": "^2.0.0-beta.9",
     "ngx-modal": "0.0.29",
     "patternfly-ng": "^0.13.7",
+    "primeng": "^4.1.2",
     "raphael": "^2.2.7",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
+  },
+  "peerDependencies": {
+    "primeng": "^4.1.2"
   },
   "devDependencies": {
     "@angular/compiler-cli": "4.0.1",
