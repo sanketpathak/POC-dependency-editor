@@ -22,8 +22,8 @@ export class NaturalLanguageService {
   }
 
   public getMasterTags(): Observable<any> {
-    let url: string = 'API_URL';
-    this.headers.set('Authorization', 'Bearer ' + "ACCESS_TOKEN");
+    let url: string = 'https://recommender.api.prod-preview.openshift.io/api/v1/master-tags/maven';
+    this.headers.set('Authorization', 'Bearer ' + 'ACCESS_TOKEN');
     let options = new RequestOptions({ headers: this.headers });
     return this .http
     .get(url, options)

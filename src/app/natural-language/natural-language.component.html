@@ -1,5 +1,6 @@
 <div class="natural-language">
-    <textarea class="ma-textarea" (keydown)="handleUserInputKeyPress($event)" [(ngModel)]="userInput" placeholder="Describe your intent here."></textarea>
+    <h3>Describe your intent here</h3>
+    <textarea placeholder="Example: I want to create a @spring boot application" class="ma-textarea" [(ngModel)]="userInput"></textarea>
     <section>
         <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0" class="suggestions">
             <span (click)="suggestions = [];"> </span>
@@ -16,7 +17,7 @@
     <table class="table table-fix table-striped table-bordered">
         <thead>
             <tr>
-                <th></th>
+                <th class="small-column"></th>
                 <th>Package Name</th>
                 <th>Recommended Version</th>
                 <th>Security Issues</th>
@@ -27,7 +28,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let dependency of dependencies">
-                <td class="small-column"><input type="checkbox" value="" (change)="dependency.checked = !dependency.checked" [checked]="dependency.checked" /></td>
+                <td><input type="checkbox" value="" (change)="dependency.checked = !dependency.checked" [checked]="dependency.checked" /></td>
                 <td class="dependency-package">{{dependency.name}}</td>
                 <td class="dependency-package">{{dependency && dependency.latest_version}}</td>
                 <td>
