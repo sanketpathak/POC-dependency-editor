@@ -8,6 +8,7 @@ import { Component, ViewChild } from '@angular/core';
 
 export class MachineStacksComponent {
 
+    public openModal = false;
     private containerMap: any = {};
     private showFinalButton = false;
     private linkMap: any = {};
