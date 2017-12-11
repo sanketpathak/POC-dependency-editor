@@ -31,7 +31,7 @@ export class MachineStacksComponent implements OnChanges {
             this.currentElement = event;
             this.openNaturalLanguage = true;
             this.openModal = true;
-            this.readInput = event.config.read;
+            this.readInput = event.config.read || {};
             // this.naturalLanguageModal.open();
             this.showFinalButton = true;
         }

@@ -55,11 +55,17 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
                     this.dependencies = data['dependencies'];
                 }
             });
-            if (this.userInput.indexOf('aws') !== -1) {
-                this.onContainerEntry.emit('aws');
-            } else {
-                this.onContainerEntry.emit('openshift');
-            }
+            this.setContainerType();
+        }
+    }
+
+    private setContainerType(): void {
+        if (this.userInput.indexOf('aws') !== -1) {
+            this.onContainerEntry.emit('aws');
+        } else if (this.userInput.indexOf('openshift') !== -1) {
+            this.onContainerEntry.emit('openshift');
+        } else {
+            this.onContainerEntry.emit('');
         }
     }
 
@@ -223,6 +229,11 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
             this.dependencies = data.dependencies;
             this.serviceName = this.input.name;
             this.dependencies.map(d => d.checked = true);
+            this.setContainerType();
+        } else {
+            this.userInput = '';
+            this.dependencies = [];
+            this.serviceName = '';
         }
     }
 
