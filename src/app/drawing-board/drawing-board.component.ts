@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, Input, ElementRef, EventEmitter, Output, OnChanges } from '@angular/core';
 
 import * as joint from 'jointjs';
 
@@ -8,7 +8,10 @@ import * as joint from 'jointjs';
     templateUrl: './drawing-board.component.html'
 })
 
-export class DrawingBoardComponent implements AfterViewInit {
+export class DrawingBoardComponent implements AfterViewInit, OnChanges {
+
+    @Input() read;
+
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
 
@@ -43,6 +46,10 @@ export class DrawingBoardComponent implements AfterViewInit {
         // }
 
         // this.board = new Raphael(this.boardContainer.nativeElement, 1000, 500);
+        this.appInit();
+    }
+
+    private appInit(): void {
         this.graph = new joint.dia.Graph;
         const arrowheadShape = 'M 10 0 L 0 5 L 10 10 z';
         this.paper = new joint.dia.Paper({
@@ -99,8 +106,120 @@ export class DrawingBoardComponent implements AfterViewInit {
         });
         /** Trial */
 
-           
         this.initBoard();
+
+        if (this.read) {
+            this.handleReadMode();
+        }
+    }
+
+    private handleReadMode(): void {
+        let square = [
+            {
+                x1: 50,
+                y1: 50,
+                width: 100,
+                height: 100,
+                options: {
+                    stroke: '#000'
+                },
+                name: 'sq-' + this.increment ++,
+                type: 'element',
+                shape: 'square',
+                read: {
+                    config: {
+                        links: ''
+                    }
+                }
+            }, {
+                x1: 50,
+                y1: 50,
+                width: 100,
+                height: 100,
+                options: {
+                    stroke: '#000'
+                },
+                name: 'sq-' + this.increment ++,
+                type: 'element',
+                shape: 'square',
+                read: {
+                    config: {
+                        links: ''
+                    }
+                }
+            }
+        ];
+
+        const containersCount: number = this.read.containers.length;
+
+        for (let i = 0; i < containersCount; ++ i) {
+            ((counter) => {
+                square[i].x1 = square[0].x1 + (i * square[0].width + (75 * i));
+                square[i]['read'] = this.read.containers[i];
+                this.drawShape(square[i]);
+            })(i);
+        }
+
+        console.log(square);
+        // Link arrows
+
+        let idMap: any = {};
+
+        let connections: any = {};
+        idMap = {};
+        for (let i in this.objectMap) {
+            if (this.objectMap.hasOwnProperty(i)) {
+                const name: string = this.objectMap[i].name;
+                
+                for (let j in square) {
+                    if (square[j].name === name) {
+                        let read: any = square[j].read;
+                        idMap[read.id] = {};
+                        console.log(read.id);
+                        idMap[read.id]['linkId'] = read.config.links;
+                        idMap[read.id]['id'] = read.id;
+                        idMap[read.id]['vendorId'] = i;
+                    }
+                }
+            }
+        }
+
+        for (let id in idMap) {
+            if (idMap.hasOwnProperty(id)) {
+                let curr = idMap[id];
+                connections[curr.vendorId] = idMap[curr.linkId] ? idMap[curr.linkId].vendorId : null;
+                if (curr.vendorId && connections[curr.vendorId]) {
+                    let link = new joint.shapes.devs.Link({
+                        source: {
+                            id: curr.vendorId,
+                            port: 'out'
+                        },
+                        target: {
+                            id: connections[curr.vendorId],
+                            port: 'in'
+                        }
+                    });
+                    this.graph.addCell(link);
+                }
+            }
+        }
+        console.log(connections);
+
+
+
+
+        // let link = new joint.shapes.devs.Link({
+        //     source: {
+        //     id: srcModel.id,
+        //     port: 'out'
+        //     },
+        //     target: {
+        //     id: dstModel.id,
+        //     port: 'in'
+        //     }
+        // });
+        // this.graph.addCell(link);
+
     }
 
     private handleCallback(eventType: string, config: any, identifier: string): void {
@@ -139,7 +258,7 @@ export class DrawingBoardComponent implements AfterViewInit {
             }
         } else if (eventType === 'dblclick') {
             console.log(config.modelId);
-            this.dblclick.emit(config.modelId);
+            this.dblclick.emit(config);
         }
     }
 
@@ -187,7 +306,8 @@ export class DrawingBoardComponent implements AfterViewInit {
                 this.objectMap[rect.id] = {
                     type: config.type,
                     name: config.name,
-                    shape: config.shape
+                    shape: config.shape,
+                    config: config
                 };
                 this.graph.addCell(rect);
             }
@@ -219,21 +339,55 @@ export class DrawingBoardComponent implements AfterViewInit {
                 },
                 attrs: {
                     rect: { fill: '#fff' },
-                    text: { text: 'Service' + ++ this.containers }
+                    text: { text: config.read && config.read.name || ('Service' + ++ this.containers) }
                 }
             });
-            let notification = new joint.shapes.basic.Rect({
-                position: { x: x1 + width - 10, y: y1 },
-                size: { width: 20, height: 20 },
-                attrs: { text: { text: '1', fill: '#fff' }, rect: { fill: 'GREEN' } }
-            });
-            notification = null;
-            this.graph.addCell(square);
+            // let notification = new joint.shapes.basic.Rect({
+            //     position: { x: x1 + width - 10, y: y1 },
+            //     size: { width: 20, height: 20 },
+            //     attrs: { text: { text: '', fill: '#fff' }, rect: { fill: 'ORANGE' } }
+            // });
+            // notification = null;
+            
+            console.log('$$$');
+            console.log(config);
+            let arr: Array<any> = [square];
+            if (config.read && config.read.notification && config.read.notification.value) {
+                let notification = new joint.shapes.basic.Rect({
+                    position: { x: x1 + width - 10, y: y1 },
+                    size: { width: 20, height: 20 },
+                    attrs: { text: { text: `${config.read.notification.value}`, fill: '#fff' }, rect: { fill: 'ORANGE' } }
+                });
+
+                let image = new joint.shapes.basic.Image({
+                    position : {
+                        x: x1 + ((width / 2) - 20),
+                        y: y1 + ((height / 2) - 20)
+                    },
+                    size : {
+                        width : 40,
+                        height : 40
+                    },
+                    attrs : {
+                        image : {
+                            'xlink:href' : 'https://cdn.iconscout.com/public/images/icon/free/png-128/openshift-company-brand-logo-34e2356e162dd5df-128x128.png',
+                            width : 40,
+                            height : 40
+                        }
+                    }
+                });
+                // square.embed(notification);
+                arr.push(notification);
+                arr.push(image);
+            }
+            this.graph.addCell(arr);
+
             // square.embed(notification);
             this.objectMap[square.id] = {
                 type: config.type,
                 name: config.name,
-                shape: config.shape
+                shape: config.shape,
+                config: config
             };
         }
     }
@@ -280,6 +434,12 @@ export class DrawingBoardComponent implements AfterViewInit {
                 x2: config.x2 ? config.x2 : config.x1 + config.width,
                 y2: config.y2 ? config.y2 : config.y1 + config.height
             };
+        }
+    }
+
+    ngOnChanges(): void {
+        if (this.read) {
+            this.appInit();
         }
     }
 }

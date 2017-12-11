@@ -1,6 +1,6 @@
 <div class="natural-language">
-    <h3>Describe your intent here</h3>
-    <textarea placeholder="Example: I want to create a @spring boot application" class="ma-textarea" [(ngModel)]="userInput"></textarea>
+    <h3>Describe your intent here {{serviceName ? 'for ' + serviceName: ''}}</h3>
+    <textarea placeholder="Example: I want to create a @spring boot application" (keypress)="handleUserInputKeyPress($event)" class="ma-textarea" [(ngModel)]="userInput"></textarea>
     <section>
         <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0" class="suggestions">
             <span (click)="suggestions = [];"> </span>

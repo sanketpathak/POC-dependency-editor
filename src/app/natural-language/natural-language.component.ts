@@ -1,6 +1,6 @@
 
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { NaturalLanguageService } from './natural-language.service';
@@ -15,13 +15,17 @@ import { waitForMap } from '@angular/router/src/utils/collection';
     templateUrl: './natural-language.component.html'
 })
 
-export class NaturalLanguageComponent implements OnInit {
+export class NaturalLanguageComponent implements OnInit, OnChanges {
+
+    @Input() input;
     public userInput: string;
     public dependencies: Array<any> = [];
     public suggestions: Array<any> = [];
     public search_key = '';
     public selceted: string;
     public newDepen: Array<any> = [];
+
+    public serviceName = '';
     
     @Output('submit') submit = new EventEmitter();
 
@@ -95,7 +99,11 @@ export class NaturalLanguageComponent implements OnInit {
         if (this.dependencies && this.dependencies.length > 0) {
             const final: Array<any> = this.dependencies.filter((d) => d['checked'] === true);
             console.log(final);
-            this.submit.emit({ results: final });
+            const result: any = {
+                deps: final,
+                sentence: this.userInput
+            };
+            this.submit.emit({ results: result });
         }
     }
 
@@ -160,6 +168,17 @@ export class NaturalLanguageComponent implements OnInit {
     }
     ngOnInit(): void {
         this.processMasterTags();
+    }
+
+    ngOnChanges(): void {
+        if (this.input) {
+            debugger;
+            let data: any = this.input.config.dataset;
+            this.userInput = data.sentence;
+            this.dependencies = data.dependencies;
+            this.serviceName = this.input.name;
+            this.dependencies.map(d => d.checked = true);
+        }
     }
 
 }

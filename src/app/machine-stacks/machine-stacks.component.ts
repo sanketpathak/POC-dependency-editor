@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges } from '@angular/core';
 
 @Component ({
     selector: 'machine-stacks',
@@ -6,8 +6,10 @@ import { Component, ViewChild } from '@angular/core';
     templateUrl: './machine-stacks.component.html'
 })
 
-export class MachineStacksComponent {
+export class MachineStacksComponent implements OnChanges {
 
+    @Input() read;
+    public readInput = {}
     public openModal = false;
     private containerMap: any = {};
     private showFinalButton = false;
@@ -21,11 +23,14 @@ export class MachineStacksComponent {
 
     public handleDblClick(event: any): void {
         if (!event.stopPropagation) {
-            this.containerMap[event] = {};
+            this.containerMap[event.modeId] = {};
+            console.log('HErerererer');
+            console.log(event);
             console.log('Ev', event);
             this.currentElement = event;
             this.openNaturalLanguage = true;
             this.openModal = true;
+            this.readInput = event.config.read;
             // this.naturalLanguageModal.open();
             this.showFinalButton = true;
         }
@@ -39,6 +44,7 @@ export class MachineStacksComponent {
             linkKeys.forEach((key) => {
                 this.message += '<b>Source:</b> ' + key + ', <b>Destination:</b> ' + this.linkMap[key] + '<br />';
             });
+            console.log(this.containerMap);
         }
         this.doShowMessage = true;
     }
@@ -64,6 +70,10 @@ export class MachineStacksComponent {
     public handleModalInputSubmit(event: any): void {
         this.containerMap[this.currentElement] = event;
         this.handleModalClose();
+    }
+
+    ngOnChanges(): void {
+        console.log(this.read);
     }
 
 }

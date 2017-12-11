@@ -6,13 +6,13 @@ import 'rxjs/add/operator/map';
 import { Observer } from 'rxjs/Observer';
 
 @Injectable()
-export class NaturalLanguageService {
+export class AppService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) {}
 
-  public getPackages(userInput: string): Observable<any> {
-    let url: string = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/ed64af56c6fbddeb1b10f7d30debb172f5062bba/response.json';
+  public readConfiguration (): Observable<any> {
+    let url: string = 'https://gist.githubusercontent.com/arunkumars08/72d5acbefcff5a8b488fe69326354ecb/raw/2dddf71c32b15e8e96b8440d0b8a5e59d27e3c99/read-containers.json';
     let body: any = {};
     // Change to POST once integrated with service
     return this    .http
@@ -20,17 +20,6 @@ export class NaturalLanguageService {
     .map(this.extractData)
     .catch(this.handleError);
   }
-
-  public getMasterTags(): Observable<any> {
-    let url: string = 'API_URL';
-    this.headers.set('Authorization', 'Bearer ' + 'APP_TOKEN');
-    let options = new RequestOptions({ headers: this.headers });
-    return this .http
-    .get(url, options)
-    .map(this.extractData)
-    .catch(this.handleError);
-  }
-
 
   private extractData(res: Response) {
     let body = res.json() || {};
