@@ -18,7 +18,9 @@ import { waitForMap } from '@angular/router/src/utils/collection';
 export class NaturalLanguageComponent implements OnInit, OnChanges {
 
     @Input() input;
+    @Output('onContainerChange') onContainerChange = new EventEmitter();
     public userInput: string;
+    public containerLabel: string;
     public dependencies: Array<any> = [];
     public suggestions: Array<any> = [];
     public search_key = '';
@@ -65,7 +67,7 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
         } else if (this.userInput.indexOf('openshift') !== -1) {
             this.onContainerEntry.emit('openshift');
         } else {
-            this.onContainerEntry.emit('');
+            this.onContainerEntry.emit(null);
         }
     }
 
@@ -222,19 +224,30 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
-        if (this.input) {
-            debugger;
-            let data: any = this.input.config.dataset;
+        
+        console.log(this.input);
+        const inputMock = this.input.config.read;
+        if (inputMock) {
+            
+            let data: any = inputMock.config.dataset;
             this.userInput = data.sentence;
             this.dependencies = data.dependencies;
-            this.serviceName = this.input.name;
+            this.serviceName = inputMock.name;
             this.dependencies.map(d => d.checked = true);
-            this.setContainerType();
         } else {
             this.userInput = '';
             this.dependencies = [];
-            this.serviceName = '';
+            this.serviceName = this.input.service;
         }
+        this.setContainerType();
+    }
+
+    public updateContainerLabel(): void {
+        const info = {
+            containerName: this.serviceName,
+            modelId: this.input.modelId
+        };
+        this.onContainerChange.emit(info);
     }
 
 }

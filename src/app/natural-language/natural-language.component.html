@@ -1,4 +1,9 @@
 <div class="natural-language">
+    <h3>Update your label: </h3>
+    <input type="text" [(ngModel)]="serviceName" />
+    <button class="btn btn-primary ma-button" (click)="updateContainerLabel()">Update</button>
+</div>
+<div class="natural-language">
     <h3>Describe your intent here {{serviceName ? 'for ' + serviceName: ''}}</h3>
     <textarea placeholder="Example: I want to create a @spring boot application" (keypress)="handleUserInputKeyPress($event)" class="ma-textarea" [(ngModel)]="userInput"></textarea>
     <section>

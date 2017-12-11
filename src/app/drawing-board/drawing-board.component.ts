@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, Input, ElementRef, EventEmitter, Output, OnChanges } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, SimpleChanges, Input, ElementRef, EventEmitter, Output, OnChanges } from '@angular/core';
 
 import * as joint from 'jointjs';
 
@@ -11,6 +11,7 @@ import * as joint from 'jointjs';
 export class DrawingBoardComponent implements AfterViewInit, OnChanges {
 
     @Input() read;
+    @Input() service;
 
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
@@ -27,6 +28,13 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
 
     private increment = 1;
     private containers = 0;
+
+    private containerIconMap = {};
+
+    public IMAGES_URL = {
+        openshift: 'https://cdn.iconscout.com/public/images/icon/free/png-128/openshift-company-brand-logo-34e2356e162dd5df-128x128.png',
+        aws: 'http://icons.iconarchive.com/icons/uiconstock/socialmedia/128/AWS-icon.png'
+    };
 
     // @ViewChild('canvasElement') canvasEl: ElementRef;
     @ViewChild('boardContainer') boardContainer: ElementRef;
@@ -99,6 +107,7 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
                     if (config.type === 'element') {
                         config['modelId'] = event.model.id;
                         config['service'] = event.model.attributes.attrs.text.text;
+                        
                         this.handleCallback('dblclick', config, config.name);
                     }
                 }
@@ -348,6 +357,13 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
             //     attrs: { text: { text: '', fill: '#fff' }, rect: { fill: 'ORANGE' } }
             // });
             // notification = null;
+
+            // Set the increment based on the existing containers
+
+            if (config.read && config.read.name) {
+                const num = Number(config.read.name.split('Service')[1].trim() || '0');
+                this.containers = num;
+            }
             
             console.log('$$$');
             console.log(config);
@@ -358,26 +374,24 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
                     size: { width: 20, height: 20 },
                     attrs: { text: { text: `${config.read.notification.value}`, fill: '#fff' }, rect: { fill: 'ORANGE' } }
                 });
-
-                let image = new joint.shapes.basic.Image({
-                    position : {
-                        x: x1 + ((width / 2) - 20),
-                        y: y1 + ((height / 2) - 20)
-                    },
-                    size : {
-                        width : 40,
-                        height : 40
-                    },
-                    attrs : {
-                        image : {
-                            'xlink:href' : 'https://cdn.iconscout.com/public/images/icon/free/png-128/openshift-company-brand-logo-34e2356e162dd5df-128x128.png',
-                            width : 40,
-                            height : 40
-                        }
-                    }
-                });
                 // square.embed(notification);
                 arr.push(notification);
+            }
+
+            if (config.read && config.read.config && config.read.config.dataset && config.read.config.dataset.sentence) {
+                let imageUrl: string = this.IMAGES_URL.openshift;
+                
+                if (config.read.config.dataset.sentence.indexOf('aws') !== -1) {
+                    imageUrl = this.IMAGES_URL.aws;
+                }
+                const params = {
+                    x: x1 + ((width / 2) - 20),
+                    y: y1 + ((height / 2) - 20),
+                    width: 40,
+                    height: 40,
+                    modelId: config['modelId'] || square.id
+                };
+                const image = this.createImage(imageUrl, params, true);
                 arr.push(image);
             }
             this.graph.addCell(arr);
@@ -437,9 +451,94 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
         }
     }
 
-    ngOnChanges(): void {
-        if (this.read) {
+    private addImage(modelId: string, name: string): void {
+        let element = this.getElement(modelId);
+        if (element) {
+            const {width, height} = element.attributes.size;
+            const {x: xPos, y: yPos} = element.attributes.position;
+            let imageUrl: string = this.IMAGES_URL.openshift;
+            if (name === 'aws') {
+                imageUrl = this.IMAGES_URL.aws;
+            }
+            const config = {
+                x: xPos + ((width / 2) - 20),
+                y: yPos + ((height / 2) - 20),
+                width: 40,
+                height: 40,
+                modelId: modelId
+            };
+            this.createImage(imageUrl, config);
+        }
+        console.log(element);
+    }
+
+    private deleteElement (modelId: string): void {
+        let element = this.getElement(modelId);
+        if (element) {
+            element.remove();
+        }
+    }
+
+    private createImage(url: string, config: any, needsReturn?: boolean): any {
+        if (config.modelId) {
+            if (this.containerIconMap[config.modelId]) {
+                this.deleteElement(this.containerIconMap[config.modelId]);
+            }
+        }
+        const image = new joint.shapes.basic.Image({
+            position : {
+                x: config.x,
+                y: config.y
+            },
+            size : {
+                width : config.width,
+                height : config.height
+            },
+            attrs : {
+                image : {
+                    'xlink:href' : url,
+                    width : config.width,
+                    height : config.height
+                }
+            }
+        });
+        this.containerIconMap[config.modelId] = image.id;
+        if (needsReturn) {
+            return image;
+        } else {
+            this.graph.addCell(image);
+            return;
+        }
+    }
+
+    private getElement(modelId: string): any {
+        const elements = this.graph.getCells();
+        for (let e of elements) {
+            if (e.id === modelId) {
+                return e;
+            }
+        }
+    }
+
+    private updateLabel(modelId: string, text: string): void {
+        let element = this.getElement(modelId);
+        if (element) {
+            element.attr('text/text', text);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        
+        if (changes['read'] && changes['read'].currentValue) {
             this.appInit();
+        }
+        if (changes['service'] && changes['service'].currentValue) {
+            if (this.service.name) {
+                this.addImage(this.service.modelId, this.service.name);
+            }
+            if (this.service.containerName) {
+                this.updateLabel(this.service.modelId, this.service.containerName);
+            }
         }
     }
 }

@@ -14,9 +14,11 @@ export class MachineStacksComponent implements OnChanges {
     private containerMap: any = {};
     private showFinalButton = false;
     private linkMap: any = {};
-    private currentElement: string = '';
+    private currentElement: any;
 
-    public containerType = '';
+    public serviceInfo = {};
+
+    public containerType = null;
 
     public doShowMessage = false;
     public message = '';
@@ -31,9 +33,18 @@ export class MachineStacksComponent implements OnChanges {
             this.currentElement = event;
             this.openNaturalLanguage = true;
             this.openModal = true;
-            this.readInput = event.config.read || {};
+            this.readInput = event;
             // this.naturalLanguageModal.open();
             this.showFinalButton = true;
+        }
+    }
+
+    public handleContainerNameChange(event: any): void {
+        if (!event.stopPropagation) {
+            this.serviceInfo = {
+                containerName: event.containerName,
+                modelId: event.modelId
+            };
         }
     }
 
@@ -51,9 +62,13 @@ export class MachineStacksComponent implements OnChanges {
     }
 
     public handleContainerEntry(event: any): void {
-        if (!event.stopPropagation) {
+        if (!event || !event.stopPropagation) {
             console.log(event);
             this.containerType = event;
+            this.serviceInfo = {
+                name: this.containerType,
+                modelId: this.currentElement.modelId
+            };
         }
     }
 
