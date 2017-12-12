@@ -313,7 +313,7 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
                 const rect = new joint.shapes.basic.Rect({
                     position: { x: 10, y: 10 },
                     size: { width: 30, height: 30 },
-                    attrs: { rect: { fill: '#fff', stroke: '#000' } }
+                    attrs: { rect: { fill: '#fff', stroke: '#000' }, text: { text: '+' } }
                 });
                 this.objectMap[rect.id] = {
                     type: config.type,

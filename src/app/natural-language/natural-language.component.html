@@ -1,10 +1,9 @@
-<div class="natural-language">
-    <h3>Update your label: </h3>
-    <input type="text" [(ngModel)]="serviceName" />
-    <button class="btn btn-primary ma-button" (click)="updateContainerLabel()">Update</button>
+<div id="determineScroll" class="natural-language">
+    <h3>Name of the service: </h3>
+    <input type="text" (keypress)="checkForEnter($event, 'update_service')" [(ngModel)]="serviceName" />
 </div>
 <div class="natural-language">
-    <h3>Describe your intent here {{serviceName ? 'for ' + serviceName: ''}}</h3>
+    <h3>Describe the purpose {{serviceName ? 'of ' + serviceName: ''}}</h3>
     <textarea placeholder="Example: I want to create a @spring boot application" (keypress)="handleUserInputKeyPress($event)" class="ma-textarea" [(ngModel)]="userInput"></textarea>
     <section>
         <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0" class="suggestions">
@@ -90,8 +89,7 @@
 </div>
 
 <button (click)="addTag = true" *ngIf="dependencies && dependencies.length > 0" class="add-more btn btn-primary">Additional Dependencies..</button>
-<button (click)="handleSubmit()" *ngIf="dependencies && dependencies.length > 0" class="submit add-more btn btn-primary">Specify Deployment Options</button> 
+<button (click)="handleSubmit()" *ngIf="dependencies && dependencies.length > 0 || userInput.indexOf('s3') !== -1" class="submit add-more btn btn-primary">Specify Deployment Options</button>
 <div *ngIf="addTag" class="add-more-section">
-  <input type="text" value="" [(ngModel)]="selected" [typeahead]="masterTagsList" />
-  <button class="btn btn-primary" (click)="handleAddTag()">Add</button>
+  <input type="text" value="" [(ngModel)]="selected" (keypress)="checkForEnter($event, 'add_tag')" [typeahead]="masterTagsList" />
 </div>

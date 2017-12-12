@@ -48,7 +48,7 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
                 private dependencyCheckService: DependencyCheckService) {}
 
     processNaturalLanguage(): void {
-        if (this.userInput.indexOf('s3') === -1) { 
+        if (this.userInput.indexOf('s3') === -1) {
             const naturalLanguage: Observable<any> = this.naturalLanguageService.getPackages(this.userInput);
             if (this.userInput) {
                 naturalLanguage.subscribe((data) => {
@@ -59,6 +59,8 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
                     }
                 });
             }
+        } else {
+            this.dependencies = [];
         }
         this.setContainerType();
     }
@@ -237,7 +239,21 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
             this.dependencies = [];
             this.serviceName = this.input.service;
         }
+        let scrollElem = document.getElementById('determineScroll');
+        if (scrollElem) {
+            window.scrollBy(0, scrollElem.offsetTop);
+        }
         this.setContainerType();
+    }
+
+    public checkForEnter(event: KeyboardEvent, flag: string): void {
+        if (event && event.keyCode === 13) {
+            if (flag === 'update_service') {
+                this.updateContainerLabel();
+            } else if (flag === 'add_tag') {
+                this.handleAddTag();
+            }
+        }
     }
 
     public updateContainerLabel(): void {
