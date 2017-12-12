@@ -20,15 +20,15 @@ export class TreeService {
     }
 
     public getFileSystem(config: string) {
-        if (config === 'aws') {
-            return this.http.get('https://gist.githubusercontent.com/ravsa/16a48a68a44741c7f20dcbe7b4996b81/raw/c245fa4b907fa967b951ed146b2fa8d34ebc6048/aws_dp_config.json', {})
-                .toPromise()
-                .then(res => <TreeNode[]> res.json().data);
-        }else {
-            return this.http.get('https://gist.githubusercontent.com/ravsa/c45f3f96d886fb7037697b66874dbab0/raw/aef199ed1ef19e94dedae237786e660ae70445ac/openshift_dp_config.json', {})
-                .toPromise()
-                .then(res => <TreeNode[]> res.json().data);
+        let url: string = 'https://gist.githubusercontent.com/ravsa/c45f3f96d886fb7037697b66874dbab0/raw/aef199ed1ef19e94dedae237786e660ae70445ac/openshift_dp_config.json';
+        if (config === 's3') {
+            url = 'https://gist.githubusercontent.com/ravsa/16a48a68a44741c7f20dcbe7b4996b81/raw/c245fa4b907fa967b951ed146b2fa8d34ebc6048/aws_dp_config.json';
+        } else if (config === 'lambda') {
+            
         }
+        return this.http.get(url, {})
+                .toPromise()
+                .then(res => <TreeNode[]> res.json().data);
     }
 
     private handleError(error: Response | any) {

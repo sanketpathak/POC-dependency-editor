@@ -48,24 +48,28 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
                 private dependencyCheckService: DependencyCheckService) {}
 
     processNaturalLanguage(): void {
-        const naturalLanguage: Observable<any> = this.naturalLanguageService.getPackages(this.userInput);
-        if (this.userInput) {
-            naturalLanguage.subscribe((data) => {
-                console.log(data);
-                if (data) {
-                    data['dependencies'].map((d) => d['checked'] = true);
-                    this.dependencies = data['dependencies'];
-                }
-            });
-            this.setContainerType();
+        if (this.userInput.indexOf('s3') === -1) { 
+            const naturalLanguage: Observable<any> = this.naturalLanguageService.getPackages(this.userInput);
+            if (this.userInput) {
+                naturalLanguage.subscribe((data) => {
+                    console.log(data);
+                    if (data) {
+                        data['dependencies'].map((d) => d['checked'] = true);
+                        this.dependencies = data['dependencies'];
+                    }
+                });
+            }
         }
+        this.setContainerType();
     }
 
     private setContainerType(): void {
-        if (this.userInput.indexOf('aws') !== -1) {
-            this.onContainerEntry.emit('aws');
+        if (this.userInput.indexOf('lambda') !== -1) {
+            this.onContainerEntry.emit('lambda');
         } else if (this.userInput.indexOf('openshift') !== -1) {
             this.onContainerEntry.emit('openshift');
+        } else if (this.userInput.indexOf('s3') !== -1) {
+            this.onContainerEntry.emit('s3');
         } else {
             this.onContainerEntry.emit(null);
         }
@@ -161,8 +165,6 @@ export class NaturalLanguageComponent implements OnInit, OnChanges {
 
     handleUserInputKeyPress(event: KeyboardEvent): void {
         console.log(event);
-        if(this.userInput)
-            this.getDeploymentConfig(this.userInput);
         const key: string = event.key;
         if ((key && key.trim() === '@') || (key && this._flag)) {
             if (key === ' ') {

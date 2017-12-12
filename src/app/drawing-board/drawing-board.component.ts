@@ -33,7 +33,10 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
 
     public IMAGES_URL = {
         openshift: 'https://cdn.iconscout.com/public/images/icon/free/png-128/openshift-company-brand-logo-34e2356e162dd5df-128x128.png',
-        aws: 'http://icons.iconarchive.com/icons/uiconstock/socialmedia/128/AWS-icon.png'
+        aws: {
+            s3: 'http://www.ajcsoft.com/images/amazon-s3-logo.png',
+            lambda: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Half-Life_Lambda_popr..png'
+        }
     };
 
     // @ViewChild('canvasElement') canvasEl: ElementRef;
@@ -381,8 +384,10 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
             if (config.read && config.read.config && config.read.config.dataset && config.read.config.dataset.sentence) {
                 let imageUrl: string = this.IMAGES_URL.openshift;
                 
-                if (config.read.config.dataset.sentence.indexOf('aws') !== -1) {
-                    imageUrl = this.IMAGES_URL.aws;
+                if (config.read.config.dataset.sentence.indexOf('s3') !== -1) {
+                    imageUrl = this.IMAGES_URL.aws.s3;
+                } else if (config.read.config.dataset.sentence.indexOf('lambda') !== -1) {
+                    imageUrl = this.IMAGES_URL.aws.lambda;
                 }
                 const params = {
                     x: x1 + ((width / 2) - 20),
@@ -457,8 +462,10 @@ export class DrawingBoardComponent implements AfterViewInit, OnChanges {
             const {width, height} = element.attributes.size;
             const {x: xPos, y: yPos} = element.attributes.position;
             let imageUrl: string = this.IMAGES_URL.openshift;
-            if (name === 'aws') {
-                imageUrl = this.IMAGES_URL.aws;
+            if (name === 's3') {
+                imageUrl = this.IMAGES_URL.aws.s3;
+            } else if (name === 'lambda') {
+                imageUrl = this.IMAGES_URL.aws.lambda;
             }
             const config = {
                 x: xPos + ((width / 2) - 20),
