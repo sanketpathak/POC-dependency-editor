@@ -19,13 +19,10 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-          "../node_modules/patternfly/dist/css/patternfly.min.css",
-          "../node_modules/jointjs/css/layout.css",
-          "../node_modules/primeng/resources/themes/cruze/theme.css",
-          "../node_modules/primeng/resources/primeng.min.css",
-          { "input": "../node_modules/primeng/resources/themes/omega/theme.css", "output": "omega.css" },
-          { "input": "../node_modules/primeng/resources/primeng.min.css", "output": "primeng.min.css" }
-
+          "../node_modules/patternfly/node_modules/bootstrap/less/bootstrap.less",
+          "../node_modules/patternfly/node_modules/font-awesome/less/font-awesome.less",
+          "../node_modules/patternfly/dist/css/patternfly-additions.min.css",
+          "../node_modules/patternfly/dist/css/patternfly.min.css"
       ],
       "scripts": [],
       "environments": {

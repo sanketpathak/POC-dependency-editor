@@ -1,0 +1,8 @@
+<div class="dependency">
+    <div class="application">
+        <app-application [dependencies]="selectedDependencies"></app-application>
+    </div>
+    <div class="package">
+        <app-packages (onPackageSelect)="handlePackageSelection($event)"></app-packages>
+    </div>
+</div>

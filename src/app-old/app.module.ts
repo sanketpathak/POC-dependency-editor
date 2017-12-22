@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import {BrowserModule} from '@angular/platform-browser';
+
+import { PackagesModule } from './packages/packages.component.module';
 import { AppComponent } from './app.component';
-import {DependencyModule} from './dependency-editor/dependency-editor.module';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    DependencyModule,
+    // BrowserModule,
     HttpModule,
+    PackagesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

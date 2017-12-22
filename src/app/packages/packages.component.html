@@ -1,0 +1,78 @@
+<div class="app-joint">
+  <div class="packages">
+    <div class="header"><h2>Choose Packages </h2></div>
+    <div class="content"  >
+      <div class="categories" *ngIf="objectKeys(categories).length > 0">
+        <div class="card-pf card-pf-view catagories-card" [style.height.px]="categoriesHeight">
+          <div class="card-pf-body">
+            <div class="card-pf-items">
+              <table class="tag-table"  *ngFor="let key of objectKeys(categories)">
+                <tr>
+                  <td class="tag-table-td-left" (click)="tagClick(key)" [class.tag-color]="selectedTags.has(key)" > {{key}}</td>
+                  <td class="tag-table-td-left">
+                    <label class="tag-table-td-label">{{categories[key]}}</label>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dependencies">
+      <div class="search-dependencies">
+        <!-- <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" [typeahead]="masterTags" (keypress)="test($event)" class="search-box"  type="text" placeholder="Search for Packages..">  -->
+        <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)" class="search-box"  type="text" placeholder="Search for Packages..">
+        <button type="button" class="filter-button"><span class="pficon-settings"></span> Filter </button>
+        <section [class.dependency-typeahead]="suggestions.length > 0">
+            <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0">
+                <span (click)="suggestions = [];"> </span>
+                <div *ngFor="let suggestion of suggestions | slice:0:1;" class="typeahead-text-first">
+                  <strong>{{suggestion}}</strong>
+                </div>
+                <div *ngFor="let suggestion of suggestions | slice:1:10; let i=index" class="typeahead-text">
+                    <span>{{suggestion}}</span>
+                </div>
+            </div>
+        </section>
+      </div>
+      <div class="depn">
+      <div class="display-dependencies" *ngFor="let dependency of dependencies;let i = index">
+       <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 dependency-cards">
+         <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select " [class.card-border]="unselectedPackages.has(dependency.name)" [class.active]="selectedPackages.has(dependency.name)">
+           <div class="card-pf-body">
+             <div class="card-pf-items">
+               <div class="card-pf-item">
+                 <label class="control control--checkbox">{{dependency.name}}
+                   <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
+                   <div class="control__indicator"></div>
+                 </label>
+               </div>
+               <div class="card-pf-item"> <label></label></div>
+               <span dropdown  class="dropdown-position">
+                 <label href dropdownToggle (click)="false" class="dropbtn">
+                   {{dependency.latest_version}}
+                   <span class="fa fa-angle-down">
+                   </span>
+                 </label>
+                 <ul *dropdownMenu class="dropdown-menu">
+                   <li *ngFor="let ver of dependency.version" style="cursor:pointer" onmouseover="this.style.background='#beedf9';" onmouseout="this.style.background='white';" (click)="changeVersion(dependency, ver)">
+                     <label class="dropdown-item version"  >{{ver}}</label>
+                   </li>
+                 </ul>
+               </span>
+               <p class="card-pf-info" >some description for {{dependency.name}}</p>
+               <div>
+                 <div *ngFor="let tag of dependency.topic_list">
+                   <div class="tag-border" >{{tag}}</div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

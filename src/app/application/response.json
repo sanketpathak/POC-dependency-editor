@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        {"name": "A", "latest_version":"1.1"},
+        {"name": "B", "latest_version": "2.2"}
+    ]
+}
