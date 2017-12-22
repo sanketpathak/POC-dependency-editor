@@ -120,7 +120,7 @@ export class PackagesComponent implements OnInit {
         }
       
         this.companionPackages = array.slice(0, 2);
-        return this.companionPackages;
+        return new Set(this.companionPackages);
       }
     public tagClick(tag: string){
         if (tag !== 'All'){

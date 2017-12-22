@@ -65,6 +65,16 @@ this.moreInfoText = "some description of CVE";
 }
 
 public addItem(dependency):void{
+    if(this.dependencies){
+    this.dependencies.companionPackages.delete(dependency);
+    this.dependencies.dependencies.add(dependency);
+  }else {
+    this.compDep.delete(dependency);
+    this.dependencies.dependencies.add(dependency);
+  }
+}
+
+public removeItem(dependencies):void{
 
 }
 processPackages(): void {
