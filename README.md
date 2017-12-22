@@ -3,14 +3,14 @@ This repository deals about the generation of stacks based on user's custom inte
 
 Connection between POC-dependency-editor and fabric8-ui :-
 
-##POC-dependency-editor :
+## POC-dependency-editor :
 
 In POC-dependency-editor, to establish a connection with fabric8-ui run the command given below
 
 `$npm run watch:library`
 
 
-##fabric8-ui:
+## fabric8-ui:
 
 Inside fabric8-ui repo commands to link and unlink the fabric8-ui with POC-dependency-editor as follows:
 
@@ -23,7 +23,7 @@ Run the following command for connection
 
 We provide various sample environments out of the box which make it easier to get started. They are all located as bash scripts in environments.
 
-==The default one you should use when you want to develop on the console is to reuse openshift.io production cluster:
+The default one you should use when you want to develop on the console is to reuse openshift.io production cluster:
 
 ```bash
 source environments/openshift-prod-cluster.sh
