@@ -37,7 +37,7 @@ Execute to start the UI with live reload enabled:
 
 Run the following command to disconnect with POC-dependency-editor
 
-`$sudo npm unlink fabric8-stack-analysis-ui`
+`$sudo npm unlink analytics-driven-ui`
 
 
 
