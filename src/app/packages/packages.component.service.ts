@@ -27,7 +27,7 @@ export class PackagesServices {
     public getMasterTags(): Observable<any> {
         let url: string = 'API_URL';
         this.headers.set('Authorization', 'Bearer ' + '');
-        let options = new RequestOptions({ headers: this.headers });
+        const options = new RequestOptions({ headers: this.headers });
         return this .http
         .get(url, options)
         .map(this.extractData)
@@ -39,7 +39,7 @@ export class PackagesServices {
         if(ecosystem === "node"){
             // TODO: node ecosystem;
         }else {
-            let url: string = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4d01fbb2475467c443ee383f25c6a89590f4f8e6/companion_packages_response.json';
+            let url = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4488b8a3a0ee447bf7c8cfd8f351e9ac14c9cb6c/companion_packages_response.json';
             let body: any = {};
             return this    .http
             .get(url, body)
@@ -47,9 +47,9 @@ export class PackagesServices {
             .catch(this.handleError);
         }
     }
-    
+
     private extractData(res: Response) {
-        let body = res.json() || {};
+        const body = res.json() || {};
         body['statusCode'] = res.status;
         body['statusText'] = res.statusText;
         return body;
