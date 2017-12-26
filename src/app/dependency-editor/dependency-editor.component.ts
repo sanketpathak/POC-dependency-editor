@@ -1,6 +1,13 @@
 import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+
+import { ChatExampleData } from '../data/chat-example-data';
+
+import { UsersService } from '../user/users.service';
+import { ThreadsService } from '../thread/threads.service';
+import { MessagesService } from '../message/messages.service';
+
 @Component({
     selector: 'dependency-editor',
     styleUrls: ['./dependency-editor.component.less'],
@@ -9,6 +16,12 @@ import { Observable } from 'rxjs/Observable';
 export class DependencyComponent {
 
     public selectedDependencies: any;
+
+    constructor(public messagesService: MessagesService,
+              public threadsService: ThreadsService,
+              public usersService: UsersService) {
+        ChatExampleData.init(messagesService, threadsService, usersService);
+    }
 
     public handlePackageSelection(event: any): void {
         if (!event.preventDefault) {
