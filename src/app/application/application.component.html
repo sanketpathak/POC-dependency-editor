@@ -1,9 +1,9 @@
 <div class="application-summary">
-  <div class="application-header">
+  <!-- <div class="application-header">
     <h2>
       Your Application
-    </h2>
-  </div>
+    </h2> 
+  </div>-->
   <div class="application-body">
     <div class="application-content">
       <div class="app-top">
@@ -21,9 +21,10 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div></div></div>
+      <div class="app-top">
         <div class="col-xs-12">
+        <div class="application-header"><h3 class="heading">Current Dependencies </h3>
           <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dep" style="margin-top: -10px">
             <div class="row" style="font-size: 12px">
               <span style="color:#42a8e2" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
@@ -33,6 +34,7 @@
               <!-- <div class="col-sm-0" style="float: right"><span class="pficon-remove"></span></div> -->
             </div>
           </div>
+        </div>
           <br>
           <div *ngIf="dependencies">
             <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
@@ -63,10 +65,51 @@
                 <div class="col-sm-0" style="float: right">
                   <span class="pficon-remove"></span>
                 </div>
+            <div class="row" style="font-size: 12px;">
+              <div>
+                <strong>
+                  <span style="width:auto;float:left;padding-left:15px;">{{d.name}}</span>
+                  <div style="float:right;">
+                    <span style="width:auto;float:left;padding-right:15px;">|</span>
+                    <span style=" width: auto;float:right;padding-right:15px;">{{d.latest_version}}</span>
+                  </div>
+                </strong>
+              </div> 
+              <!-- <div class="col-sm-2">|</div>  -->
+              <!-- <div style="font-size:10px">{{d.latest_version}}</div> -->
+              <!-- <div class="col-sm-0" style="float: right"><span class="pficon-remove"></span></div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+          <br> 
+      <div class="col-xs-12">
+        <div class="application-header"><h3 class="heading">Newly Added Dependencies </h3><hr />    
+          <div *ngIf="dependencies">
+            <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
+              <div class="row" style="font-size: 12px;">
+                  <div>
+                      <strong>
+                        <span style="float:left;padding-left:15px;">{{d.name}}</span>
+                        <div style="float:right;">
+                          <span style="float:left;padding-right:15px;">|</span>
+                          <span style="float:right;padding-right:15px;">{{d.latest_version}}
+                              <div style="float: right;padding-left:10px;">
+                                  <span class="pficon-remove" (click)="removeItem(d)"></span>
+                              </div>            
+                          </span>
+                        </div>
+                      </strong>
+                    </div>
+                  <!-- <div class="col-sm-1">{{d.name}}</div>
+                  <div class="col-sm-3">|</div>                        
+                  <div class="col-sm-3">{{d.latest_version}}</div> -->
+                  
               </div>
             </div>
           </div>
         </div>
+      </div>
         <div class="app-bottom">
           <div class="app-head">
             <accordion>
