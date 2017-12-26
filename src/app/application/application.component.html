@@ -90,17 +90,18 @@
               <div class="row" style="font-size: 12px;">
                   <div>
                       <strong>
-                        <span style="float:left;padding-left:15px;">{{d.name}}</span>
+                        <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span>
                         <div style="float:right;">
-                          <span style="float:left;padding-right:15px;">|</span>
-                          <span style="float:right;padding-right:15px;">{{d.latest_version}}
-                              <div style="float: right;padding-left:10px;">
-                                  <span class="pficon-remove" (click)="removeItem(d)"></span>
-                              </div>            
-                          </span>
+                          <span style="float:left;width:auto;float:left;padding-left:10px;margin-right:10px;">|</span>
+                          <div style="float:right">
+                              <span style=" width: auto;float:left;padding-left:8px;padding-right:15px;">{{d.latest_version}}
+                              </span>
+                              <span class="pficon-remove" style="float: right;padding-right:10px;" (click)="removeItem(d)">
+                              </span>                               
                         </div>
-                      </strong>
-                    </div>
+                     </div>
+                    </strong>
+                    </div> 
                   <!-- <div class="col-sm-1">{{d.name}}</div>
                   <div class="col-sm-3">|</div>                        
                   <div class="col-sm-3">{{d.latest_version}}</div> -->
@@ -135,7 +136,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
                 <div *ngIf="!dependencies">
                   <div class="col-xs-12">
                     <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px">
@@ -149,6 +149,7 @@
                     </div>
                   </div>
                 </div>
+              </div>
               </accordion-group>
             </accordion>
           </div>
