@@ -11,13 +11,17 @@ export class PackagesServices {
 
     constructor(private http: Http) {}
 
-    public getPackages(): Observable<any> {
-        let url: string = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/5c834160f84a023c4b10ad6ae28eb509f61643a2/response.json';
-        let body: any = {};
-        return this    .http
-        .get(url, body)
-        .map(this.extractData)
-        .catch(this.handleError);
+    public getPackages(ecosystem:string): Observable<any> {
+        if (ecosystem === "node"){
+            // TODO node ecosystem;
+        }else {
+            let url: string = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/5c834160f84a023c4b10ad6ae28eb509f61643a2/response.json';
+            let body: any = {};
+            return this    .http
+            .get(url, body)
+            .map(this.extractData)
+            .catch(this.handleError);
+        }
     }
 
     public getMasterTags(): Observable<any> {
@@ -30,13 +34,18 @@ export class PackagesServices {
         .catch(this.handleError);
     }
     
-    public getCompanionPackages(): Observable<any> {
-        let url: string = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4d01fbb2475467c443ee383f25c6a89590f4f8e6/companion_packages_response.json';
-        let body: any = {};
-        return this    .http
-        .get(url, body)
-        .map(this.extractData)
-        .catch(this.handleError);
+    public getCompanionPackages(ecosystem: string): Observable<any> {
+
+        if(ecosystem === "node"){
+            // TODO: node ecosystem;
+        }else {
+            let url: string = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4d01fbb2475467c443ee383f25c6a89590f4f8e6/companion_packages_response.json';
+            let body: any = {};
+            return this    .http
+            .get(url, body)
+            .map(this.extractData)
+            .catch(this.handleError);
+        }
     }
     
     private extractData(res: Response) {

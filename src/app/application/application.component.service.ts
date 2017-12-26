@@ -11,13 +11,18 @@ export class ApplicationServices {
 
     constructor(private http: Http) {}
 
-    public getPackages(): Observable<any> {
-        let url: string = 'https://gist.githubusercontent.com/ravsa/dc3445708fc519795d093d9ce44b6698/raw/87fc96631f6a5e5c6237d1f68a94a6bb4c2c7df6/springboot_response.json';
-        let body: any = {};
-        return this    .http
-        .get(url, body)
-        .map(this.extractData)
-        .catch(this.handleError);
+    public getPackages(ecosystem: string): Observable<any> {
+        if (ecosystem === "node"){
+            // TODO: node ecosystem;
+        }else {
+            let url: string = 'https://gist.githubusercontent.com/ravsa/dc3445708fc519795d093d9ce44b6698/raw/87fc96631f6a5e5c6237d1f68a94a6bb4c2c7df6/springboot_response.json';
+            let body: any = {};
+            return this    .http
+            .get(url, body)
+            .map(this.extractData)
+            .catch(this.handleError);
+        }
+        
     }
 
     private extractData(res: Response) {

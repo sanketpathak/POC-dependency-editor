@@ -39,6 +39,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     public allLicenses:Array<any> = [];
     public licenseCount = {};
     public licenseData = [];
+    public ecosystem  = "maven";
 
 
 
@@ -79,7 +80,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
 
     public processPackages(): void {
-        const packageInfo: Observable<any> = this.applicationServices.getPackages();
+        const packageInfo: Observable<any> = this.applicationServices.getPackages(this.ecosystem);
         packageInfo.subscribe((data) => {
             if (data) {
                 this.dep = data['dependencies'];

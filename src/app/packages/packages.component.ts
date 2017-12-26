@@ -27,6 +27,7 @@ export class PackagesComponent implements OnInit {
     public search_key = '';
     public companionPackages:Array<any> =[];
     public compDep:Array<any> = [];
+    public ecosystem = "maven"; 
 
     constructor(private packagesServices: PackagesServices ) {}
 
@@ -67,7 +68,7 @@ export class PackagesComponent implements OnInit {
     }
 
     processPackages(): void {
-        const packageInfo: Observable<any> = this.packagesServices.getPackages();
+        const packageInfo: Observable<any> = this.packagesServices.getPackages(this.ecosystem);
         packageInfo.subscribe((data) => {
             console.log(data);
             if (data) {
@@ -77,7 +78,7 @@ export class PackagesComponent implements OnInit {
     }
 
     processCompanionPackages(): void {
-        const packageInfo: Observable<any> = this.packagesServices.getCompanionPackages();
+        const packageInfo: Observable<any> = this.packagesServices.getCompanionPackages(this.ecosystem);
         packageInfo.subscribe((data) => {
             console.log(data);
             if (data) {
