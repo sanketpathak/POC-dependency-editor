@@ -40,7 +40,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   public allLicenses: Array<any> = [];
   public licenseCount = {};
   public licenseData = [];
-  public ecosystem = 'maven';
+  public ecosystem = 'node';
   public title: string;
   public isNode = true;
   public runTimeIcon = '🆁';

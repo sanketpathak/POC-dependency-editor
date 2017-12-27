@@ -23,7 +23,7 @@ export class ApplicationServices {
     if (ecosystem === 'node') {
       // TODO: node ecosystem;
       const url =
-        'https://gist.githubusercontent.com/ravsa/dc3445708fc519795d093d9ce44b6698/raw/13a60c97e2f1996e81613ce19c59ca9ba01a1439/springboot_response.json';
+        'https://gist.githubusercontent.com/ravsa/38ed3cab8d7237d7a8c2b608635fbe0d/raw/ffc9f69b6050d96f3d6b86ad7259a77d9263f22a/node_response.json';
       const body: any = {};
       return this.http
         .get(url, body)

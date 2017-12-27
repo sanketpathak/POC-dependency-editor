@@ -11,12 +11,17 @@ export class PackagesServices {
 
     constructor(private http: Http) {}
 
-    public getPackages(ecosystem:string): Observable<any> {
-        if (ecosystem === "node"){
-            // TODO node ecosystem;
+    public getPackages(ecosystem: string): Observable<any> {
+        if (ecosystem === 'node'){
+            const url = 'https://gist.githubusercontent.com/ravsa/47f2c87eb7e3d005d7c32929677ce4b8/raw/69fea33cb1a28da5efdce46f70a961de95c5137f/response_node.json';
+            const body: any = {};
+            return this    .http
+            .get(url, body)
+            .map(this.extractData)
+            .catch(this.handleError);
         }else {
-            let url: string = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/5c834160f84a023c4b10ad6ae28eb509f61643a2/response.json';
-            let body: any = {};
+            const url = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/c343460a361d948647ce875c33fb3851f0d364b9/response.json';
+            const body: any = {};
             return this    .http
             .get(url, body)
             .map(this.extractData)
@@ -25,7 +30,7 @@ export class PackagesServices {
     }
 
     public getMasterTags(): Observable<any> {
-        let url: string = 'API_URL';
+        const url = 'API_URL';
         this.headers.set('Authorization', 'Bearer ' + '');
         const options = new RequestOptions({ headers: this.headers });
         return this .http
@@ -33,14 +38,14 @@ export class PackagesServices {
         .map(this.extractData)
         .catch(this.handleError);
     }
-    
+
     public getCompanionPackages(ecosystem: string): Observable<any> {
 
-        if(ecosystem === "node"){
+        if (ecosystem === 'node'){
             // TODO: node ecosystem;
         }else {
-            let url = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4488b8a3a0ee447bf7c8cfd8f351e9ac14c9cb6c/companion_packages_response.json';
-            let body: any = {};
+            const url = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4488b8a3a0ee447bf7c8cfd8f351e9ac14c9cb6c/companion_packages_response.json';
+            const body: any = {};
             return this    .http
             .get(url, body)
             .map(this.extractData)

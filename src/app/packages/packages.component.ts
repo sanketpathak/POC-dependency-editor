@@ -25,7 +25,12 @@ export class PackagesComponent implements OnInit {
     'database',
     'starter',
     'aws',
-    'maven'
+    'maven',
+    'openshift',
+    'middleware',
+    'express',
+    'test',
+    'debug'
   ];
   public selectedPackages = new Set();
   public unselectedPackages = new Set();
@@ -40,7 +45,7 @@ export class PackagesComponent implements OnInit {
   public search_key = '';
   public companionPackages: Array<any> = [];
   public compDep: Array<any> = [];
-  public ecosystem = 'maven';
+  public ecosystem = 'node';
 
   constructor(private packagesServices: PackagesServices) {}
 
