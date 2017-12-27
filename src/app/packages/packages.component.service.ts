@@ -13,7 +13,7 @@ export class PackagesServices {
 
     public getPackages(ecosystem: string): Observable<any> {
         if (ecosystem === 'node'){
-            const url = 'https://gist.githubusercontent.com/ravsa/47f2c87eb7e3d005d7c32929677ce4b8/raw/69fea33cb1a28da5efdce46f70a961de95c5137f/response_node.json';
+            const url = 'https://gist.githubusercontent.com/ravsa/47f2c87eb7e3d005d7c32929677ce4b8/raw/80acb138e8f402a73907cb9ce497f294844c1c31/response_node.json';
             const body: any = {};
             return this    .http
             .get(url, body)
@@ -42,7 +42,12 @@ export class PackagesServices {
     public getCompanionPackages(ecosystem: string): Observable<any> {
 
         if (ecosystem === 'node'){
-            // TODO: node ecosystem;
+            const url = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4488b8a3a0ee447bf7c8cfd8f351e9ac14c9cb6c/companion_packages_response.json';
+            const body: any = {};
+            return this    .http
+            .get(url, body)
+            .map(this.extractData)
+            .catch(this.handleError);
         }else {
             const url = 'https://gist.githubusercontent.com/ravsa/75e911b954ce15cd816161dbcf4849c4/raw/4488b8a3a0ee447bf7c8cfd8f351e9ac14c9cb6c/companion_packages_response.json';
             const body: any = {};
