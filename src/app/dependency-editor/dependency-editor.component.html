@@ -1,9 +1,9 @@
 <div class="dependency">
     <div class="application">
-        <app-application [dependencies]="selectedDependencies"></app-application>
+        <app-application [dependencies]="selectedDependencies" [mygui]="guiAppName"></app-application>
     </div>
     <div class="package">
-        <app-packages (onPackageSelect)="handlePackageSelection($event)"></app-packages>
+        <app-packages (onPackageSelect)="handlePackageSelection($event)" [mygui]="guiAppName"></app-packages>
     </div>
     <chat-window *ngIf="true"></chat-window>
 </div>

@@ -16,6 +16,7 @@ import { MessagesService } from '../message/messages.service';
 export class DependencyComponent implements OnInit{
     @Input('gui') gui: any;
     public selectedDependencies: any;
+    public guiAppName: string;
 
     constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -32,6 +33,7 @@ export class DependencyComponent implements OnInit{
 
     ngOnInit(){
         console.log('------------ this.gui -----');
+        this.guiAppName = this.gui;
         console.log(this.gui);
     }
 
