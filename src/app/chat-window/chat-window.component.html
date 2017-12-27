@@ -27,6 +27,10 @@
           <input type="text"
           class="chat-input"
           placeholder="Write your message here..."
+          style="font-size: 12px;
+                 line-height: 1.5;
+                 width: 100%;
+                 height: 33px;"
           (keydown.enter)="onEnter($event)"
           [(ngModel)]="draftMessage.text" />
           <span class="input-group-btn">
