@@ -17,7 +17,7 @@ import { PackagesServices } from './packages.component.service';
 })
 export class PackagesComponent implements OnInit {
   @Output('onPackageSelect') onPackageSelect = new EventEmitter();
-  @Input('mygui') mygui: string;
+  @Input('mygui') appName: string;
   public dependencies: Array<any> = [];
   public dependenciesData: Array<any> = [];
   public masterTags: Array<any> = [
@@ -278,14 +278,15 @@ export class PackagesComponent implements OnInit {
     console.log(this.selected);
   }
   ngOnInit() {
-    if (this.mygui.toLocaleLowerCase().indexOf('node') !== -1){
+    console.log(this.ecosystem);
+    this.processPackages();
+    this.processCompanionPackages();
+    if (this.appName)
+    if (this.appName.toLocaleLowerCase().indexOf('node') !== -1){
       this.ecosystem = 'node';
     }else {
       this.ecosystem = 'maven';
     }
-    console.log(this.ecosystem);
-    console.log('this is in packages', this.mygui);
-    this.processPackages();
-    this.processCompanionPackages();
   }
+
 }

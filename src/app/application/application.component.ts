@@ -25,7 +25,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   @Input('component') component;
   @Output() onCloseEmitter = new EventEmitter();
   @Input('dependencies') dependencies;
-  @Input('mygui') mygui: string;
+  @Input('mygui') appName: string;
 
   public donutData: any;
   public showtd = false;
@@ -155,15 +155,15 @@ export class ApplicationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.mygui.toLocaleLowerCase().indexOf('node') !== -1){
+    this.processInit();
+    this.processPackages();
+    this.displayLicenses();
+    if (this.appName)
+    if (this.appName.toLocaleLowerCase().indexOf('node') !== -1){
       this.ecosystem = 'node';
     }else {
       this.ecosystem = 'maven';
     }
-    console.log(this.ecosystem);
-    this.processInit();
-    this.processPackages();
-    this.displayLicenses();
   }
 
   public emitCloseEvent(element: Element): void {
