@@ -3,6 +3,7 @@ import {
   Inject,
   ElementRef,
   OnInit,
+  Input,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -25,43 +26,43 @@ export class ChatWindowComponent implements OnInit {
   currentThread: Thread;
   draftMessage: Message;
   currentUser: User;
+  public isOpen = false;
+  @Input('dependencies') dependencies;
 
-  constructor(public messagesService: MessagesService,
-              public threadsService: ThreadsService,
-              public UsersService: UsersService,
-              public el: ElementRef) {
-  }
+  constructor(
+    public messagesService: MessagesService,
+    public threadsService: ThreadsService,
+    public UsersService: UsersService,
+    public el: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.messages = this.threadsService.currentThreadMessages;
 
     this.draftMessage = new Message();
 
-    this.threadsService.currentThread.subscribe(
-      (thread: Thread) => {
-        this.currentThread = thread;
+    this.threadsService.currentThread.subscribe((thread: Thread) => {
+      this.currentThread = thread;
+    });
+
+    this.UsersService.currentUser.subscribe((user: User) => {
+      this.currentUser = user;
+    });
+
+    this.messages.subscribe((messages: Array<Message>) => {
+      setTimeout(() => {
+        this.scrollToBottom();
       });
-
-    this.UsersService.currentUser
-      .subscribe(
-        (user: User) => {
-          this.currentUser = user;
-        });
-
-    this.messages
-      .subscribe(
-        (messages: Array<Message>) => {
-          setTimeout(() => {
-            this.scrollToBottom();
-          });
-        });
+    });
   }
 
   onEnter(event: any): void {
     this.sendMessage();
     event.preventDefault();
   }
-
+  public toggleChatBox() {
+    this.isOpen ? (this.isOpen = false) : (this.isOpen = true);
+  }
   sendMessage(): void {
     const m: Message = this.draftMessage;
     m.author = this.currentUser;
@@ -72,8 +73,16 @@ export class ChatWindowComponent implements OnInit {
   }
 
   scrollToBottom(): void {
-    const scrollPane: any = this.el
-      .nativeElement.querySelector('.msg-container-base');
-    scrollPane.scrollTop = scrollPane.scrollHeight;
+    const scrollPane: any = this.el.nativeElement.querySelector(
+      '.msg-container-base'
+    );
+    if (scrollPane) {
+      scrollPane.scrollTop = scrollPane.scrollHeight;
+    }
+  }
+  ngOnChanges(): void {
+    if (this.dependencies) {
+      this.isOpen = true;
+    }
   }
 }

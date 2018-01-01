@@ -1,33 +1,84 @@
 .messages .msg-receive {
+    font-weight: bold;
     background-color: #ececec;
-    margin: 10px;
-    max-width: 500px;
-    padding: 10px 5px;
+    margin: 8px;
+    max-width: 330px;
+    padding-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 10px;
 }
 
+.messages {
+    background: white;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    max-width: 100%;
+      p {
+        font-size: 13px;
+        margin: 0 0 .2rem;
+      }
+      .time {
+        font-size: 11px;
+        color: #ccc;
+      }
+  }
+
 .messages .msg-sent {
+    font-weight: bold;
+    color: #fff;
     max-height: 200px;
-    background-color: #bdd8da;
-    padding: 10px 5px;
-    max-width: 400px;
+    background-color: rgb(0, 144, 223);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    max-width: 330px;
     margin-left: 70px;
     border-radius: 10px;
 }
+.msg-container {
+    padding: 0px;
+    overflow: hidden;
+    display: flex;
+  }
 
 .msg-receive {
-    background-color: #ececec;
-    margin: 10px;
-    max-width: 500px;
-    padding: 10px 5px;
+    font-weight: bold;
+    background-color: rgb(236, 236, 236);
+    margin: 8px;
+    max-width: 330px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
     border-radius: 10px;
 }
 
 .msg-sent {
+    font-weight: bold;
+    color: #fff;
     max-height: 200px;
-    background-color: #bdd8da;
-    padding: 10px 5px;
-    max-width: 400px;
+    background-color: rgb(0, 144, 223);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    max-width: 330px;
     margin-left: 70px;
     border-radius: 10px;
+}
+
+  .base-sent {
+    justify-content: flex-end;
+    align-items: flex-end;
+    > .avatar:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border: 5px solid white;
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
 }

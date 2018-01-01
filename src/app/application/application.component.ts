@@ -41,7 +41,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   public allLicenses: Array<any> = [];
   public licenseCount = {};
   public licenseData = [];
-  public ecosystem = 'node';
+  public ecosystem = 'maven';
   public title: string;
   public isNode = true;
   public runTimeIcon = '🆁';
@@ -158,11 +158,12 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.processInit();
     this.processPackages();
     this.displayLicenses();
-    if (this.appName)
-    if (this.appName.toLocaleLowerCase().indexOf('node') !== -1){
-      this.ecosystem = 'node';
-    }else {
-      this.ecosystem = 'maven';
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
     }
   }
 
@@ -193,7 +194,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     return resultArray;
   }
 
-  public licenseChange(){
+  public licenseChange() {
     if (this.dep) {
       this.allLicenses = [];
       this.licenseCount = {};
@@ -224,6 +225,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(): void {
-   this.licenseChange();
+    this.licenseChange();
+    this.isSecurityIssue();
   }
 }

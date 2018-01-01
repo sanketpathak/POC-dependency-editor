@@ -6,33 +6,64 @@ import { MessagesService } from '../message/messages.service';
 import { ThreadsService } from '../thread/threads.service';
 import { UsersService } from '../user/users.service';
 import * as moment from 'moment';
+import { setTimeout } from 'timers';
 
 // the person using the app us Juliet
-const me: User      = new User('Juliet', 'assets/images/avatars/female-avatar-1.png');
-const ladycap: User = new User('Lady Capulet', 'assets/images/avatars/female-avatar-2.png');
-const echo: User    = new User('Dependency Editor', 'assets/images/avatars/male-avatar-1.png');
-const rev: User     = new User('Reverse Bot', 'assets/images/avatars/female-avatar-4.png');
-const wait: User    = new User('Waiting Bot', 'assets/images/avatars/male-avatar-2.png');
+const me: User = new User(
+  'Juliet',
+  'assets/images/avatars/female-avatar-1.png'
+);
+const ladycap: User = new User(
+  'Lady Capulet',
+  'assets/images/avatars/female-avatar-2.png'
+);
+const echo: User = new User(
+  'Dependency Editor',
+  'assets/images/avatars/male-avatar-1.png'
+);
+const rev: User = new User(
+  'Reverse Bot',
+  'assets/images/avatars/female-avatar-4.png'
+);
+const wait: User = new User(
+  'Waiting Bot',
+  'assets/images/avatars/male-avatar-2.png'
+);
 
-const tLadycap: Thread = new Thread('tLadycap', ladycap.name, ladycap.avatarSrc);
-const tEcho: Thread    = new Thread('tEcho', echo.name, echo.avatarSrc);
-const tRev: Thread     = new Thread('tRev', rev.name, rev.avatarSrc);
-const tWait: Thread    = new Thread('tWait', wait.name, wait.avatarSrc);
+const tLadycap: Thread = new Thread(
+  'tLadycap',
+  ladycap.name,
+  ladycap.avatarSrc
+);
+const tEcho: Thread = new Thread('tEcho', echo.name, echo.avatarSrc);
+const tRev: Thread = new Thread('tRev', rev.name, rev.avatarSrc);
+const tWait: Thread = new Thread('tWait', wait.name, wait.avatarSrc);
 
 const initialMessages: Array<Message> = [
   new Message({
     author: echo,
-    sentAt: moment().subtract(1, 'minutes').toDate(),
-    text: `you want suggestion for this component?`,
+    sentAt: moment()
+      .subtract(1, 'minutes')
+      .toDate(),
+    text: `Hi, I detected that you are looking to secure your application. I think you might be interested by depXXX instead of depYYY which is having less security issues reported over the last 6months.`,
+    thread: tEcho
+  }),
+  new Message({
+    author: echo,
+    sentAt: moment()
+      .subtract(1, 'minutes')
+      .toDate(),
+    text: `Are you interested?`,
     thread: tEcho
   })
 ];
 
 export class ChatExampleData {
-  static init(messagesService: MessagesService,
-              threadsService: ThreadsService,
-              UsersService: UsersService): void {
-
+  static init(
+    messagesService: MessagesService,
+    threadsService: ThreadsService,
+    UsersService: UsersService
+  ): void {
     // TODO make `messages` hot
     messagesService.messages.subscribe(() => ({}));
 
@@ -40,7 +71,9 @@ export class ChatExampleData {
     UsersService.setCurrentUser(me);
 
     // create the initial messages
-    initialMessages.map( (message: Message) => messagesService.addMessage(message) );
+    initialMessages.map((message: Message) =>
+      messagesService.addMessage(message)
+    );
 
     threadsService.setCurrentThread(tEcho);
 
@@ -48,19 +81,22 @@ export class ChatExampleData {
   }
 
   static setupBots(messagesService: MessagesService): void {
-
     // echo bot
-    messagesService.messagesForThreadUser(tEcho, echo)
-      .forEach( (message: Message): void => {
-        if(message.text == "hi"){
-          messagesService.addMessage(
-            new Message({
-              author: echo,
-              text: 'hello!!',
-              thread: tEcho
-            })
-          );
-        }else {
+    messagesService
+      .messagesForThreadUser(tEcho, echo)
+      .forEach((message: Message): void => {
+        if (message.text === 'hi') {
+          setTimeout(function(){
+            messagesService.addMessage(
+              new Message({
+                author: echo,
+                text: 'hello!!',
+                thread: tEcho
+              })
+            );
+          }, 1000);
+
+        } else {
           messagesService.addMessage(
             new Message({
               author: echo,
@@ -69,9 +105,6 @@ export class ChatExampleData {
             })
           );
         }
-      },
-                null);
-
-
+      }, null);
   }
 }

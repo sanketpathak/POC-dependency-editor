@@ -46,7 +46,7 @@ export class PackagesComponent implements OnInit {
   public search_key = '';
   public companionPackages: Array<any> = [];
   public compDep: Array<any> = [];
-  public ecosystem = 'node';
+  public ecosystem = 'maven';
 
   constructor(private packagesServices: PackagesServices) {}
 
@@ -281,12 +281,12 @@ export class PackagesComponent implements OnInit {
     console.log(this.ecosystem);
     this.processPackages();
     this.processCompanionPackages();
-    if (this.appName)
-    if (this.appName.toLocaleLowerCase().indexOf('node') !== -1){
-      this.ecosystem = 'node';
-    }else {
-      this.ecosystem = 'maven';
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
     }
   }
-
 }

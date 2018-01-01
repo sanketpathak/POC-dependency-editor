@@ -5,5 +5,5 @@
     <div class="package">
         <app-packages (onPackageSelect)="handlePackageSelection($event)" [mygui]="guiAppName"></app-packages>
     </div>
-    <chat-window *ngIf="true"></chat-window>
+    <chat-window *ngIf="true" [dependencies]="selectedDependencies"></chat-window>
 </div>
