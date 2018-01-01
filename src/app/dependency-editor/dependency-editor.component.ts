@@ -32,9 +32,7 @@ export class DependencyComponent implements OnInit{
     }
 
     ngOnInit(){
-        console.log('------------ this.gui -----');
         this.guiAppName = this.gui;
-        console.log(this.gui);
     }
 
 

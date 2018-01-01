@@ -82,29 +82,48 @@ export class ChatExampleData {
 
   static setupBots(messagesService: MessagesService): void {
     // echo bot
+    let response = '';
+    const q1 = ['tell', 'popular'];
+    const q2 = ['ok', 'do', 'change'];
+    const quries = [q1, q2];
     messagesService
       .messagesForThreadUser(tEcho, echo)
       .forEach((message: Message): void => {
-        if (message.text === 'hi') {
-          setTimeout(function(){
-            messagesService.addMessage(
-              new Message({
-                author: echo,
-                text: 'hello!!',
-                thread: tEcho
-              })
-            );
-          }, 1000);
-
-        } else {
-          messagesService.addMessage(
-            new Message({
-              author: echo,
-              text: message.text,
-              thread: tEcho
-            })
-          );
-        }
+        setTimeout(function() {
+          quries.forEach(q => {
+            let matched = false;
+            q.forEach(words => {
+              matched = false;
+              if (message.text.toLowerCase().indexOf(words) !== -1) {
+                matched = true;
+              }
+            });
+            if (matched){
+              switch (q){
+                case q1: response = 'It is very active on github, the community is also very reactive - in general issues are responded in less than 12h';
+                  break;
+                case q2: response = 'Done';
+                  break;
+              }
+              messagesService.addMessage(
+                new Message({
+                  author: echo,
+                  text: response,
+                  thread: tEcho
+                })
+              );
+            }
+          });
+        }, 800);
+        // else {
+        //   messagesService.addMessage(
+        //     new Message({
+        //       author: echo,
+        //       text: message.text,
+        //       thread: tEcho
+        //     })
+        //   );
+        // }
       }, null);
   }
 }
