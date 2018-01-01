@@ -27,6 +27,9 @@ export class ChatWindowComponent implements OnInit {
   draftMessage: Message;
   currentUser: User;
   public isOpen = false;
+  public ecosystem = 'maven';
+  @Input('mygui') appName: string;
+  public securityPackages: Array<any> = [];
   @Input('dependencies') dependencies;
 
   constructor(
@@ -81,8 +84,26 @@ export class ChatWindowComponent implements OnInit {
     }
   }
   ngOnChanges(): void {
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
+    }
+    if ((this.ecosystem === 'node')) {
+      this.securityPackages = ['B'];
+    } else {
+      this.securityPackages = ['aws-maven'];
+    }
     if (this.dependencies) {
-      this.isOpen = true;
+      if (this.dependencies) {
+        this.dependencies['dependencies'].forEach(d => {
+          if (this.securityPackages.indexOf(d.name) !== -1) {
+            this.isOpen = true;
+          }
+        });
+      }
     }
   }
 }
