@@ -31,7 +31,7 @@ export class ApplicationServices {
         .catch(this.handleError);
     } else {
       const url =
-        'https://gist.githubusercontent.com/ravsa/dc3445708fc519795d093d9ce44b6698/raw/1ba1d94f5d55307a93b09a78217c536b4c1d7341/springboot_response.json';
+        'https://gist.githubusercontent.com/ravsa/dc3445708fc519795d093d9ce44b6698/raw/822869dda126350244f2adef60b2a9ddf92b987c/springboot_response.json';
       const body: any = {};
       return this.http
         .get(url, body)
@@ -49,7 +49,7 @@ export class ApplicationServices {
 
   public intialConfig(ecosystem: string) {
     const url =
-      'https://gist.githubusercontent.com/ravsa/1db69300892f58ba97b7855a97863684/raw/0d25768e2a619bc2f33a6f0d09cd39d7c7839a5c/initial_config.json';
+      'https://gist.githubusercontent.com/ravsa/1db69300892f58ba97b7855a97863684/raw/d096f61e001f44dd2be7d863ac8d9ac144b7e4dd/initial_config.json';
     const body: any = {};
     return this.http
       .get(url, body)

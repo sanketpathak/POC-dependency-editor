@@ -8,6 +8,7 @@ import { UsersService } from '../user/users.service';
 import * as moment from 'moment';
 import { setTimeout } from 'timers';
 
+
 // the person using the app us Juliet
 const me: User = new User(
   'Juliet',
@@ -57,6 +58,7 @@ const initialMessages: Array<Message> = [
     thread: tEcho
   })
 ];
+
 
 export class ChatExampleData {
   static init(

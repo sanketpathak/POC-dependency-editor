@@ -17,10 +17,11 @@ export class DependencyComponent implements OnInit{
     @Input('gui') gui: any;
     public selectedDependencies: any;
     public guiAppName: string;
-
+    public subject: any;
     constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
-              public usersService: UsersService) {
+              public usersService: UsersService,
+        ) {
         ChatExampleData.init(messagesService, threadsService, usersService);
     }
 
@@ -33,7 +34,6 @@ export class DependencyComponent implements OnInit{
 
     ngOnInit(){
         this.guiAppName = this.gui;
+        console.log(this.subject);
     }
-
-
 }
