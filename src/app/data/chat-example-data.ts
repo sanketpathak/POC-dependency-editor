@@ -102,7 +102,7 @@ export class ChatExampleData {
             });
             if (matched){
               switch (q){
-                case q1: response = `It has no CVEs associated. <br/> Has very active community with over than 26K stars on gitHub`;
+                case q1: response = `It has no CVEs associated. <br/> Has very active community with over than 26K ★ stars on gitHub`;
                   break;
                 case q2: response = 'Done';
                   break;

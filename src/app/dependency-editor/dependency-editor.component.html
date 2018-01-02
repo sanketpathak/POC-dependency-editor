@@ -1,6 +1,6 @@
 <div class="dependency">
     <div class="application">
-        <app-application [dependencies]="selectedDependencies" [mygui]="guiAppName"></app-application>
+        <app-application [dependencies]="selectedDependencies" [mygui]="guiAppName" [chatDependency]="onPicked"></app-application>
     </div>
     <div class="package">
         <app-packages (onPackageSelect)="handlePackageSelection($event)" [mygui]="guiAppName"></app-packages>

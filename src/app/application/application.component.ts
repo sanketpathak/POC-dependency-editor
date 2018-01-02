@@ -25,6 +25,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   @Input('component') component;
   @Output() onCloseEmitter = new EventEmitter();
   @Input('dependencies') dependencies;
+  @Input('chatDependency') chatDependency;
   @Input('mygui') appName: string;
 
   public donutData: any;
@@ -281,6 +282,13 @@ export class ApplicationComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(): void {
+    if (this.chatDependency){
+      this.selectedComp.add({
+        'name': 'spring-data-redis',
+        'latest_version': '1.6.2.RELEASE'
+      });
+      this.chatDependency = false;
+    }
     this.licenseChange();
     this.isSecurityIssue();
     this.isLicenseIssue();

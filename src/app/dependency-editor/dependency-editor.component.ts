@@ -17,6 +17,7 @@ export class DependencyComponent implements OnInit{
     @Input('gui') gui: any;
     public selectedDependencies: any;
     public guiAppName: string;
+    public onPicked = false;
     public subject: any;
     constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
@@ -38,7 +39,7 @@ export class DependencyComponent implements OnInit{
     }
 
     onDependencyAdd(depAdded: any){
-        debugger;
-        console.log("event emiited"+ depAdded);
+        this.onPicked = true;
+        console.log('event emiited'+ depAdded);
     }
 }

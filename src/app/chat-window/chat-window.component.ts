@@ -34,7 +34,7 @@ export class ChatWindowComponent implements OnInit {
   public securityPackages: Array<any> = [];
   @Input('dependencies') dependencies;
 
-  @Output("addDep") dependencyAdded = new EventEmitter<any>();
+  @Output('addDep') dependencyAdded = new EventEmitter<any>();
 
   constructor(
     public messagesService: MessagesService,
@@ -71,7 +71,7 @@ export class ChatWindowComponent implements OnInit {
     this.isOpen ? (this.isOpen = false) : (this.isOpen = true);
   }
   sendMessage(): void {
-    if(this.draftMessage.text.toLowerCase().indexOf("please") !== -1){
+    if(this.draftMessage.text.toLowerCase().indexOf('please') !== -1){
       this.dependencyAdded.emit(true);
     }
     const m: Message = this.draftMessage;
@@ -102,7 +102,7 @@ export class ChatWindowComponent implements OnInit {
     if ((this.ecosystem === 'node')) {
       this.securityPackages = ['B'];
     } else {
-      this.securityPackages = ['logback-core'];
+      this.securityPackages = ['com.googlecode.xmemcached'];
     }
     if (this.dependencies) {
       if (this.dependencies) {
