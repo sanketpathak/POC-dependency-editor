@@ -2,7 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, OnChanges } from '@angu
 import { Observable } from 'rxjs/Observable';
 
 
-import { ChatExampleData, SharingService } from '../data/chat-example-data';
+import { ChatExampleData } from '../data/chat-example-data';
 
 import { UsersService } from '../user/users.service';
 import { ThreadsService } from '../thread/threads.service';
@@ -18,7 +18,6 @@ export class DependencyComponent implements OnInit{
     public selectedDependencies: any;
     public guiAppName: string;
     public subject: any;
-    public sharingService = new SharingService();
     constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
               public usersService: UsersService,
@@ -35,7 +34,6 @@ export class DependencyComponent implements OnInit{
 
     ngOnInit(){
         this.guiAppName = this.gui;
-        this.sharingService.getData().subscribe(subject => {this.subject = subject; });
         console.log(this.subject);
     }
 }

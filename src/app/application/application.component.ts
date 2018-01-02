@@ -38,6 +38,8 @@ export class ApplicationComponent implements OnInit, OnChanges {
   public dep: Array<any> = [];
   public securityConflicts: Array<any>;
   public isSecurityIssueVar = '';
+  public licenseConflicts: Array<any>;
+  public isLicenseConflictsVar = false;
   public allLicenses: Array<any> = [];
   public licenseCount = {};
   public licenseData = [];
@@ -55,7 +57,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     isFirstDisabled: false
   };
   public moreInfo() {
-  this.moreInfoText = "some description of CVE";
+  this.moreInfoText = 'some description of CVE';
   }
 
   public isSecurityIssue(): void {
@@ -70,7 +72,19 @@ export class ApplicationComponent implements OnInit, OnChanges {
       });
     }
   }
-  
+
+  public isLicenseIssue(): void {
+    this.isLicenseConflictsVar = false;
+    this.cve = 0;
+    if (this.dependencies) {
+      this.dependencies['dependencies'].forEach(d => {
+        if (this.licenseConflicts.indexOf(d.name) !== -1) {
+          this.isLicenseConflictsVar = true;
+        }
+      });
+    }
+  }
+
   constructor(private applicationServices: ApplicationServices) {}
 
   public cveDesc() {
@@ -88,9 +102,9 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.licenseChange();
   }
 
-  public removeItem(dependency):void{
+  public removeItem(dependency): void{
     // if(dependency === this.dependencies){
-      if(this.dependencies){
+      if (this.dependencies){
         this.dependencies.dependencies.delete(dependency);
         this.dependencies.companionPackages.add(dependency);
       }else {
@@ -108,9 +122,9 @@ export class ApplicationComponent implements OnInit, OnChanges {
     // }
   //  }
   }
-  
+
   // public remove_dep_Item(dependencies):void{
-    
+
   // }
 
 
@@ -123,6 +137,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
         this.title = data[this.ecosystem]['title'];
         this.stackLevelLicense = data[this.ecosystem]['stackLevelLicense'];
         this.securityConflicts = data[this.ecosystem]['securityConflicts'];
+        this.licenseConflicts = data[this.ecosystem]['licenseConflicts'];
         this.iconImage = data[this.ecosystem]['iconImage'];
         data[this.ecosystem]['compDep'].forEach(element => {
           this.compDep.add(element);
@@ -257,5 +272,6 @@ export class ApplicationComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.licenseChange();
     this.isSecurityIssue();
+    this.isLicenseIssue();
   }
 }

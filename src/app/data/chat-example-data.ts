@@ -7,9 +7,7 @@ import { ThreadsService } from '../thread/threads.service';
 import { UsersService } from '../user/users.service';
 import * as moment from 'moment';
 import { setTimeout } from 'timers';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+
 
 // the person using the app us Juliet
 const me: User = new User(
@@ -61,21 +59,8 @@ const initialMessages: Array<Message> = [
   })
 ];
 
-@Injectable()
-export class SharingService {
-    private subject = new Subject<any>();
-
-    setData(text: string) {
-        this.subject.next({'package': text});
-    }
-
-    getData(): Observable<any> {
-        return this.subject.asObservable();
-    }
-}
 
 export class ChatExampleData {
-  static onDataPicked = new SharingService();
   static init(
     messagesService: MessagesService,
     threadsService: ThreadsService,
@@ -120,7 +105,6 @@ export class ChatExampleData {
                 case q1: response = 'It is very active on github, the community is also very reactive - in general issues are responded in less than 12h';
                   break;
                 case q2: response = 'Done';
-                  ChatExampleData.onDataPicked.setData('maven maven maven ');
                   break;
               }
               messagesService.addMessage(
@@ -145,4 +129,3 @@ export class ChatExampleData {
       }, null);
   }
 }
-

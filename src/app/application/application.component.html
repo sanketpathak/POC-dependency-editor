@@ -223,9 +223,11 @@
                   </div>
                 </div>
                 <div class="liscence">
-                  <span style="margin-left:2px"> Stack Level Licence(s):
-                    <span style="font-weight: bold">{{stackLevelLicense}}</span>
-                  </span>
+                  <div>
+                    <span style="margin-left:2px"> Stack Level Licence(s):
+                      <span style="font-weight: bold">{{stackLevelLicense}}</span>
+                    </span>
+                  </div>
                   <div class="row">
                     <f8-chart id="chart" [data]="charts['data']" [chartOptions]="charts['options']" bind-configs="charts['configs']"></f8-chart>
                   </div>
