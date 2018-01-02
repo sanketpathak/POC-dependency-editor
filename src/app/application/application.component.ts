@@ -29,6 +29,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
   public donutData: any;
   public showtd = false;
+  public compPackages = new Set();
   public symbol = 'fa fa-sort-desc';
   public showOnScreen = true;
   public stackLevelLicense: string;
@@ -57,7 +58,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     isFirstDisabled: false
   };
   public moreInfo() {
-  this.moreInfoText = 'some description of CVE';
+    this.moreInfoText = 'some description of CVE';
   }
 
   public isSecurityIssue(): void {
@@ -91,28 +92,41 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.moreInfoText = 'some description of CVE';
   }
 
+  // public addItem(dependency): void {
+  //   if (this.dependencies) {
+  //     this.dependencies.companionPackages.delete(dependency);
+  //     this.dependencies.dependencies.add(dependency);
+  //   } else {
+  //     this.compDep.delete(dependency);
+  //     this.selectedComp.add(dependency);
+  //   }
+  //   this.licenseChange();
+  // }
+
   public addItem(dependency): void {
-    if (this.dependencies) {
-      this.dependencies.companionPackages.delete(dependency);
-      this.dependencies.dependencies.add(dependency);
-    } else {
-      this.compDep.delete(dependency);
-      this.selectedComp.add(dependency);
-    }
+    this.compDep.delete(dependency);
+    this.selectedComp.add(dependency);
     this.licenseChange();
   }
-
-  public removeItem(dependency): void{
+  public removeItem(dependency): void {
+    if (this.compPackages.has(dependency)){
+      this.selectedComp.delete(dependency);
+      this.compDep.add(dependency);
+    }else{
+      this.dependencies.dependencies.delete(dependency);
+    }
+  }
+  // public removeItem(dependency): void {
     // if(dependency === this.dependencies){
-      if (this.dependencies){
-        this.dependencies.dependencies.delete(dependency);
-        this.dependencies.companionPackages.add(dependency);
-      }else {
-        this.compDep.add(dependency);
-        this.dependencies.dependencies.delete(dependency);
-      }
-  //  }
-  //  else{
+    // if (this.dependencies) {
+    //   this.dependencies.dependencies.delete(dependency);
+    //   this.dependencies.companionPackages.add(dependency);
+    // } else {
+    //   this.compDep.add(dependency);
+    //   this.dependencies.dependencies.delete(dependency);
+    // }
+    //  }
+    //  else{
     // if(this.dependencies){
     //   this.dependencies.dependencies.delete(dependency);
     //   this.dependencies.companionPackages.add(dependency);
@@ -120,11 +134,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     //   this.compDep.add(dependency);
     //   this.dependencies.dependencies.delete(dependency);
     // }
-  //  }
-  }
-
-  // public remove_dep_Item(dependencies):void{
-
+    //  }
   // }
 
 
@@ -141,6 +151,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
         this.iconImage = data[this.ecosystem]['iconImage'];
         data[this.ecosystem]['compDep'].forEach(element => {
           this.compDep.add(element);
+          this.compPackages.add(element);
         });
       }
     });

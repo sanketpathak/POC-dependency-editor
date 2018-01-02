@@ -74,7 +74,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="!dependencies">
+          <div>
             <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of selectedComp" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
                 <div class="row" style="font-size: 12px;">
                     <div style="float:left;padding-left:5px;">
@@ -158,11 +158,11 @@
                   </div>
                 </div>
                 <div class="recommendation">
-                  <div *ngIf="dependencies">
+                  <!-- <div *ngIf="dependencies">
                     <div class="col-xs-12">
                       <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.companionPackages" style="margin-top: -10px">
                         <div class="row" style="font-size: 12px">
-                          <div style="float:left;"><strong>{{d.name}}</strong></div> <!--|-->
+                          <div style="float:left;"><strong>{{d.name}}</strong></div> 
                           <div style="float:right;">
                             <span style="font-size:10px;float:left;">{{d.latest_version}}</span>
                             <span style="float: right;margin-left:10px;margin-right:-5px;padding-top:5px;" class="fa fa-plus-square mon icon-b" (click)="addItem(d)"></span>
@@ -170,8 +170,8 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                <div *ngIf="!dependencies">
+                  </div> -->
+                <div>
                   <div class="col-xs-12">
                     <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px">
                       <div class="row" style="font-size: 12px">
@@ -229,7 +229,7 @@
                     </span>
                   </div>
                   <div class="row">
-                    <f8-chart id="chart" [data]="charts['data']" [chartOptions]="charts['options']" bind-configs="charts['configs']"></f8-chart>
+                    <f8-chart id="chart" [data]="charts['data']" [chartOptions]="charts['options']" bind-configs="charts['configs']" style="left: 0px"></f8-chart>
                   </div>
                 </div>
               </accordion-group>
