@@ -283,9 +283,17 @@ export class ApplicationComponent implements OnInit, OnChanges {
   }
   ngOnChanges(): void {
     if (this.chatDependency){
+      if(this.dependencies){
+        this.dependencies['dependencies'].forEach((i) => {
+          if (i['name'].indexOf('xmemcached') !== -1){
+            this.dependencies['dependencies'].delete(i);
+          }
+        });
+      }
       this.selectedComp.add({
         'name': 'spring-data-redis',
-        'latest_version': '1.6.2.RELEASE'
+        'latest_version': '1.6.2.RELEASE',
+        'packageType': 'runtime'
       });
       this.chatDependency = false;
     }
