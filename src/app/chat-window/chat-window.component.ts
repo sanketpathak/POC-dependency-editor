@@ -4,7 +4,9 @@ import {
   ElementRef,
   OnInit,
   Input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -31,6 +33,8 @@ export class ChatWindowComponent implements OnInit {
   @Input('mygui') appName: string;
   public securityPackages: Array<any> = [];
   @Input('dependencies') dependencies;
+
+  @Output("addDep") dependencyAdded = new EventEmitter<any>();
 
   constructor(
     public messagesService: MessagesService,
@@ -67,10 +71,14 @@ export class ChatWindowComponent implements OnInit {
     this.isOpen ? (this.isOpen = false) : (this.isOpen = true);
   }
   sendMessage(): void {
+    if(this.draftMessage.text.toLowerCase().indexOf("please") !== -1){
+      this.dependencyAdded.emit(true); 
+    }
     const m: Message = this.draftMessage;
     m.author = this.currentUser;
     m.thread = this.currentThread;
     m.isRead = true;
+
     this.messagesService.addMessage(m);
     this.draftMessage = new Message();
   }

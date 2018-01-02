@@ -36,4 +36,9 @@ export class DependencyComponent implements OnInit{
         this.guiAppName = this.gui;
         console.log(this.subject);
     }
+
+    onDependencyAdd(depAdded: any){
+        debugger;
+        console.log("event emiited"+ depAdded);
+    }
 }

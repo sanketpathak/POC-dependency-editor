@@ -98,7 +98,7 @@
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "^2.6.1",
-    "webpack-dev-server": "^2.9.4"
+    "webpack-dev-server": "2.6.1"
   },
   "release": {
     "branch": "master",
