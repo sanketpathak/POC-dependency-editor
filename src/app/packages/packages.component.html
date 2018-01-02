@@ -61,6 +61,13 @@
                    </li>
                  </ul>
                </span>
+               <!-- CVE -->
+               <div class="card-pf-item" *ngIf="dependency.name == 'logback-core'" title="This package has security issue!">
+                 <label class="pficon-error-circle-o">
+                   <div class="control__indicator"></div>
+                 </label>
+               </div>
+
                <p class="card-pf-info" >{{dependency.description}}</p>
                <div>
                  <div *ngFor="let tag of dependency.topic_list">

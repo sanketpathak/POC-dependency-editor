@@ -45,7 +45,7 @@
           <br>
         </div>
         <div class="col-xs-12">            
-        <div class="application-header"><h3 class="heading" style="font-weight: 300;">Newly Added Dependencies </h3><hr />              
+        <div class="application-header"><h3 class="heading" style="font-weight: 300;">Added Dependencies </h3><hr />              
           <div *ngIf="dependencies">
             <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
               <div class="row" style="font-size: 12px;">
@@ -173,7 +173,7 @@
                   </div> -->
                 <div>
                   <div class="col-xs-12">
-                    <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px">
+                    <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px;padding: 0px;">
                       <div class="row" style="font-size: 12px">
                         <div style="float:left;"><strong>{{d.name}}</strong></div> <!--|-->
                         <div style="float:right;">
@@ -202,7 +202,7 @@
                   </div>
                 </div>
                 <div class="security" *ngIf="isSecurityIssueVar">
-                  <div class="card-pf card-pf-view card-pf-view-xs" style="margin-top: -10px">
+                  <div class="card-pf card-pf-view card-pf-view-xs" style="margin-top: -10px;">
                     <div class="row" style="font-size: 12px">
                       <strong>{{isSecurityIssueVar}}</strong>
                       <button id="but" style="margin:3px;float:right;" href="#" (click)="cveDesc()">More info</button>
