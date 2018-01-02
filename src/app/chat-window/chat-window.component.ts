@@ -72,7 +72,7 @@ export class ChatWindowComponent implements OnInit {
   }
   sendMessage(): void {
     if(this.draftMessage.text.toLowerCase().indexOf("please") !== -1){
-      this.dependencyAdded.emit(true); 
+      this.dependencyAdded.emit(true);
     }
     const m: Message = this.draftMessage;
     m.author = this.currentUser;
@@ -102,7 +102,7 @@ export class ChatWindowComponent implements OnInit {
     if ((this.ecosystem === 'node')) {
       this.securityPackages = ['B'];
     } else {
-      this.securityPackages = ['aws-maven'];
+      this.securityPackages = ['logback-core'];
     }
     if (this.dependencies) {
       if (this.dependencies) {

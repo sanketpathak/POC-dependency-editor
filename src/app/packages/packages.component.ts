@@ -22,6 +22,9 @@ export class PackagesComponent implements OnInit {
   public dependenciesData: Array<any> = [];
   public masterTags: Array<any> = [
     'web',
+    'cache',
+    'memcache',
+    'client',
     'spring',
     'database',
     'starter',
@@ -31,6 +34,7 @@ export class PackagesComponent implements OnInit {
     'middleware',
     'express',
     'test',
+    'logging',
     'debug'
   ];
   public selectedPackages = new Set();

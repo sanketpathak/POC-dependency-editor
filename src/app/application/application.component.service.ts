@@ -49,7 +49,7 @@ export class ApplicationServices {
 
   public intialConfig(ecosystem: string) {
     const url =
-      'https://gist.githubusercontent.com/ravsa/1db69300892f58ba97b7855a97863684/raw/d096f61e001f44dd2be7d863ac8d9ac144b7e4dd/initial_config.json';
+      'https://gist.githubusercontent.com/ravsa/1db69300892f58ba97b7855a97863684/raw/580469503d8f88bd27fbf6eb6a60c65ef55cc790/initial_config.json';
     const body: any = {};
     return this.http
       .get(url, body)

@@ -20,7 +20,7 @@ export class PackagesServices {
             .map(this.extractData)
             .catch(this.handleError);
         }else {
-            const url = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/c343460a361d948647ce875c33fb3851f0d364b9/response.json';
+            const url = 'https://gist.githubusercontent.com/ravsa/72695271a0bc23eda07d3dab70d011ba/raw/22e490642578a6a325fb1aa1ca970d9871f0ca4f/response.json';
             const body: any = {};
             return this    .http
             .get(url, body)
