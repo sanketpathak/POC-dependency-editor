@@ -54,6 +54,9 @@ export class ApplicationComponent implements OnInit, OnChanges {
     isFirstOpen: true,
     isFirstDisabled: false
   };
+  public moreInfo() {
+  this.moreInfoText = "some description of CVE";
+  }
 
   public isSecurityIssue(): void {
     this.isSecurityIssueVar = '';
@@ -67,6 +70,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
       });
     }
   }
+  
   constructor(private applicationServices: ApplicationServices) {}
 
   public cveDesc() {
@@ -83,6 +87,32 @@ export class ApplicationComponent implements OnInit, OnChanges {
     }
     this.licenseChange();
   }
+
+  public removeItem(dependency):void{
+    // if(dependency === this.dependencies){
+      if(this.dependencies){
+        this.dependencies.dependencies.delete(dependency);
+        this.dependencies.companionPackages.add(dependency);
+      }else {
+        this.compDep.add(dependency);
+        this.dependencies.dependencies.delete(dependency);
+      }
+  //  }
+  //  else{
+    // if(this.dependencies){
+    //   this.dependencies.dependencies.delete(dependency);
+    //   this.dependencies.companionPackages.add(dependency);
+    // }else {
+    //   this.compDep.add(dependency);
+    //   this.dependencies.dependencies.delete(dependency);
+    // }
+  //  }
+  }
+  
+  // public remove_dep_Item(dependencies):void{
+    
+  // }
+
 
   public processInit() {
     const config: Observable<any> = this.applicationServices.intialConfig(
