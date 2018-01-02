@@ -3,6 +3,7 @@ import {
   Inject,
   ElementRef,
   OnInit,
+  Input,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -25,43 +26,46 @@ export class ChatWindowComponent implements OnInit {
   currentThread: Thread;
   draftMessage: Message;
   currentUser: User;
+  public isOpen = false;
+  public ecosystem = 'maven';
+  @Input('mygui') appName: string;
+  public securityPackages: Array<any> = [];
+  @Input('dependencies') dependencies;
 
-  constructor(public messagesService: MessagesService,
-              public threadsService: ThreadsService,
-              public UsersService: UsersService,
-              public el: ElementRef) {
-  }
+  constructor(
+    public messagesService: MessagesService,
+    public threadsService: ThreadsService,
+    public UsersService: UsersService,
+    public el: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.messages = this.threadsService.currentThreadMessages;
 
     this.draftMessage = new Message();
 
-    this.threadsService.currentThread.subscribe(
-      (thread: Thread) => {
-        this.currentThread = thread;
+    this.threadsService.currentThread.subscribe((thread: Thread) => {
+      this.currentThread = thread;
+    });
+
+    this.UsersService.currentUser.subscribe((user: User) => {
+      this.currentUser = user;
+    });
+
+    this.messages.subscribe((messages: Array<Message>) => {
+      setTimeout(() => {
+        this.scrollToBottom();
       });
-
-    this.UsersService.currentUser
-      .subscribe(
-        (user: User) => {
-          this.currentUser = user;
-        });
-
-    this.messages
-      .subscribe(
-        (messages: Array<Message>) => {
-          setTimeout(() => {
-            this.scrollToBottom();
-          });
-        });
+    });
   }
 
   onEnter(event: any): void {
     this.sendMessage();
     event.preventDefault();
   }
-
+  public toggleChatBox() {
+    this.isOpen ? (this.isOpen = false) : (this.isOpen = true);
+  }
   sendMessage(): void {
     const m: Message = this.draftMessage;
     m.author = this.currentUser;
@@ -72,8 +76,34 @@ export class ChatWindowComponent implements OnInit {
   }
 
   scrollToBottom(): void {
-    const scrollPane: any = this.el
-      .nativeElement.querySelector('.msg-container-base');
-    scrollPane.scrollTop = scrollPane.scrollHeight;
+    const scrollPane: any = this.el.nativeElement.querySelector(
+      '.msg-container-base'
+    );
+    if (scrollPane) {
+      scrollPane.scrollTop = scrollPane.scrollHeight;
+    }
+  }
+  ngOnChanges(): void {
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
+    }
+    if ((this.ecosystem === 'node')) {
+      this.securityPackages = ['B'];
+    } else {
+      this.securityPackages = ['aws-maven'];
+    }
+    if (this.dependencies) {
+      if (this.dependencies) {
+        this.dependencies['dependencies'].forEach(d => {
+          if (this.securityPackages.indexOf(d.name) !== -1) {
+            this.isOpen = true;
+          }
+        });
+      }
+    }
   }
 }

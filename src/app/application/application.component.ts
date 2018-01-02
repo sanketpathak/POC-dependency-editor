@@ -25,7 +25,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   @Input('component') component;
   @Output() onCloseEmitter = new EventEmitter();
   @Input('dependencies') dependencies;
-  @Input('mygui') mygui: string;
+  @Input('mygui') appName: string;
 
   public donutData: any;
   public showtd = false;
@@ -41,7 +41,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   public allLicenses: Array<any> = [];
   public licenseCount = {};
   public licenseData = [];
-  public ecosystem = 'node';
+  public ecosystem = 'maven';
   public title: string;
   public isNode = true;
   public runTimeIcon = '🆁';
@@ -155,15 +155,16 @@ export class ApplicationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.mygui.toLocaleLowerCase().indexOf('node') !== -1){
-      this.ecosystem = 'node';
-    }else {
-      this.ecosystem = 'maven';
-    }
-    console.log(this.ecosystem);
     this.processInit();
     this.processPackages();
     this.displayLicenses();
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
+    }
   }
 
   public emitCloseEvent(element: Element): void {
@@ -193,7 +194,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     return resultArray;
   }
 
-  public licenseChange(){
+  public licenseChange() {
     if (this.dep) {
       this.allLicenses = [];
       this.licenseCount = {};
@@ -224,6 +225,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(): void {
-   this.licenseChange();
+    this.licenseChange();
+    this.isSecurityIssue();
   }
 }

@@ -34,6 +34,6 @@ export class ChatMessageComponent implements OnInit {
           if (this.message.author && user) {
             this.incoming = this.message.author.id !== user.id;
           }
-        });
+    });
   }
 }
