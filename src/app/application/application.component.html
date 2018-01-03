@@ -1,9 +1,9 @@
 <div class="application-summary">
-  <!-- <div class="application-header">
+  <div class="application-header" style="margin-left:20px;">
     <h2>
       Your Application
     </h2> 
-  </div>-->
+  </div>
   <div class="application-body">
     <div class="application-content">
       <div class="app-top" style="margin-top:15px;">
@@ -24,7 +24,7 @@
           </div></div></div>
       <div class="app-top">
         <div class="col-xs-12">
-        <div class="application-header"><h3 class="heading" style="font-weight: 300;">Current Dependencies </h3><hr/>
+        <div class="application-header"><!--<h3 class="heading" style="font-weight: 300;">Current Dependencies </h3><hr/>-->
           <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dep" style="margin-top: -10px">
             <div class="row" style="font-size: 12px">
                 <div style="float:left;padding-left:5px;">
@@ -45,7 +45,7 @@
           <br>
         </div>
         <div class="col-xs-12">            
-        <div class="application-header"><h3 class="heading" style="font-weight: 300;">Added Dependencies </h3><hr />              
+        <div class="application-header"><!--<h3 class="heading" style="font-weight: 300;">Added Dependencies </h3><hr />-->            
           <div *ngIf="dependencies">
             <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
               <div class="row" style="font-size: 12px;">
@@ -116,7 +116,8 @@
           </div>
         </div>
       </div>
-    </div></div>
+     </div>
+    </div>
           <br> 
        <!-- <div class="col-xs-12">
         <div class="application-header"><h3 class="heading">Newly Added Dependencies </h3><hr />    
@@ -153,7 +154,7 @@
                 <div accordion-heading>
                   <div class="accordion-heading" accordion-heading>
                     <h2>
-                      <i class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true,'fa-sort-desc': grouped?.isOpen, 'fa-caret-right': !grouped?.isOpen}"></i>
+                      <i class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true,'fa-angle-down': grouped?.isOpen, 'fa-angle-right': !grouped?.isOpen}"></i>
                       Insights</h2>
                   </div>
                 </div>
@@ -194,7 +195,7 @@
               <accordion-group #grouped1 [isOpen]="false" [panelClass]="customClass" (click)="isSecurityIssue()">
                 <div accordion-heading>
                   <div class="accordion-heading" accordion-heading>
-                    <i style="font-size:22px;font-weight:300;" class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true, 'fa-caret-right': !grouped1?.isOpen, 'fa-sort-desc': grouped1?.isOpen}"></i>
+                    <i style="font-size:22px;font-weight:300;" class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true, 'fa-angle-right': !grouped1?.isOpen, 'fa-angle-down': grouped1?.isOpen}"></i>
                     <div>
                       <span style="font-size:22px;font-weight:300"> Security Alerts </span>
                       <span *ngIf="cve" style="font-size:16px;color:red"> {{cve}}</span>
@@ -218,7 +219,7 @@
                 <div accordion-heading>
                   <div class="accordion-heading" accordion-heading>
                     <h2>
-                      <i class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true,'fa-sort-desc': grouped2?.isOpen, 'fa-caret-right': !grouped2?.isOpen}"></i>
+                      <i class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true,'fa-angle-down': grouped2?.isOpen, 'fa-angle-right': !grouped2?.isOpen}"></i>
                       Licenses</h2>
                   </div>
                 </div>
