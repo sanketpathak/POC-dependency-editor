@@ -71,7 +71,7 @@ export class ChatWindowComponent implements OnInit {
     this.isOpen ? (this.isOpen = false) : (this.isOpen = true);
   }
   sendMessage(): void {
-    if(this.draftMessage.text.toLowerCase().indexOf('please') !== -1){
+    if(this.draftMessage.text.toLowerCase().indexOf('switch') !== -1){
       this.dependencyAdded.emit(true);
     }
     const m: Message = this.draftMessage;

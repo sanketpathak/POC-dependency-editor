@@ -46,7 +46,7 @@ const initialMessages: Array<Message> = [
     sentAt: moment()
       .subtract(1, 'minutes')
       .toDate(),
-    text: `For Springboot application with CRUD operations, we suggest redis than memcache.`,
+    text: `For Springboot application with CRUD operations, we suggest <b>"redis"</b> over <b>"memcached"</b>.`,
     thread: tEcho
   }),
   new Message({
@@ -54,7 +54,7 @@ const initialMessages: Array<Message> = [
     sentAt: moment()
       .subtract(1, 'minutes')
       .toDate(),
-    text: `Are you interested?`,
+    text: `Do you want to switch to <b>"redis"</b>?`,
     thread: tEcho
   })
 ];
@@ -86,7 +86,7 @@ export class ChatExampleData {
     // echo bot
     let response = '';
     const q1 = ['tell', 'popular', 'more'];
-    const q2 = ['ok', 'do', 'change'];
+    const q2 = ['ok', 'do', 'switch'];
     const quries = [q1, q2];
     messagesService
       .messagesForThreadUser(tEcho, echo)
@@ -102,9 +102,9 @@ export class ChatExampleData {
             });
             if (matched){
               switch (q){
-                case q1: response = `It has no CVEs associated. <br/> Has very active community with over than 26K ★ stars on gitHub`;
+                case q1: response = `<b>"redis"</b> has no CVEs associated. <br/> Has very active community with over than 26K ★ stars on gitHub`;
                   break;
-                case q2: response = 'Done';
+                case q2: response = `Done: Replaced <b>"memcached"</b> with <b>"redis"</b>`;
                   break;
               }
               messagesService.addMessage(

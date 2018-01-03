@@ -23,7 +23,7 @@ export class PackagesComponent implements OnInit {
   public masterTags: Array<any> = [
     'web',
     'cache',
-    'memcache',
+    'memcached',
     'client',
     'spring',
     'database',
@@ -205,8 +205,8 @@ export class PackagesComponent implements OnInit {
     console.log(this.selectedTags);
   }
   public showDependency() {
-    // this.dependencies = [];
-    // this.categories = {};
+     this.dependencies = [];
+     this.categories = {};
     const tags = this.selected.split(',').map(item => {
       return item.trim();
     });
