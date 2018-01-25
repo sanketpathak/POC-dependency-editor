@@ -2,7 +2,7 @@
   <div class="application-header" style="margin-left:20px;">
     <h2>
       Your Application
-    </h2> 
+    </h2>
   </div>
   <div class="application-body">
     <div class="application-content">
@@ -21,176 +21,162 @@
                 </div>
               </div>
             </div>
-          </div></div></div>
-      <div class="app-top">
-        <div class="col-xs-12">
-        <div class="application-header"><!--<h3 class="heading" style="font-weight: 300;">Current Dependencies </h3><hr/>-->
-          <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dep" style="margin-top: -10px">
-            <div class="row" style="font-size: 12px">
-                <div style="float:left;padding-left:5px;">
-                    <span style="color:#42a8e2;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
-                    <span style="color:#78ba80;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
-                  </div>
-              <div style="padding-left:0px;"><strong>
-                  <span style="width:auto;float:left;padding-left:8px;">{{d.name}}</span></strong>
-                  <div style="float:right;">
-                    <!-- <span style="width:auto;float:left;padding-left:8px;margin-right:8px;">|</span> -->
-                    <span style="width: auto;float:right;padding-right:10px;">{{d.latest_version}}</span>
-                  </div>
-                </div>
-              <!-- <div class="col-sm-0" style="float: right"><span class="pficon-remove"></span></div> -->
-            </div>
-          </div>
-        </div>
-          <br>
-        </div>
-        <div class="col-xs-12">            
-        <div class="application-header"><!--<h3 class="heading" style="font-weight: 300;">Added Dependencies </h3><hr />-->            
-          <div *ngIf="dependencies">
-            <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
-              <div class="row" style="font-size: 12px;">
-                  <div style="float:left;padding-left:5px;">
-                      <span style="color:#42a8e2;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
-                      <span style="color:#78ba80;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
-                    </div>
-                <div style="padding-left:0px;"><strong>
-                    <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span></strong>
-                    <div style="float:right;">
-                      <!-- <span style="width:auto;float:left;padding-left:8px;margin-right:8px;">|</span> -->
-                      <div style="float:right">
-                          <span style=" width: auto;float:left;padding-left:8px;padding-right:15px;">{{d.latest_version}}
-                          </span>
-                          <span class="pficon-remove" style="float: right;padding-right:10px;padding-top:5px;" (click)="removeItem(d)">
-                          </span>                               
-                    </div>
-                 </div>
-                </div>
-                <!-- <div class="col-sm-1">{{d.name}}</div>
-                  <div class="col-sm-3">|</div>                        
-                  <div class="col-sm-3">{{d.latest_version}}</div> -->
-                <!-- <div class="col-sm-0" style="float: right">
-                  <span class="pficon-remove"></span>
-                </div> -->
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of selectedComp" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
-                <div class="row" style="font-size: 12px;">
-                    <div style="float:left;padding-left:5px;">
-                      <span style="color:#42a8e2;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
-                      <span style="color:#78ba80;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
-                    </div>
-                    <div style="padding-left:0px;"><strong>
-                    <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span></strong>
-                    <div style="float:right;">
-                      <!-- <span style="width:auto;float:left;padding-left:8px;margin-right:8px;">|</span> -->
-                      <div style="float:right">
-                          <span style=" width: auto;float:left;padding-left:8px;padding-right:10px;">{{d.latest_version}}
-                          </span>
-                          <span class="pficon-remove" style="float: right;padding-right:8px;padding-top:5px;" (click)="removeItem(d)">
-                          </span>                               
-                    </div>
-                 </div>
-                </div>
-                <!-- <div class="col-sm-1">{{d.name}}</div>
-                    <div class="col-sm-3">|</div>                        
-                    <div class="col-sm-3">{{d.latest_version}}</div> -->
-                <!-- <div class="col-sm-0" style="float: right">
-                  <span class="pficon-remove"></span>
-                </div> -->
-            <!-- <div class="row" style="font-size: 12px;">
-              <div>
-                <strong>
-                  <span style="width:auto;float:left;padding-left:15px;">{{d.name}}</span>
-                  <div style="float:right;">
-                    <span style="width:auto;float:left;padding-right:15px;">|</span>
-                    <span style=" width: auto;float:right;padding-right:15px;">{{d.latest_version}}</span>
-                  </div>
-                </strong>
-              </div> -->
-              <!-- <div class="col-sm-2">|</div>  -->
-              <!-- <div style="font-size:10px">{{d.latest_version}}</div> -->
-              <!-- <div class="col-sm-0" style="float: right"><span class="pficon-remove"></span></div> -->
-            <!--</div> -->
           </div>
         </div>
       </div>
-     </div>
-    </div>
-          <br> 
-       <!-- <div class="col-xs-12">
-        <div class="application-header"><h3 class="heading">Newly Added Dependencies </h3><hr />    
-          <div *ngIf="dependencies">
-            <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
-              <div class="row" style="font-size: 12px;">
-                  <div>
-                      <strong>
-                        <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span>
-                        <div style="float:right;">
-                          <span style="float:left;width:auto;float:left;padding-left:10px;margin-right:10px;">|</span>
-                          <div style="float:right">
-                              <span style=" width: auto;float:left;padding-left:8px;padding-right:15px;">{{d.latest_version}}
-                              </span>
-                              <span class="pficon-remove" style="float: right;padding-right:10px;" (click)="removeItem(d)">
-                              </span>                               
-                        </div>
-                     </div>
-                    </strong>
-                    </div>   -->
-                  <!-- <div class="col-sm-1">{{d.name}}</div>
-                  <div class="col-sm-3">|</div>                        
-                  <div class="col-sm-3">{{d.latest_version}}</div> -->
-                  
-               <!-- </div>
+      <div class="app-top">
+        <div class="col-xs-12">
+          <div class="application-header">
+            <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dep" style="margin-top: -10px">
+              <div class="row" style="font-size: 12px">
+                <div style="float:left;padding-left:5px;">
+                  <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
+                  <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
+                </div>
+                <div style="padding-left:0px;">
+                  <strong>
+                    <span style="width:auto;float:left;padding-left:8px;">{{d.name}}</span>
+                  </strong>
+                  <div style="float:right;">
+                    <span style="width: auto;float:right;padding-right:10px;">{{d.latest_version}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div> 
-      </div> -->
+          <br>
+        </div>
+        <div class="col-xs-12">
+          <div class="application-header">
+            <div *ngIf="dependencies">
+              <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.dependencies" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
+                <div class="row" style="font-size: 12px;">
+                  <div style="float:left;padding-left:5px;">
+                    <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
+                    <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
+                  </div>
+                  <div style="padding-left:0px;">
+                    <strong>
+                      <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span>
+                    </strong>
+                    <div style="float:right;">
+                      <div style="float:right">
+                        <span style=" width: auto;float:left;padding-left:8px;padding-right:10px;">{{d.latest_version}}
+                        </span>
+                        <span class="pficon-remove" style="float: right;padding-right:5px;padding-top:5px;" (click)="removeItem(d)">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of selectedComp" style="margin-top: -10px;background-color:rgb(233, 232, 232)">
+                <div class="row" style="font-size: 12px;">
+                  <div style="float:left;padding-left:5px;">
+                    <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
+                    <span style="color:#b9b6b6;;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
+                  </div>
+                  <div style="padding-left:0px;">
+                    <strong>
+                      <span style="width:auto;float:left;padding-left:15px;padding-right:8px;">{{d.name}}</span>
+                    </strong>
+                    <div style="float:right;">
+                      <div style="float:right">
+                        <span style=" width: auto;float:left;padding-left:8px;padding-right:10px;">{{d.latest_version}}
+                        </span>
+                        <span class="pficon-remove" style="float: right;padding-right:5px;padding-top:5px;" (click)="removeItem(d)">
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
         <div class="app-bottom">
-          <div class="app-head">
+          <div class="insights">
             <accordion>
-              <accordion-group #grouped [isOpen]="true" [panelClass]="customClass">
+              <accordion-group #grouped [isOpen]="true" style="padding:0px;">
                 <div accordion-heading>
-                  <div class="accordion-heading" accordion-heading>
+                  <div accordion-heading>
                     <h2>
                       <i class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true,'fa-angle-down': grouped?.isOpen, 'fa-angle-right': !grouped?.isOpen}"></i>
                       Insights</h2>
                   </div>
                 </div>
-                <div class="recommendation">
-                  <!-- <div *ngIf="dependencies">
+                <div>
+                  <div>
                     <div class="col-xs-12">
-                      <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of dependencies.companionPackages" style="margin-top: -10px">
+                      <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px;padding: 0px;">
                         <div class="row" style="font-size: 12px">
-                          <div style="float:left;"><strong>{{d.name}}</strong></div> 
+                          <div style="float:left;padding-left:1px;padding-right:6px;">
+                            <span style="color:#b9b6b6;float:left;" *ngIf="d.packageType=='runtime'"> {{runTimeIcon}} </span>
+                            <span style="color:#b9b6b6;float:left;" *ngIf="d.packageType=='test'"> {{testIcon}} </span>
+                          </div>
+                          <div style="float:left;">
+                            <strong>{{d.name}}</strong>
+                          </div>
                           <div style="float:right;">
-                            <span style="font-size:10px;float:left;">{{d.latest_version}}</span>
-                            <span style="float: right;margin-left:10px;margin-right:-5px;padding-top:5px;" class="fa fa-plus-square mon icon-b" (click)="addItem(d)"></span>
+                            <div style="float:right;">
+                              <div style="float:right">
+                                <span style=" width: auto;float:left;padding-right:5px">{{d.latest_version}}</span>
+                                <div style="float: right">
+                                  <span style="padding-top:5px;" style="color:#00A1C0" class="fa fa-plus-square mon icon-b" (click)="addItem(d)"></span>
+                                  <span class="pficon-remove" style="float: right;padding-left:5px;padding-top:3px;"></span>
+                                  <!-- <span style="float:right;padding-top:5px;" style="color:red" class="fa fa-times-circle mon icon-b" (click)="addItem(d)"></span> -->
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div> -->
-                <div>
-                  <div class="col-xs-12">
-                    <div class="card-pf card-pf-view card-pf-view-xs" *ngFor="let d of compDep" style="margin-top: -10px;padding: 0px;">
-                      <div class="row" style="font-size: 12px">
-                        <div style="float:left;"><strong>{{d.name}}</strong></div> <!--|-->
-                        <div style="float:right;">
-                        <span style="font-size:10px;float:left;">{{d.latest_version}}</span>
-                        <div style="float: right">
-                          <span style="margin-left:10px;margin-right:-5px;padding-top:5px;" class="fa fa-plus-square mon icon-b" (click)="addItem(d)"></span>
-                        </div></div>
+
+
+
+
+
+
+
+                    <div class="col-xs-12" id='infoDiv' *ngIf="isOpen" [style.height.px]="infoDivHeight">
+                      <div class="card-pf card-pf-view card-pf-view-xs" style="margin-top: -10px;padding: 0px;">
+                        <div class="row" style="font-size: 12px;" [style.height.px]="infoDivHeight">
+                          <div>
+                            <div [innerHTML]="infoText">
+                            </div>
+                            <div>
+                              <button style="float:left" class="rec-button-gray"><span style="margin-bottom:20px" (click)="moreInfoInsight()">more</span></button>
+                              <div style="float:right">
+                                <button style="float:left"  class="rec-button-blue"><span class="btn-text" (click)="addItemInsight()">accept</span></button>
+                                <button style="float:right"  class="rec-button-gray"><span class="btn-text" (click)="removeItemInsight()">decline</span></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
                   </div>
                 </div>
-              </div>
               </accordion-group>
             </accordion>
           </div>
-          <div class="app-head">
+          <div class="app-bottom security">
             <accordion>
               <accordion-group #grouped1 [isOpen]="false" [panelClass]="customClass" (click)="isSecurityIssue()">
                 <div accordion-heading>
@@ -198,15 +184,15 @@
                     <i style="font-size:22px;font-weight:300;" class="pull-left accordion-indicator float-xs-left" [ngClass]="{'fa': true, 'fa-angle-right': !grouped1?.isOpen, 'fa-angle-down': grouped1?.isOpen}"></i>
                     <div>
                       <span style="font-size:22px;font-weight:300"> Security Alerts </span>
-                      <span *ngIf="cve" style="font-size:16px;color:red"> {{cve}}</span>
+                      <span *ngIf="cve" class='security-numbers' style="font-size:14px;margin-left:20px"> {{cve}}</span>
                     </div>
                   </div>
                 </div>
-                <div class="security" *ngIf="isSecurityIssueVar">
-                  <div class="card-pf card-pf-view card-pf-view-xs" style="margin-top: -10px;">
+                <div *ngIf="isSecurityIssueVar" style="width:90%; margin-left:20px">
+                  <div class="card-pf card-pf-view card-pf-view-xs">
                     <div class="row" style="font-size: 12px">
                       <strong>{{isSecurityIssueVar}}</strong>
-                      <button id="but" style="margin:3px;float:right;" href="#" (click)="cveDesc()">More info</button>
+                      <button id="but" style="float:right;" href="#" (click)="cveDesc()">More info</button>
                     </div>
                   </div>
                 </div>

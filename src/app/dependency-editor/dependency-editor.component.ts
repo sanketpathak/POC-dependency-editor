@@ -16,6 +16,7 @@ import { MessagesService } from '../message/messages.service';
 export class DependencyComponent implements OnInit{
     @Input('gui') gui: any;
     public selectedDependencies: any;
+    public deletedDependencies: any;
     public guiAppName: string;
     public onPicked = false;
     public subject: any;
@@ -33,6 +34,12 @@ export class DependencyComponent implements OnInit{
         }
     }
 
+    public handleDeletePackages(event: any): void {
+        if (!event.preventDefault) {
+            this.deletedDependencies = event;
+            console.log(this.deletedDependencies);
+        }
+    }
     ngOnInit(){
         this.guiAppName = this.gui;
         console.log(this.subject);

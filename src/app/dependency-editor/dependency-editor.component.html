@@ -1,10 +1,10 @@
 <div class="dependency">
     <div class="application">
-        <app-application [dependencies]="selectedDependencies" [mygui]="guiAppName" [chatDependency]="onPicked"></app-application>
+        <app-application [dependencies]="selectedDependencies" (deletePackages)= "handleDeletePackages($event)" [mygui]="guiAppName" [chatDependency]="onPicked"></app-application>
     </div>
     <div class="package">
-        <app-packages (onPackageSelect)="handlePackageSelection($event)" [mygui]="guiAppName"></app-packages>
+        <app-packages (onPackageSelect)="handlePackageSelection($event)" [deletedDependencies]="deletedDependencies" [mygui]="guiAppName"></app-packages>
     </div>
     <chat-window
-    (addDep)="onDependencyAdd($event)" *ngIf="true" [dependencies]="selectedDependencies" [mygui]="guiAppName" ></chat-window>
+    (addDep)="onDependencyAdd($event)" *ngIf="false" [dependencies]="selectedDependencies" [mygui]="guiAppName" ></chat-window>
 </div> 

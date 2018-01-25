@@ -13,6 +13,8 @@ import { Observable } from 'rxjs/Observable';
 import { ApplicationServices } from './application.component.service';
 // import { BrowserModule } from '@angular/platform-browser';
 import * as c3 from 'c3';
+import { concat } from 'rxjs/operator/concat';
+
 
 @Component({
   selector: 'app-application',
@@ -27,8 +29,11 @@ export class ApplicationComponent implements OnInit, OnChanges {
   @Input('dependencies') dependencies;
   @Input('chatDependency') chatDependency;
   @Input('mygui') appName: string;
+  @Output('deletePackages') deletePackages = new EventEmitter();
+
 
   public donutData: any;
+  public infoDivHeight: number = 100;
   public showtd = false;
   public compPackages = new Set();
   public symbol = 'fa fa-sort-desc';
@@ -51,9 +56,14 @@ export class ApplicationComponent implements OnInit, OnChanges {
   public runTimeIcon = '🆁';
   public testIcon = '🆃';
   public iconImage: string;
+  public securityPackageName: any;
   public selectedComp = new Set();
   public compDep = new Set();
   public charts: any = {};
+  public securityPackages = ['com.googlecode.xmemcached'];
+  public isOpen = false;
+
+  public infoText = `For Springboot application with CRUD operations, we suggest <b>"redis"</b> over <b>"memcached"</b>. <br/> Do you want to switch to <b>"redis"</b>?`
   status: any = {
     isFirstOpen: true,
     isFirstDisabled: false
@@ -67,6 +77,10 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.cve = 0;
     if (this.dependencies) {
       this.dependencies['dependencies'].forEach(d => {
+        if (this.securityPackages.indexOf(d.name) !== -1 ){
+          this.isOpen = true;
+          this.securityPackageName = d;
+        }
         if (this.securityConflicts.indexOf(d.name) !== -1) {
           this.isSecurityIssueVar = d.name;
           this.cve += 1;
@@ -77,7 +91,6 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
   public isLicenseIssue(): void {
     this.isLicenseConflictsVar = false;
-    this.cve = 0;
     if (this.dependencies) {
       this.dependencies['dependencies'].forEach(d => {
         if (this.licenseConflicts.indexOf(d.name) !== -1) {
@@ -115,7 +128,32 @@ export class ApplicationComponent implements OnInit, OnChanges {
       this.compDep.add(dependency);
     }else{
       this.dependencies.dependencies.delete(dependency);
+      this.deletePackages.emit({packages: dependency});
     }
+  }
+  public addItemInsight() {
+    if(this.dependencies){
+      this.dependencies['dependencies'].forEach((i) => {
+        if (i['name'].indexOf('xmemcached') !== -1){
+          this.dependencies.dependencies.delete(i);
+          this.deletePackages.emit({packages: i});
+        }
+      });
+      this.isOpen = false;
+    }
+    this.dependencies['dependencies'].add({
+      'name': 'spring-data-redis',
+      'latest_version': '1.6.2.RELEASE',
+      'packageType': 'runtime'
+    });
+  }
+  public removeItemInsight(){
+    this.isOpen = false;
+  }
+  public moreInfoInsight(){
+    this.infoText = `<b>"redis"</b> has no CVEs associated. <br/> Has very active community with over than 26K ★ stars on gitHub`;
+    this.infoDivHeight = (this.infoText.length / 2) + 30;
+
   }
   // public removeItem(dependency): void {
     // if(dependency === this.dependencies){
@@ -212,6 +250,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.infoDivHeight = (this.infoText.length / 2) + 10;
     this.processInit();
     this.processPackages();
     this.displayLicenses();
@@ -240,6 +279,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
   public filterLicenses(licenses: Array<any>) {
     const resultArray: Array<any> = [];
+    if(licenses){
     licenses.forEach(i => {
       resultArray.push(
         i
@@ -248,6 +288,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
           .trim()
       );
     });
+  }
     return resultArray;
   }
 
@@ -282,6 +323,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges(): void {
+    console.log('change');
     if (this.chatDependency){
       if(this.dependencies){
         this.dependencies['dependencies'].forEach((i) => {
@@ -297,8 +339,8 @@ export class ApplicationComponent implements OnInit, OnChanges {
       });
       this.chatDependency = false;
     }
-    this.licenseChange();
     this.isSecurityIssue();
+    this.licenseChange();
     this.isLicenseIssue();
   }
 }

@@ -1,16 +1,16 @@
 <div class="app-joint">
   <div class="packages">
-    <div class="header"><h2>Choose Packages </h2></div>
+    <div class="header"><h2>Choose Dependencies </h2></div>
     <div class="content"  >
       <div class="categories" *ngIf="objectKeys(categories).length > 0">
         <div class="card-pf card-pf-view catagories-card" [style.height.px]="categoriesHeight">
           <div class="card-pf-body">
             <div class="card-pf-items">
-              <table class="tag-table"  *ngFor="let key of objectKeys(categories)">
+              <table class="tag-table"  *ngFor="let key of categories">
                 <tr>
-                  <td class="tag-table-td-left" (click)="tagClick(key)" [class.tag-color]="selectedTags.has(key)" > {{key}}</td>
+                  <td class="tag-table-td-left" (click)="tagClick(key[0])" [class.tag-color]="selectedTags.has(key[0])" > {{key[0].substring(0, 1).toUpperCase() + key[0].substring(1)}}</td>
                   <td class="tag-table-td-left">
-                    <label class="tag-table-td-label">{{categories[key]}}</label>
+                    <label class="tag-table-td-label">{{key[1]}}</label>
                   </td>
                 </tr>
               </table>
@@ -22,7 +22,7 @@
     <div class="dependencies">
       <div class="search-dependencies">
         <!-- <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" [typeahead]="masterTags" (keypress)="test($event)" class="search-box"  type="text" placeholder="Search for Packages..">  -->
-        <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)" class="search-box"  type="text" placeholder="Search for Packages..">
+        <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)" class="search-box"  type="text" placeholder="Search for Dependencies..">
         <button type="button" class="filter-button"><span class="pficon-settings"></span> Filter </button>
         <section [class.dependency-typeahead]="suggestions.length > 0">
             <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0">
@@ -42,7 +42,7 @@
          <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select " [class.card-border]="unselectedPackages.has(dependency.name)" [class.active]="selectedPackages.has(dependency.name)">
            <div class="card-pf-body">
              <div class="card-pf-items">
-               <div class="card-pf-item">
+               <div class="card-pf-item" style="float:left;width:60%">
                  <label class="control control--checkbox">{{dependency.name}}
                    <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
                    <div class="control__indicator"></div>
@@ -61,13 +61,11 @@
                    </li>
                  </ul>
                </span>
-               <!-- CVE -->
                <div class="card-pf-item" *ngIf="dependency.name == 'logback-core'" title="Has a CVE with cvss score of 9">
                  <label class="pficon-error-circle-o">
                  </label>
                </div>
-
-               <p class="card-pf-info" >{{dependency.description}}</p>
+               <p class="card-pf-info" >{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p>
                <div>
                  <div *ngFor="let tag of dependency.topic_list">
                    <div class="tag-border" >{{tag}}</div>

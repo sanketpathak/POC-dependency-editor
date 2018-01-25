@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { PackagesServices } from './packages.component.service';
+import { concat } from 'rxjs/operator/concat';
 
 @Component({
   selector: 'app-packages',
@@ -18,6 +19,7 @@ import { PackagesServices } from './packages.component.service';
 export class PackagesComponent implements OnInit {
   @Output('onPackageSelect') onPackageSelect = new EventEmitter();
   @Input('mygui') appName: string;
+  @Input('deletedDependencies') deletedDependencies;
   public dependencies: Array<any> = [];
   public dependenciesData: Array<any> = [];
   public masterTags: Array<any> = [
@@ -40,9 +42,9 @@ export class PackagesComponent implements OnInit {
   public selectedPackages = new Set();
   public unselectedPackages = new Set();
   public selected: string;
-  public offsetHeight = 110;
-  public categoriesHeight = 120;
-  public categories = {};
+  public offsetHeight = 90;
+  public categoriesHeight = 100;
+  public categories = [];
   public objectKeys = Object.keys;
   public selectedTags = new Set();
   public suggestions: Array<any> = [];
@@ -52,37 +54,37 @@ export class PackagesComponent implements OnInit {
   public compDep: Array<any> = [];
   public ecosystem = 'maven';
 
-  constructor(private packagesServices: PackagesServices) {}
+  constructor(private packagesServices: PackagesServices) { }
 
   public isDependencySelected(event, dependency: string): void {
     if (event.target.checked) {
       this.selectedPackages.add(dependency['name']);
       this.selectedDependenciesObject.add(dependency);
       this.unselectedPackages.delete(dependency['name']);
-      console.log(dependency);
-      dependency['topic_list'].forEach(i => {
-        this.selectedTags.add(i);
-      });
+      // console.log(dependency);
+      // dependency['topic_list'].forEach(i => {
+      //   this.selectedTags.add(i);
+      // });
     } else {
-      this.selectedTags.delete('All');
+      // this.selectedTags.delete('All');
       this.selectedDependenciesObject.delete(dependency);
       this.unselectedPackages.add(dependency['name']);
       this.selectedPackages.delete(dependency['name']);
       console.log(dependency);
-      dependency['topic_list'].forEach(i => {
-        this.selectedTags.delete(i);
-      });
-      this.selectedPackages.forEach(i => {
-        this.dependencies.map(d => {
-          if (d['name'] === i) {
-            d['topic_list'].forEach(j => {
-              this.selectedTags.add(j);
-            });
-          }
-        });
-      });
+      // dependency['topic_list'].forEach(i => {
+      //   this.selectedTags.delete(i);
+      // });
+      // this.selectedPackages.forEach(i => {
+      //   this.dependencies.map(d => {
+      //     if (d['name'] === i) {
+      //       d['topic_list'].forEach(j => {
+      //         this.selectedTags.add(j);
+      //       });
+      //     }
+      //   });
+      // });
     }
-    console.log(this.selectedPackages);
+    // console.log(this.selectedPackages);
 
     this.onPackageSelect.emit({
       dependencies: this.selectedDependenciesObject,
@@ -98,14 +100,36 @@ export class PackagesComponent implements OnInit {
       console.log(data);
       if (data) {
         this.dependenciesData = data['dependencies'];
+        this.dependencies = this.dependenciesData;
+        this.calculateCategories(this.dependencies);
       }
     });
+  }
+
+  public calculateCategories(dependencies) {
+    const tempCategories = {};
+    this.dependencies.map((d) => {
+      tempCategories[d.category] = tempCategories[d.category] + 1 || 1;
+      tempCategories['All'] = Object.keys(tempCategories).length - 1;
+    });
+    for (const key in tempCategories) {
+      if (key !== 'All') {
+        this.categories.push([key, tempCategories[key]]);
+      }
+    }
+    this.categories.sort(function (a, b) {
+      if (a[0] < b[0]) { return -1; }
+      if (a[0] > b[0]) { return 1; }
+      return 0;
+    });
+    this.categories.unshift(['All', tempCategories['All']]);
+    this.categoriesHeight = this.offsetHeight + 20 * Object.keys(tempCategories).length;
   }
 
   processCompanionPackages(): void {
     const packageInfo: Observable<
       any
-    > = this.packagesServices.getCompanionPackages(this.ecosystem);
+      > = this.packagesServices.getCompanionPackages(this.ecosystem);
     packageInfo.subscribe(data => {
       console.log(data);
       if (data) {
@@ -151,96 +175,55 @@ export class PackagesComponent implements OnInit {
     this.companionPackages = array.slice(0, 2);
     return new Set(this.companionPackages);
   }
+
   public tagClick(tag: string) {
     if (tag !== 'All') {
       if (this.selectedTags.has('All')) {
         this.selectedTags.delete('All');
-        this.selectedPackages.forEach(i => {
-          this.unselectedPackages.add(i);
-        });
-        this.selectedPackages.clear();
       }
       if (!this.selectedTags.delete(tag)) {
         this.selectedTags.add(tag);
-        this.selectedTags.forEach(i => {
-          this.dependencies.map(d => {
-            if (d['topic_list'].indexOf(i) !== -1) {
-              this.selectedPackages.add(d['name']);
-              this.unselectedPackages.delete(d['name']);
-            }
-          });
-        });
-      } else {
-        this.selectedPackages.clear();
-        this.selectedTags.forEach(i => {
-          this.dependencies.map(d => {
-            if (d['topic_list'].indexOf(i) !== -1) {
-              this.selectedPackages.add(d['name']);
-              this.unselectedPackages.delete(d['name']);
-            }
-          });
-        });
       }
     } else {
       if (this.selectedTags.has(tag)) {
         this.selectedTags.clear();
-        this.selectedPackages.clear();
-        this.dependencies.map(d => {
-          this.unselectedPackages.add(d['name']);
-        });
       } else {
         this.selectedTags.clear();
         this.selectedTags.add(tag);
-        this.unselectedPackages.clear();
-        this.dependencies.map(d => {
-          this.selectedPackages.add(d['name']);
-        });
       }
     }
-    this.moveSelectedPackages();
-    this.onPackageSelect.emit({
-      dependencies: this.selectedDependenciesObject,
-      companionPackages: this.shuffle(this.compDep)
-    });
-    console.log(this.selectedTags);
+    this.selected = Array.from(this.selectedTags).join(', ');
+    this.showDependency();
   }
+
+
   public showDependency() {
-     this.dependencies = [];
-     this.categories = {};
-    const tags = this.selected.split(',').map(item => {
-      return item.trim();
-    });
-    tags.forEach(i => {
-      this.dependenciesData.map(d => {
-        if (d['topic_list'].indexOf(i) !== -1) {
-          let _flag = true;
-          this.dependencies.map(tmp => {
-            if (tmp.name === d.name) {
-              _flag = false;
-            }
-          });
-          if (_flag) {
-            this.dependencies.push(d);
-            d.topic_list.forEach(element => {
-              this.categories[element] = this.categories[element] + 1 || 1;
-              this.categories['All'] = this.categories['All'] + 1 || 1;
-              this.categories = Object.keys(this.categories)
-                .sort((a, b) => this.categories[b] - this.categories[a])
-                .reduce(
-                  (_sortedObj, key) => ({
-                    ..._sortedObj,
-                    [key]: this.categories[key]
-                  }),
-                  {}
-                );
-              this.categoriesHeight =
-                this.offsetHeight + 20 * Object.keys(this.categories).length;
-            });
-          }
-        }
+    if (this.selected) {
+      this.dependencies = [];
+      // this.categories = [];
+      const tags = this.selected.split(',').map(item => {
+        return item.trim();
       });
-    });
-    console.log(tags);
+      tags.forEach(i => {
+        this.dependenciesData.map(d => {
+          if (d['category'].indexOf(i) !== -1) {
+            let _flag = true;
+            this.dependencies.map(tmp => {
+              if (tmp.name === d.name) {
+                _flag = false;
+              }
+            });
+            if (_flag) {
+              this.dependencies.push(d);
+            }
+          }
+        });
+      });
+      // this.calculateCategories(this.dependencies);
+    }
+    if (this.selected.toLocaleLowerCase().indexOf('all') !== -1){
+      this.dependencies = this.dependenciesData;
+    }
   }
 
   handleUserInputKeyPress(event: KeyboardEvent): void {
@@ -291,6 +274,15 @@ export class PackagesComponent implements OnInit {
       } else {
         this.ecosystem = 'maven';
       }
+    }
+  }
+  ngOnChanges() {
+    if (this.deletedDependencies) {
+      console.log(this.deletedDependencies['packages']['name']);
+      this.isDependencySelected(
+        { target: { checked: false } },
+        this.deletedDependencies['packages']
+      )
     }
   }
 }
