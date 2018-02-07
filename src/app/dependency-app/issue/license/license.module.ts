@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { AlertBoxModule } from '../alert-box/alert-box.module'
 import { LicenseComponent } from './license.component';
 import { IssueModule } from '../issue.module'
 
@@ -18,7 +18,8 @@ import { IssueModule } from '../issue.module'
     FormsModule,
     TagInputModule,
     BrowserModule,
-    IssueModule
+    IssueModule,
+    AlertBoxModule
 ],
  declarations: [
     LicenseComponent

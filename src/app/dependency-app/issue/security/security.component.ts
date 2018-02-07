@@ -14,6 +14,9 @@ export class SecurityComponent implements OnInit {
   public issue_name: string;
   public issue_symbol: string;
   public issue_status: string;
+  public alert_title: string;
+  public colored: string ;
+  public secure_issue: boolean = false;
 
   constructor() { }
 
