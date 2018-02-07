@@ -24,26 +24,30 @@
       </div>
     </div> -->
   </issue>
-  <div class="cards-pf" style="background:#ffffff;border:1px solid #6ca100;box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);width:356px;height:229px;margin-left:20px;">
+  <!-- <div class="cards-pf securebox" *ngIf="secure_issue">
     <div class="container-fluid container-cards-pf">
       <div class="row row-cards-pf">
-        <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="col-xs-6 col-sm-4 col-md-4"> -->
           <!-- <div class="card-pf"> -->
-          <div class="card-pf-heading" style="background:#6ca100;width:354.5px;height:46px;position: relative;top: -61px;left: -20px;">
+          <!-- <div class="card-pf-heading" style="background:#6ca100;width:346.5px;height:46px;position: relative;top: -61px;left: -21px;">
             <h2 class="card-pf-title" style="font-family:OpenSans-Semibold;font-size:16px;color:#ffffff;">
-              <span class="fa fa-shield" style="margin:5px;font-family:FontAwesome;font-size:16px;color:#ffffff;"></span>Security Alert
-            </h2>
+              <span class="fa fa-shield" style="margin:11px;font-family:FontAwesome;font-size:16px;color:#ffffff;"></span>Security Alert
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin: 11px;">
+                <span class="pficon pficon-close"></span>
+              </button>
+            </h2> -->
             <!-- <div class="list-view-pf-expand">
                   <span class="fa fa-angle-right"></span>
               </div> -->
-         </div>
+         <!-- </div>
           <div class="card-pf-body">
 
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+  <alert-box [alert_title] = "'Security Alert'" [issue_status] = "'00'" [colored] = "'#6ca100'" [issue_symbol] = "'fa fa-shield'" *ngIf="secure_issue"></alert-box>
 
 </div>
 

@@ -36,4 +36,4 @@ import {CurrentprojectModule} from '../currentproject/currentproject.module'
 ],
  providers: [],
 })
-export class DependencyEditorModule { }
+export class DependencyEditorModule {}
