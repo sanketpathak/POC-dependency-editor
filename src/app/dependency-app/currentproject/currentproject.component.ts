@@ -2,21 +2,22 @@ import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewE
 import { TagInputModule } from 'ngx-chips';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
+import { DependencySnapshotItem } from '../model/stack-response.model';
 
 @Component({
-  selector: 'currentproject',
+  selector: 'app-current-project',
   templateUrl: './currentproject.component.html',
   styleUrls: ['./currentproject.component.less']
 })
 
 export class CurrentprojectComponent implements OnInit {
-  
+  @Input() dependencies: Array<DependencySnapshotItem>;
+  @Input() metadata: any;
+
   public component: string[]  ;
 
   constructor() { }
 
   ngOnInit() {
-    this.component = ['Hystrix', 'Hystrix01', 'Comp with big name 01', 'Comp with big name 02'];
   }
-
 }
