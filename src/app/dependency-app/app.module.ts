@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { AuthenticationService } from 'ngx-login-client';
 
 import { AppComponent } from './app.component';
 import { DependencyEditorModule } from './dependencyeditor/dependencyeditor.module';
-
+import { MockAuthenticationService } from './shared/mock-auth.service';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,11 @@ import { DependencyEditorModule } from './dependencyeditor/dependencyeditor.modu
     BrowserModule,
     DependencyEditorModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthenticationService, useClass: MockAuthenticationService
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
