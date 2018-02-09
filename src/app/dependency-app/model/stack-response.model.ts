@@ -5,6 +5,7 @@ export class StackReportModel {
     result: Array<ResultInformationModel>;
     started_at: string;
     version: string;
+    dep_snapshot: Array<any>;
 }
 
 export class ResultInformationModel {

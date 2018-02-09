@@ -4,16 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
 
 @Component({
-  selector: 'add-dependency',
+  selector: 'app-add-dependency',
   templateUrl: './add-dependency.component.html',
   styleUrls: ['./add-dependency.component.less']
 })
 
 export class AddDependencyComponent implements OnInit {
-  
+  public dependencySearchString: string;
 
   constructor() { }
 
   ngOnInit() {}
+
+  getDependencies() {
+    console.log('component search string', this.dependencySearchString);
+  }
 
 }

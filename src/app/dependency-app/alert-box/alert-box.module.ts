@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AlertBoxComponent } from './alert-box.component';
-import { IssueModule } from '../issue.module'
+import { IssueModule } from '../issue/issue.module';
 
 
 @NgModule({
@@ -21,7 +21,6 @@ import { IssueModule } from '../issue.module'
 ],
  exports: [
     AlertBoxComponent,
-    
 ],
  providers: [],
 })
