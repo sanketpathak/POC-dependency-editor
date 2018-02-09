@@ -6,12 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { DependencyEditorComponent } from './dependencyeditor.component';
-import { InsightModule } from '../insights/insights.module'
-import { AddDependencyModule } from '../add-dependency/add-dependency.module'
-import { SecurityModule } from '../issue/security/security.module'
-import { LicenseModule } from '../issue/license/license.module'
-import { CurrentprojectModule } from '../currentproject/currentproject.module';
+import { DependencyEditorComponent } from './dependency-editor.component';
+import { InsightModule } from '../insights/insights.module';
+import { AddDependencyModule } from '../add-dependency/add-dependency.module';
+import { SecurityModule } from '../security/security.module';
+import { LicenseModule } from '../license/license.module';
+import { CurrentprojectModule } from '../current-project/current-project.module';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 
 @NgModule({

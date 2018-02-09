@@ -5,10 +5,10 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
-import { AlertBoxModule } from '../alert-box/alert-box.module'
-import { LicenseComponent } from './license.component';
-import { IssueModule } from '../issue.module'
 
+import { SecurityComponent } from './security.component';
+import { IssueModule } from '../issue/issue.module';
+import { AlertBoxModule } from '../alert-box/alert-box.module';
 
 @NgModule({
  imports: [
@@ -22,12 +22,11 @@ import { IssueModule } from '../issue.module'
     AlertBoxModule
 ],
  declarations: [
-    LicenseComponent
+    SecurityComponent
 ],
  exports: [
-    LicenseComponent,
-    
+    SecurityComponent,
 ],
  providers: [],
 })
-export class LicenseModule { }
+export class SecurityModule { }

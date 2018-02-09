@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-issue [issueName]="'Security Alert'" [issueSymbol]="'fa fa-shield'" [issueStatus]="'00'">
+    </app-issue>
+    <app-alert-box [title]="'Security Alert'" [issueStatus]="'00'" [colored]="'#6ca100'" [issueSymbol]="'fa fa-shield'" *ngIf="secureIssue">
+    </app-alert-box>
+  </div>
+</div>
