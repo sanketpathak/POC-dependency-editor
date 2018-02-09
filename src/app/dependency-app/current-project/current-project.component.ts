@@ -2,7 +2,7 @@ import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewE
 import { TagInputModule } from 'ngx-chips';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
-import { DependencySnapshotItem } from '../model/stack-response.model';
+import { DependencySnapshotItem } from '../model/data.model';
 
 @Component({
   selector: 'app-current-project',

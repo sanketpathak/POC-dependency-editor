@@ -19,7 +19,7 @@ import {
 
 import {
   ComponentInformationModel
-} from '../model/stack-response.model';
+} from '../model/data.model';
 
 @Component({
   selector: 'app-insights',
