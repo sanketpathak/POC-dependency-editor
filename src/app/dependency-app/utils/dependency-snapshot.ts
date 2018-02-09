@@ -1,4 +1,4 @@
-import { DependencySnapshotItem } from '../model/stack-response.model';
+import { DependencySnapshotItem } from '../model/data.model';
 
 export class DependencySnapshot {
     public static DEP_SNAPSHOT: Array<DependencySnapshotItem> = [];
