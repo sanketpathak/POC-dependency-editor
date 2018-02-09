@@ -16,7 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { ComponentInformationModel, StackReportModel } from '../model/stack-response.model';
+import { ComponentInformationModel, StackReportModel } from '../model/data.model';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { DependencySnapshot } from '../utils/dependency-snapshot';
 
@@ -28,26 +28,15 @@ import { DependencySnapshot } from '../utils/dependency-snapshot';
 
 export class ListElementComponent implements OnInit {
   @Input() companion: ComponentInformationModel;
-  private addDependencyUrl: string;
+  @Output() companionAdded = new EventEmitter<ComponentInformationModel> ();
 
   constructor(private service: DependencyEditorService) {
   }
 
   ngOnInit() {
-    this.addDependencyUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
   }
 
   addDependency() {
-    const persist = false;
-    const urlToHit = this.addDependencyUrl + 'persist=' + persist;
-    const payload = {};
-    payload['_resolved'] = DependencySnapshot.DEP_SNAPSHOT;
-    payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
-    payload['request_id'] = DependencySnapshot.REQUEST_ID;
-    console.log(payload);
-    this.service.addDependency(this.addDependencyUrl, payload)
-    .subscribe((response: StackReportModel) => {
-      console.log('response after add dependency call', response);
-    });
+    this.companionAdded.emit(this.companion);
   }
 }

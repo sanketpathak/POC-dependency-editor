@@ -1,7 +1,21 @@
-import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewEncapsulation } from '@angular/core';
-import { TagInputModule } from 'ngx-chips';
-import { FormsModule } from '@angular/forms';
-import { AccordionModule } from 'ngx-bootstrap';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+  ViewEncapsulation
+} from '@angular/core';
+import {
+  TagInputModule
+} from 'ngx-chips';
+import {
+  FormsModule
+} from '@angular/forms';
+import {
+  AccordionModule
+} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-issue',
@@ -9,12 +23,18 @@ import { AccordionModule } from 'ngx-bootstrap';
   styleUrls: ['./issue.component.less']
 })
 
-export class IssueComponent implements OnInit {
+export class IssueComponent implements OnInit, OnChanges {
   @Input() issueName: string;
   @Input() issueSymbol: string;
-  @Input() issueStatus: string;
+  @Input() issueStatus: string|number;
+  @Input() responseReady: boolean;
+  @Input() hasIssue: boolean;
 
-  constructor() { }
+  constructor() {}
+
+  ngOnChanges() {
+    console.log(this.issueStatus, typeof this.issueStatus);
+  }
 
   ngOnInit() {
 

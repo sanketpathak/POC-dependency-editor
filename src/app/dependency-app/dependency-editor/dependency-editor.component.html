@@ -13,10 +13,10 @@
             <app-add-dependency></app-add-dependency>
         </div>
         <div class="col-sm-5">
-            <app-insights [companions]="companions"></app-insights>
+            <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>
         </div>
         <div class="col-sm-2">
-            <app-security></app-security>
+            <app-security [cveData]="cveData"></app-security>
             <div style="height: 23px"></div>
             <app-license [licenseData]="licenseData"></app-license>
         </div>
