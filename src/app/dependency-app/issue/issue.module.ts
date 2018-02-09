@@ -7,8 +7,6 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { IssueComponent } from './issue.component';
-// import { LicenseModule } from './license/license.module';
-// import { SecurityModule } from './security/security.module';
 
 @NgModule({
  imports: [
@@ -18,15 +16,12 @@ import { IssueComponent } from './issue.component';
     FormsModule,
     TagInputModule,
     BrowserModule,
-    // LicenseModule,
-    // SecurityModule
 ],
  declarations: [
     IssueComponent
 ],
  exports: [
     IssueComponent,
-    
 ],
  providers: [],
 })

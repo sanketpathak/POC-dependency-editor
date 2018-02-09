@@ -1,95 +1,49 @@
-<!-- <div style="background:#ededed;"> -->
-  
-  <!-- <div class="card-pf" style="width:460px;margin-left:40px;margin-top: 8px; height:413px;box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30);position: relative;left: 455px;"> -->
-    <!-- <div class="container-fluid container-cards-pf"> -->
-    <!-- <div class="row row-cards-pf">
-      <div class="col-xs-6 col-sm-4 col-md-4" style="width:100%;">
-        <div class="card-pf-heading" style="border-bottom:none;">
-          <h2 class="card-pf-title">
-            <span class="pficon-zone" style="margin:5px;"></span>Insights
-            <span class="">01</span>
-            <span class=" pull-right" style="width:40px;height:40px;background-color:#f8a33a; position: absolute; right:-1px; top:-1px; padding: 10px; color: #fff;">
-              <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;position:relative;left:3px;"></i>
-            </span>
-          </h2>
+<div class="list-group list-view-pf">
+  <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">
+    <div class="check">
+      <div class="list-view-pf-checkbox">
+        <input type="checkbox" style="position: absolute;top: 33px;left: 15px;width: 15px;">
+      </div>
+      <div class="list-view-pf-expand">
+        <span class="fa fa-angle-right"></span>
+      </div>
+    </div>
+    <div class="list-view-pf-actions">
+      <button class="btn btn-default check" (click)="addDependency(companion)">
+        <span class="glyphicon glyphicon-ok"></span>
+      </button>
+      <button class="btn btn-default close">
+        <span class="fa fa-remove"></span>
+      </button>
+    </div>
+    <div class="list-view-pf-main-info">
+      <div class="list-view-pf-body">
+        <div class="list-view-pf-description">
+          <div class="list-group-item-heading">
+            {{companion.name}}
+          </div>
+          <div class="list-group-item-text">
+            Why this component?
+          </div>
         </div>
-        <div class="card-pf-body"> -->
-          <div class="list-group list-view-pf">
-            <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">
-              <div class="check">
-                <div class="list-view-pf-checkbox">
-                  <input type="checkbox" style="position: absolute;top: 28px;left: 15px;width: 15px;">
-                </div>
-                <div class="list-view-pf-expand">
-                  <span class="fa fa-angle-right"></span>
-                </div>
-              </div>
-              <div class="list-view-pf-actions">
-                <button class="btn btn-default check">
-                  <span class="glyphicon glyphicon-ok"></span>
-                </button>
-                <button class="btn btn-default close">
-                  <span class="fa fa-remove"></span>
-                </button>
-                <!-- <div class="dropdown pull-right dropdown-kebab-pf">
-                  <button class="btn btn-link dropdown-toggle" type="button" id="dropdownKebabRight3" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="true">
-                    <span class="fa fa-ellipsis-v"></span>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownKebabRight3">
-                    <li>
-                      <a href="#">Action</a>
-                    </li>
-                    <li>
-                      <a href="#">Another Action</a>
-                    </li>
-                    <li>
-                      <a href="#">Something Else Here</a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                      <a href="#">Separated Link</a>
-                    </li>
-                  </ul>
-                </div> -->
-
-              </div>
-              <div class="list-view-pf-main-info">
-                <div class="list-view-pf-body">
-                  <div class="list-view-pf-description">
-                    <div class="list-group-item-heading">
-                      {{package}}
-                    </div>
-                    <div class="list-group-item-text">
-                      Why this component?
-                      <!-- <a href="#">rendered as link text</a>. -->
-                    </div>
-                  </div>
-                  <div class="list-view-pf-additional-info">
-                    <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-                      {{version}}
-                    </div>
-                    <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-                      <strong>
-                        <span class="security_symbol"></span>
-                      </strong>
-                      <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Security</span>
-                    </div>
-                    <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-                      <strong>
-                        <span class="license_symbol"></span>
-                      </strong>
-                      <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Lisence</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <!-- </div>
+        <div class="list-view-pf-additional-info">
+          <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+            {{companion.version}}
+          </div>
+          <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+            <strong>
+              <span class="pficon-warning-triangle-o"></span>
+            </strong>
+            <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Security</span>
+          </div>
+          <!-- <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+            <strong>
+              <span class="license-symbol"></span>
+            </strong>
+            <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Lisence</span>
+          </div> -->
         </div>
       </div>
-    </div> -->
-    <!-- </div> -->
-  <!-- </div>
-  
-</div> -->
+    </div>
+  </div>
+</div>

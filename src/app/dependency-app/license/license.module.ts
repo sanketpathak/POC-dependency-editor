@@ -5,8 +5,9 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { CurrentprojectComponent } from './currentproject.component';
+import { AlertBoxModule } from '../alert-box/alert-box.module'
+import { LicenseComponent } from './license.component';
+import { IssueModule } from '../issue/issue.module';
 
 
 @NgModule({
@@ -16,15 +17,16 @@ import { CurrentprojectComponent } from './currentproject.component';
     HttpModule,
     FormsModule,
     TagInputModule,
-    BrowserModule
+    BrowserModule,
+    IssueModule,
+    AlertBoxModule
 ],
  declarations: [
-    CurrentprojectComponent
+    LicenseComponent
 ],
  exports: [
-    CurrentprojectComponent,
-    
+    LicenseComponent,
 ],
  providers: [],
 })
-export class CurrentprojectModule { }
+export class LicenseModule { }

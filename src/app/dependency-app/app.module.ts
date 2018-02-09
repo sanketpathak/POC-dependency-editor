@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AuthenticationService } from 'ngx-login-client';
 
 import { AppComponent } from './app.component';
-import { DependencyEditorModule } from './dependencyeditor/dependencyeditor.module';
+import { DependencyEditorModule } from './dependency-editor/dependency-editor.module';
 import { MockAuthenticationService } from './shared/mock-auth.service';
 
 @NgModule({

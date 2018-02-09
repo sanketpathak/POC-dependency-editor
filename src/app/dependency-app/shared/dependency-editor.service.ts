@@ -24,7 +24,10 @@ import {
 @Injectable()
 export class DependencyEditorService {
 
-    private headers: Headers = new Headers({
+    private headersProd: Headers = new Headers({
+        'Content-Type': 'application/json'
+    });
+    private headersStage: Headers = new Headers({
         'Content-Type': 'application/json'
     });
     private stackAnalysesUrl = '';
@@ -53,25 +56,35 @@ export class DependencyEditorService {
         private http: Http,
         private auth: AuthenticationService,
     ) {
-        if (this.auth.getToken() !== null) {
+        if (this.auth.getToken()) {
             // pass your token here to run in local
-            this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+            this.headersProd.set('Authorization', 'Bearer ' + this.auth.getToken());
+        } else {
+            this.headersProd.set('Authorization', 'Bearer ');
+            this.headersStage.set('Authorization', 'Bearer ');
         }
     }
 
-    getStackAnalyses(url: string, params?: any): Observable < any > {
-        console.log('stack service', params);
-        let options = new RequestOptions({
-            headers: this.headers
+    getStackAnalyses(url: string, params ?: any): Observable < any > {
+        const options = new RequestOptions({
+            headers: this.headersProd
         });
         let stackReport: StackReportModel = null;
-        if (params && params['access_token']) {
-            this.headers.set('Authorization', 'Bearer ' + params['access_token']);
-            options = new RequestOptions({
-                headers: this.headers
-            });
-        }
         return this.http.get(url, options)
+            .map(this.extractData)
+            .map((data) => {
+                stackReport = data;
+                return stackReport;
+            })
+            .catch(this.handleError);
+    }
+
+    addDependency(url, payload) {
+        const options = new RequestOptions({
+            headers: this.headersStage
+        });
+        let stackReport: StackReportModel = null;
+        return this.http.post(url, payload, options)
             .map(this.extractData)
             .map((data) => {
                 stackReport = data;

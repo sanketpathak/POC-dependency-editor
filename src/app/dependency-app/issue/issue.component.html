@@ -1,55 +1,26 @@
-
-<!-- <div class="issue" style="background:#ededed;"> -->
-
-  <div class="card-pf" style="margin-left: 827px;; margin-bottom: 28px; background-color:#fff; box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);width:178px;height:199px;">
-    <div class="container-fluid container-cards-pf">
-      <div class="row row-cards-pf">
-        <!-- <div class="col-xs-6 col-sm-4 col-md-4"> -->
-        <div class="card-pf-accented card-pf-aggregate-status" style="border-top-color: white;">
-          <h2 class="card-pf-title" style="position:relative;left:18px;right:22px">
-            <span class="issue_symbol" style="margin:5px;"></span>{{issue_name}}
-          </h2>
-          <h2>
-            <span class="card-pf-aggregate-status-count" style="color:#0088ce;position:relative;left:36px;right:65px">{{issue_status}}</span>
-          </h2>
-          <div class="card-pf-body">
-            <p class="card-pf-aggregate-status">
-              <span class="card-pf-aggregate-status-notification" style="position:relative;left:25px;top:42px;">
-                <a href="#" class="links" style="font-size:10px">
-                  Click here to know more
-                </a>
-              </span>
-            </p>
-          </div>
-        </div>
-        <!-- </div> -->
-      </div>
+<div class="card-pf" style="margin: 0; background-color:#fff; box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);height:194px;text-align: center;padding-top: 35px;position: relative;border-top: 0">
+  <h2 class="card-pf-title">
+    <span [ngClass]="issueSymbol"></span>
+    <span>{{issueName}}</span>
+  </h2>
+  <h2 style="position: relative">
+    <span class="card-pf-aggregate-status-count" style="color:#0088ce;">
+      {{issueStatus}}
+    </span>
+    <div class="pre-loader" *ngIf="!issueStatus">
+      <div class="pre-loader-spinner spinner spinner-lg"></div>
     </div>
+  </h2>
+  <div class="card-pf-body" *ngIf="issueStatus">
+    <p class="card-pf-aggregate-status">
+      <span class="card-pf-aggregate-status-notification">
+        <a href="#" class="links" style="font-size:12px">
+          Click here to know more
+        </a>
+      </span>
+    </p>
   </div>
- 
-
-
-
-  <!-- <div class="cards-pf" style="margin-left: 56.5%; margin-bottom: 28px; background-color:#fff; box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);width:178px;height:199px;position: relative;top: -1129px;left: 139px;">
-    <div class="container-fluid container-cards-pf">
-      <div class="row row-cards-pf">
-        <div class=" card-pf-accented card-pf-aggregate-status" style="border-top-color: white;">
-          <h2 class="card-pf-title" style="position:relative;left:28px;right:22px;">
-            <span class="fa fa-file-text-o" style="margin:5px;"></span>License
-          </h2>
-          <h2>
-            <span class="card-pf-aggregate-status-count" style="color:#0088ce;position:relative;left:65px;right:65px">00</span>
-          </h2>
-          <div class="card-pf-body">
-            <p class="card-pf-aggregate-status">
-              <span class="card-pf-aggregate-status-notification" style="position:relative;left:25px;top:42px;">
-                <a href="#" class="links" style="font-size:10px">Click here to know more</a>
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-<!-- </div> -->
+  <span style="background-color:#f8a33a; padding: 12px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;">
+    <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
+  </span>
+</div>
