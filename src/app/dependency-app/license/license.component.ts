@@ -16,7 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { StackLicenseAnalysisModel } from '../model/stack-response.model';
+import { StackLicenseAnalysisModel } from '../model/data.model';
 
 @Component({
   selector: 'app-license',
@@ -27,17 +27,23 @@ import { StackLicenseAnalysisModel } from '../model/stack-response.model';
 export class LicenseComponent implements OnInit, OnChanges {
   @Input() licenseData: StackLicenseAnalysisModel;
 
-  public issue_name: string;
-  public issue_symbol: string;
-  public issue_status: string;
-  public alert_title: string;
-  public colored: string;
-  public secureIssue = false;
+  public title = 'License';
+  public icon = 'fa fa-file-text-o';
+  public stackLicense: string;
+  public hasIssue = false;
+  public responseReady = false;
 
   constructor() {}
 
   ngOnChanges() {
     console.log(this.licenseData);
+    if (this.licenseData) {
+      this.stackLicense = this.licenseData.f8a_stack_licenses[0];
+      if (this.licenseData.status.toLowerCase() !== 'successful') {
+        this.hasIssue = true;
+      }
+      this.responseReady = true;
+    }
   }
 
   ngOnInit() {}
