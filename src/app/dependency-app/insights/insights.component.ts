@@ -19,7 +19,7 @@ import {
 
 import {
   ComponentInformationModel
-} from '../model/stack-response.model';
+} from '../model/data.model';
 
 @Component({
   selector: 'app-insights',
@@ -29,13 +29,24 @@ import {
 
 export class InsightComponent implements OnInit, OnChanges {
   @Input() companions: Array < ComponentInformationModel > ;
+  @Output() companionAdded = new EventEmitter < ComponentInformationModel > ();
+
+  public hasIssue = false;
+  public responseReady = false;
 
   constructor() {}
 
   ngOnChanges() {
     console.log(this.companions);
+    if (this.companions) {
+      this.responseReady = true;
+    }
   }
 
   ngOnInit() {}
+
+  public companionWasAdded(dependency: ComponentInformationModel) {
+    this.companionAdded.emit(dependency);
+  }
 
 }

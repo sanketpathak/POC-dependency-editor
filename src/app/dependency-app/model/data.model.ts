@@ -162,3 +162,28 @@ export class DependencySnapshotItem {
     package: string;
     version: string;
 }
+
+export class CveResponseModel {
+    request_id: string;
+    result: Array<CveResponseResultModel>;
+    stack_highest_cvss: number;
+    statusCode: 200;
+    statusText: string;
+}
+
+export class CveResponseResultModel {
+    ecosystem: string;
+    package: string;
+    version: string;
+    cve: CveDataModel;
+}
+
+export class CveDataModel {
+    highest_cvss: number;
+    details: Array<CveDataDetailModel>;
+}
+
+export class CveDataDetailModel {
+    cve_id: string;
+    cvss: number;
+}

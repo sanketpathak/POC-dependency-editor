@@ -19,7 +19,7 @@ import 'rxjs/operators/map';
 
 import {
     StackReportModel
-} from '../model/stack-response.model';
+} from '../model/data.model';
 
 @Injectable()
 export class DependencyEditorService {
@@ -79,7 +79,7 @@ export class DependencyEditorService {
             .catch(this.handleError);
     }
 
-    addDependency(url, payload) {
+    getDepData(url, payload) {
         const options = new RequestOptions({
             headers: this.headersStage
         });

@@ -4,18 +4,20 @@
       <p style="font-size: 16px;padding: 15px;position: relative;background: #f5f5f5;margin: 0">
         <span class="pficon-zone"></span>
         <span style="margin-left: 5px;">Insights</span>
-        <span style="margin-left:4px;">(1)</span>
-        <span style="background-color:#f8a33a; padding: 6px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;">
+        <span style="margin-left:4px;" *ngIf="responseReady">({{companions?.length}})</span>
+        <span style="background-color:#f8a33a; padding: 6px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;" *ngIf="responseReady && hasIssue">
           <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
+        </span>
+        <span style="background-color:#6ba100; padding: 7px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;" *ngIf="responseReady && !hasIssue">
+          <i class="pficon-ok" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
         </span>
       </p>
     </div>
     <div class="col-sm-12">
-      <div class="card-pf-body" *ngIf="companions?.length">
-        <app-list-element *ngFor="let companion of companions" [companion]="companion"></app-list-element>
-        <!-- <app-list-element [package]="'Package 2'" [version]="'version 2'" [securityIssue]="'pficon-warning-triangle-o'" [licenseIssue]="'pficon-ok'"></app-list-element> -->
+      <div class="card-pf-body" *ngIf="responseReady">
+        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [companion]="companion"></app-list-element>
       </div>
-      <div class="card-pf-body" *ngIf="!companions?.length">
+      <div class="card-pf-body" *ngIf="!responseReady">
         <div class="pre-loader">
           <div class="pre-loader-spinner spinner spinner-lg"></div>
         </div>

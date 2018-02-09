@@ -4,14 +4,14 @@
     <span>{{issueName}}</span>
   </h2>
   <h2 style="position: relative">
-    <span class="card-pf-aggregate-status-count" style="color:#0088ce;">
+    <span class="card-pf-aggregate-status-count" style="color:#0088ce;" *ngIf="responseReady">
       {{issueStatus}}
     </span>
-    <div class="pre-loader" *ngIf="!issueStatus">
+    <div class="pre-loader" *ngIf="!responseReady">
       <div class="pre-loader-spinner spinner spinner-lg"></div>
     </div>
   </h2>
-  <div class="card-pf-body" *ngIf="issueStatus">
+  <div class="card-pf-body" *ngIf="responseReady">
     <p class="card-pf-aggregate-status">
       <span class="card-pf-aggregate-status-notification">
         <a href="#" class="links" style="font-size:12px">
@@ -20,7 +20,12 @@
       </span>
     </p>
   </div>
-  <span style="background-color:#f8a33a; padding: 12px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;">
+  <span style="background-color:#f8a33a; padding: 12px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;"
+    *ngIf="responseReady && hasIssue">
     <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
+  </span>
+  <span style="background-color:#6ba100; padding: 12px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;"
+    *ngIf="responseReady && !hasIssue">
+    <i class="pficon-ok" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
   </span>
 </div>
