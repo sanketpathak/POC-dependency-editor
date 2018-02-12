@@ -29,7 +29,8 @@ import { DependencySnapshot } from '../utils/dependency-snapshot';
 export class ListElementComponent implements OnInit {
   @Input() dependency: ComponentInformationModel;
   @Input() fromAddDependency: string;
-  @Output() companionAdded = new EventEmitter<any> ();
+  @Output() companionAdded = new EventEmitter<EventDataModel> ();
+  @Output() companionRemoved = new EventEmitter<ComponentInformationModel> ();
 
   constructor(private service: DependencyEditorService) {
   }
@@ -46,12 +47,11 @@ export class ListElementComponent implements OnInit {
     this.companionAdded.emit(objToEmit);
   }
 
+  removeCompanion() {
+    this.companionRemoved.emit(this.dependency);
+  }
+
   removeDependency() {
-    const objToEmit: EventDataModel = {
-      depFull: this.dependency,
-      depSnapshot: null,
-      action: 'remove'
-    };
-    this.companionAdded.emit(objToEmit);
+    this.service.removeDependency(this.dependency);
   }
 }

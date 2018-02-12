@@ -16,6 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
+import * as _ from 'lodash';
 
 import {
   ComponentInformationModel
@@ -37,7 +38,6 @@ export class InsightComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges() {
-    console.log(this.companions);
     if (this.companions) {
       this.responseReady = true;
     }
@@ -49,4 +49,9 @@ export class InsightComponent implements OnInit, OnChanges {
     this.companionAdded.emit(eventData);
   }
 
+  public removeCompanion(dependency: ComponentInformationModel) {
+    _.remove(this.companions, (companion) => {
+      return companion.name === dependency.name;
+    });
+  }
 }

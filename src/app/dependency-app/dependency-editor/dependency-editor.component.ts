@@ -61,7 +61,6 @@ export class DependencyEditorComponent implements OnInit {
     this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
     this.service.getStackAnalyses(this.stackUrl)
       .subscribe((response: StackReportModel) => {
-        console.log('stack response', response);
         const result = response.result[0];
         DependencySnapshot.ECOSYSTEM = result.user_stack_info.ecosystem;
         DependencySnapshot.DEP_SNAPSHOT = result.user_stack_info.dependencies;
@@ -73,7 +72,6 @@ export class DependencyEditorComponent implements OnInit {
       });
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
-        console.log(depSelected);
         this.isDepSelectedFromSearch = true;
         this.depToAdd = depSelected;
         const obj = {
@@ -85,6 +83,11 @@ export class DependencyEditorComponent implements OnInit {
           action: 'add'
         };
         this.callDepServices(obj);
+      });
+    this.service.dependencyRemoved
+      .subscribe((data: EventDataModel) => {
+        console.log(data);
+        this.callDepServices(data);
       });
   }
 
@@ -124,10 +127,13 @@ export class DependencyEditorComponent implements OnInit {
       console.log('response after get dependency insights', response);
       this.setCompanions(response.result[0]);
       if (this.isDepSelectedFromSearch) {
-        console.log('dep selected', this.isDepSelectedFromSearch);
         DependencySnapshot.DEP_FULL_ADDED.push(<ComponentInformationModel>this.depToAdd);
         this.isDepSelectedFromSearch = false;
       }
+      console.log(DependencySnapshot.DEP_FULL_ADDED);
+      console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
+      console.log(DependencySnapshot.DEP_SNAPSHOT);
+      console.log(DependencySnapshot.ECOSYSTEM);
     });
   }
 

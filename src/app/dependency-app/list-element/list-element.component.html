@@ -12,7 +12,7 @@
       <button class="btn btn-default check" (click)="addDependency(dependency)" *ngIf="fromAddDependency !== 'true'">
         <span class="glyphicon glyphicon-ok"></span>
       </button>
-      <button class="btn btn-default close" *ngIf="fromAddDependency !== 'true'">
+      <button class="btn btn-default close" (click)="removeCompanion(dependency)" *ngIf="fromAddDependency !== 'true'">
         <span class="fa fa-remove"></span>
       </button>
       <button class="btn btn-default close" (click)="removeDependency(dependency)" *ngIf="fromAddDependency === 'true'">

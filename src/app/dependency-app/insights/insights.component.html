@@ -17,7 +17,7 @@
     </div>
     <div class="col-sm-12">
       <div class="card-pf-body" *ngIf="companions?.length">
-        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion"></app-list-element>
+        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion" (companionRemoved)="removeCompanion($event)"></app-list-element>
       </div>
       <div class="card-pf-body">
         <div class="pre-loader" *ngIf="!companions">

@@ -3,11 +3,11 @@
     <div class="col-sm-12">
       <p style="font-size: 16px;padding: 15px; background: #f5f5f5; margin: 0">
         <span>Add Dependencies</span>
-        <span style="margin-left:4px;">(0)</span>
+        <span style="margin-left:4px;" *ngIf="dependencies">({{ dependencies?.length }})</span>
       </p>
     </div>
     <div class="col-sm-12">
-      <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding-top: 15px;margin-bottom: 0;text-align: center;box-shadow: none">
+      <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding: 0;margin-bottom: 0;box-shadow: none">
         <h2 class="card-pf-title search-box">
           <div id="date-2" class="input-group date">
             <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
@@ -18,8 +18,10 @@
           <ul class="dropdown-menu" *ngIf="dependencySearchResult?.length">
             <li *ngFor="let dep of dependencySearchResult">
               <a (click)="addDependency(dep)">
-                <div><b>{{ dep.name }}</b></div> 
-                <div>{{ dep.version }}</div> 
+                <div>
+                  <b>{{ dep.name }}</b>
+                </div>
+                <div>{{ dep.version }}</div>
               </a>
             </li>
           </ul>
@@ -31,19 +33,21 @@
               <span style="padding-top:17px;">No Dependencies Added</span>
             </span>
           </p>
-          <p style="padding-top:18px;">
-            You can add dependencies either by searching or by going to 'choose dependencies' section by clicking 'View Dependency List'
-          </p>
-          <p>OR</p>
-          <p>
-            You can choose to add dependenciec mentioned in the insights section.
-          </p>
+          <div style="padding-top:18px;text-align: center">
+            <p>
+              You can add dependencies either by searching or by going to 'choose dependencies' section by clicking 'View Dependency List'
+            </p>
+            <p>OR</p>
+            <p>
+              You can choose to add dependenciec mentioned in the insights section.
+            </p>
+          </div>
         </div>
-        <div class="card-pf-body" *ngIf="dependencies?.length">
+        <div class="card-pf-body" *ngIf="dependencies?.length" style="overflow-y: scroll;height: 289px;">
           <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element>
         </div>
-        <div class="card-pf-body">
-          <div class="pre-loader" *ngIf="!dependencies">
+        <div class="card-pf-body" *ngIf="!dependencies">
+          <div class="pre-loader">
             <div class="pre-loader-spinner spinner spinner-lg"></div>
           </div>
         </div>

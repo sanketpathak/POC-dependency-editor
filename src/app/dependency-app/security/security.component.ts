@@ -36,7 +36,6 @@ export class SecurityComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges() {
-    console.log(this.cveData);
     if (this.cveData) {
       this.cveData.result.forEach(item => {
         if (item.cve) {
