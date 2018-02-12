@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
-import { ListElementModule } from '../list-element/list-element.module'
+import { ListElementModule } from '../list-element/list-element.module';
 import { InsightComponent } from './insights.component';
 
 

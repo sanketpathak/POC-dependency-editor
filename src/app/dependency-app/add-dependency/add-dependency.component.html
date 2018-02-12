@@ -8,19 +8,27 @@
     </div>
     <div class="col-sm-12">
       <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding-top: 15px;margin-bottom: 0;text-align: center;box-shadow: none">
-        <h2 class="card-pf-title">
+        <h2 class="card-pf-title search-box">
           <div id="date-2" class="input-group date">
-            <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString">
+            <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
             <span class="input-group-addon" (click)="getDependencies()" style="cursor: pointer">
               <span class="pficon-search"></span>
             </span>
           </div>
+          <ul class="dropdown-menu" *ngIf="dependencySearchResult?.length">
+            <li *ngFor="let dep of dependencySearchResult">
+              <a (click)="addDependency(dep)">
+                <div><b>{{ dep.name }}</b></div> 
+                <div>{{ dep.version }}</div> 
+              </a>
+            </li>
+          </ul>
         </h2>
-        <div class="card-pf-body">
+        <div class="card-pf-body" *ngIf="dependencies?.length === 0">
           <p class="card-pf-aggregate-status-notifications">
             <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
               <span class="pficon pficon-add-circle-o" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
-              <span style="padding-top:17px;">Dependency Added</span>
+              <span style="padding-top:17px;">No Dependencies Added</span>
             </span>
           </p>
           <p style="padding-top:18px;">
@@ -30,6 +38,14 @@
           <p>
             You can choose to add dependenciec mentioned in the insights section.
           </p>
+        </div>
+        <div class="card-pf-body" *ngIf="dependencies?.length">
+          <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element>
+        </div>
+        <div class="card-pf-body">
+          <div class="pre-loader" *ngIf="!dependencies">
+            <div class="pre-loader-spinner spinner spinner-lg"></div>
+          </div>
         </div>
       </div>
     </div>

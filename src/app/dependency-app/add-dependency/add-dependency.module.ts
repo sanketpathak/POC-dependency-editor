@@ -7,6 +7,7 @@ import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AddDependencyComponent } from './add-dependency.component';
+import { ListElementModule } from '../list-element/list-element.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AddDependencyComponent } from './add-dependency.component';
     HttpModule,
     FormsModule,
     TagInputModule,
-    BrowserModule
+    BrowserModule,
+    ListElementModule
 ],
  declarations: [
     AddDependencyComponent

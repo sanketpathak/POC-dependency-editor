@@ -16,7 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { ComponentInformationModel, StackReportModel } from '../model/data.model';
+import { ComponentInformationModel, StackReportModel, EventDataModel } from '../model/data.model';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { DependencySnapshot } from '../utils/dependency-snapshot';
 
@@ -27,8 +27,9 @@ import { DependencySnapshot } from '../utils/dependency-snapshot';
 })
 
 export class ListElementComponent implements OnInit {
-  @Input() companion: ComponentInformationModel;
-  @Output() companionAdded = new EventEmitter<ComponentInformationModel> ();
+  @Input() dependency: ComponentInformationModel;
+  @Input() fromAddDependency: string;
+  @Output() companionAdded = new EventEmitter<any> ();
 
   constructor(private service: DependencyEditorService) {
   }
@@ -37,6 +38,20 @@ export class ListElementComponent implements OnInit {
   }
 
   addDependency() {
-    this.companionAdded.emit(this.companion);
+    const objToEmit: EventDataModel = {
+      depFull: this.dependency,
+      depSnapshot: null,
+      action: 'add'
+    };
+    this.companionAdded.emit(objToEmit);
+  }
+
+  removeDependency() {
+    const objToEmit: EventDataModel = {
+      depFull: this.dependency,
+      depSnapshot: null,
+      action: 'remove'
+    };
+    this.companionAdded.emit(objToEmit);
   }
 }
