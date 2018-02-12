@@ -30,18 +30,24 @@ export class LicenseComponent implements OnInit, OnChanges {
   public title = 'License';
   public icon = 'fa fa-file-text-o';
   public stackLicense: string;
-  public hasIssue = false;
-  public responseReady = false;
+  public hasIssue: boolean | string = false;
 
   constructor() {}
 
   ngOnChanges() {
     if (this.licenseData) {
-      this.stackLicense = this.licenseData.f8a_stack_licenses[0];
-      if (this.licenseData.status.toLowerCase() !== 'successful') {
+      if (this.licenseData.status.toLowerCase() === 'successful') {
+        this.hasIssue = false;
+        this.stackLicense = this.licenseData.f8a_stack_licenses[0];
+      } else if (this.licenseData.status.toLowerCase() === 'failure') {
+        this.hasIssue = 'na';
+        this.stackLicense = 'Unknown';
+      } else if (this.licenseData.status.toLowerCase() === 'conflict' || this.licenseData.status.toLowerCase() === 'unknown') {
         this.hasIssue = true;
+        this.stackLicense = 'None';
       }
-      this.responseReady = true;
+    } else {
+      this.stackLicense = null;
     }
   }
 

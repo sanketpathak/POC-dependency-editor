@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="license">
-      <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="stackLicense" [responseReady]="responseReady" [hasIssue]="hasIssue">
+      <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="stackLicense" [hasIssue]="hasIssue">
       </app-issue>
       <app-alert-box [title]="title" [issueStatus]="stackLicense" [colored]="'#6ca100'" [issueSymbol]="icon" [secureIssue]="false"
         *ngIf="hasIssue">
