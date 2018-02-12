@@ -30,20 +30,21 @@ export class SecurityComponent implements OnInit, OnChanges {
   public title = 'Security Alert';
   public icon = 'fa fa-shield';
   public noOfCves = 0;
-  public responseReady = false;
   public hasIssue = false;
 
   constructor() {}
 
   ngOnChanges() {
     if (this.cveData) {
+      this.noOfCves = 0;
       this.cveData.result.forEach(item => {
         if (item.cve) {
           this.noOfCves++;
           this.hasIssue = true;
         }
       });
-      this.responseReady = true;
+    } else {
+      this.noOfCves = null;
     }
   }
 

@@ -26,13 +26,21 @@ import {
 export class IssueComponent implements OnInit, OnChanges {
   @Input() issueName: string;
   @Input() issueSymbol: string;
-  @Input() issueStatus: string|number;
-  @Input() responseReady: boolean;
+  @Input() issueStatus: string | number;
   @Input() hasIssue: boolean;
+
+  public isLoading = false;
 
   constructor() {}
 
   ngOnChanges() {
+    if (this.issueStatus === null) {
+      this.isLoading = true;
+    } else if (typeof this.issueStatus === 'string' && this.issueStatus) {
+      this.isLoading = false;
+    } else if (typeof this.issueStatus === 'number') {
+      this.isLoading = false;
+    }
   }
 
   ngOnInit() {

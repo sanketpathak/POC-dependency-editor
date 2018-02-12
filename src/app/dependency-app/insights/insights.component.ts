@@ -33,15 +33,10 @@ export class InsightComponent implements OnInit, OnChanges {
   @Output() companionAdded = new EventEmitter < any > ();
 
   public hasIssue = false;
-  public responseReady = false;
 
   constructor() {}
 
-  ngOnChanges() {
-    if (this.companions) {
-      this.responseReady = true;
-    }
-  }
+  ngOnChanges() {}
 
   ngOnInit() {}
 

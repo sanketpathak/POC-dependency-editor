@@ -126,6 +126,7 @@ export class DependencyEditorComponent implements OnInit {
     .subscribe((response: StackReportModel) => {
       console.log('response after get dependency insights', response);
       this.setCompanions(response.result[0]);
+      this.setLicenseData(response.result[0]);
       if (this.isDepSelectedFromSearch) {
         DependencySnapshot.DEP_FULL_ADDED.push(<ComponentInformationModel>this.depToAdd);
         this.isDepSelectedFromSearch = false;
