@@ -1,6 +1,6 @@
 .alert-box {
     background: #ffffff;
-    border: #6ca100 1px solid ;
+    // border: #6ca100 1px solid ;
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30);
     width: 346px;
     height: 239px;
@@ -10,13 +10,26 @@
     top: -39px;
     left: 452px;
     z-index: 9;
+    &.success {
+        border: #6ca100 1px solid;
+        &:after {
+            border: #6ca100 1px solid;
+        }
+    }
+    &.failure {
+        border: #d0021b 1px solid;
+        &:after {
+            border: #d0021b 1px solid;
+        }
+    }
+    
     &:after {
         content: '';
         width: 13px;
         height: 13px;
         display: block;
         position: absolute;
-        border: #6ca100 1px solid;
+        // border: #6ca100 1px solid;
         // bottom: 364px;
         // left: 811px;
         bottom: 88px;

@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AlertBoxComponent } from './alert-box.component';
 import { IssueModule } from '../issue/issue.module';
+import {ChartModule} from '../../utils/chart/chart.module' ;
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { IssueModule } from '../issue/issue.module';
     HttpModule,
     FormsModule,
     BrowserModule,
-    IssueModule
+    IssueModule,
+    ChartModule
 ],
  declarations: [
     AlertBoxComponent
