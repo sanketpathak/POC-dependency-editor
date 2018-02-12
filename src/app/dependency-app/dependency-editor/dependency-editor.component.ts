@@ -26,7 +26,9 @@ import {
   ComponentInformationModel,
   ResultInformationModel,
   StackLicenseAnalysisModel,
-  CveResponseModel
+  CveResponseModel,
+  DependencySearchItem,
+  EventDataModel
 } from '../model/data.model';
 import {
   DependencySnapshot
@@ -42,10 +44,13 @@ export class DependencyEditorComponent implements OnInit {
   public companions: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
   public cveData: CveResponseModel;
+  public dependenciesAdded: Array< ComponentInformationModel> = [];
 
   private stackUrl: string;
   private getDepInsightsUrl: string;
   private getCveUrl: string;
+  private isDepSelectedFromSearch = false;
+  private depToAdd: DependencySearchItem;
 
   constructor(private service: DependencyEditorService) {
   }
@@ -64,32 +69,39 @@ export class DependencyEditorComponent implements OnInit {
         this.setDependencies(result);
         this.setCompanions(result);
         this.setLicenseData(result);
-        this.getCveData(this.getPayload());
+        this.getCveData(this.service.getPayload());
+      });
+    this.service.dependencySelected
+      .subscribe((depSelected: DependencySearchItem) => {
+        console.log(depSelected);
+        this.isDepSelectedFromSearch = true;
+        this.depToAdd = depSelected;
+        const obj = {
+          depFull: null,
+          depSnapshot: {
+            package: depSelected.name,
+            version: depSelected.version
+          },
+          action: 'add'
+        };
+        this.callDepServices(obj);
       });
   }
 
-  public callDepServices(dependency: ComponentInformationModel) {
-    const payload = this.getPayload(dependency);
+  public callDepServices(eventData: EventDataModel) {
+    this.reset();
+    this.service.updateDependencyAddedSnapshot(eventData);
+    this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
+    const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
     this.getCveData(payload);
   }
 
-  private getPayload(dependency?: ComponentInformationModel) {
-    const payload = {};
-    let deps: Array<DependencySnapshotItem>;
-    if (dependency) {
-      const selectedDependency = [{
-        'package': dependency.name,
-        'version': dependency.version
-      }];
-      deps = DependencySnapshot.DEP_SNAPSHOT.concat(selectedDependency);
-    } else {
-      deps = DependencySnapshot.DEP_SNAPSHOT;
-    }
-    payload['_resolved'] = deps;
-    payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
-    payload['request_id'] = DependencySnapshot.REQUEST_ID;
-    return payload;
+  private reset() {
+    this.companions = null;
+    this.dependenciesAdded = null;
+    this.cveData = null;
+    this.licenseData = null;
   }
 
   private setDependencies(result: ResultInformationModel) {
@@ -107,14 +119,20 @@ export class DependencyEditorComponent implements OnInit {
   private getDependencyInsights(payload: any) {
     const persist = false;
     const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
-    this.service.getDepData(urlToHit, payload)
+    this.service.getDependencyData(urlToHit, payload)
     .subscribe((response: StackReportModel) => {
       console.log('response after get dependency insights', response);
+      this.setCompanions(response.result[0]);
+      if (this.isDepSelectedFromSearch) {
+        console.log('dep selected', this.isDepSelectedFromSearch);
+        DependencySnapshot.DEP_FULL_ADDED.push(<ComponentInformationModel>this.depToAdd);
+        this.isDepSelectedFromSearch = false;
+      }
     });
   }
 
   private getCveData(payload: any) {
-    this.service.getDepData(this.getCveUrl, payload)
+    this.service.getDependencyData(this.getCveUrl, payload)
     .subscribe((response: CveResponseModel) => {
       console.log('response after get cve call', response);
       this.cveData = response;

@@ -45,6 +45,7 @@ export class ComponentInformationModel {
     sentiment: SentimentModel;
     version: string;
     topic_list: Array<string>;
+    alternate: ComponentInformationModel;
 }
 
 export class SecurityInformationModel {
@@ -186,4 +187,16 @@ export class CveDataModel {
 export class CveDataDetailModel {
     cve_id: string;
     cvss: number;
+}
+
+export class DependencySearchItem {
+    ecosystem: string;
+    version: string;
+    name: string;
+}
+
+export class EventDataModel {
+    depFull: ComponentInformationModel;
+    depSnapshot: DependencySnapshotItem;
+    action: string;
 }

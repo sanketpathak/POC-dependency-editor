@@ -10,7 +10,7 @@
       <app-current-project [dependencies]="dependencies"></app-current-project>
       <div class="row">
         <div class="col-sm-5">
-            <app-add-dependency></app-add-dependency>
+            <app-add-dependency [dependencies]="dependenciesAdded"></app-add-dependency>
         </div>
         <div class="col-sm-5">
             <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>

@@ -29,7 +29,7 @@ import {
 
 export class InsightComponent implements OnInit, OnChanges {
   @Input() companions: Array < ComponentInformationModel > ;
-  @Output() companionAdded = new EventEmitter < ComponentInformationModel > ();
+  @Output() companionAdded = new EventEmitter < any > ();
 
   public hasIssue = false;
   public responseReady = false;
@@ -45,8 +45,8 @@ export class InsightComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  public companionWasAdded(dependency: ComponentInformationModel) {
-    this.companionAdded.emit(dependency);
+  public companionWasAdded(eventData: any) {
+    this.companionAdded.emit(eventData);
   }
 
 }

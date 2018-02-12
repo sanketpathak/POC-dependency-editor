@@ -9,18 +9,21 @@
       </div>
     </div>
     <div class="list-view-pf-actions">
-      <button class="btn btn-default check" (click)="addDependency(companion)">
+      <button class="btn btn-default check" (click)="addDependency(dependency)" *ngIf="fromAddDependency !== 'true'">
         <span class="glyphicon glyphicon-ok"></span>
       </button>
-      <button class="btn btn-default close">
+      <button class="btn btn-default close" *ngIf="fromAddDependency !== 'true'">
         <span class="fa fa-remove"></span>
+      </button>
+      <button class="btn btn-default close" (click)="removeDependency(dependency)" *ngIf="fromAddDependency === 'true'">
+        <span class="pficon pficon-remove"></span>
       </button>
     </div>
     <div class="list-view-pf-main-info">
       <div class="list-view-pf-body">
         <div class="list-view-pf-description">
-          <div class="list-group-item-heading">
-            {{companion.name}}
+          <div class="list-group-item-heading" [title]="dependency.name">
+            {{dependency.name}}
           </div>
           <div class="list-group-item-text">
             Why this component?
@@ -28,13 +31,13 @@
         </div>
         <div class="list-view-pf-additional-info">
           <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-            {{companion.version}}
+            {{dependency.version}}
           </div>
           <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-            <strong *ngIf="companion?.security?.length">
+            <strong *ngIf="dependency?.security?.length">
               <span class="pficon-warning-triangle-o"></span>
             </strong>
-            <strong *ngIf="!companion?.security?.length">
+            <strong *ngIf="!dependency?.security?.length">
               <span class="pficon-ok"></span>
             </strong>
             <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Security</span>

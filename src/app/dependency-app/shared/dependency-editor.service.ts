@@ -1,6 +1,8 @@
 import {
     Injectable,
-    Inject
+    Inject,
+    EventEmitter,
+    Output
 } from '@angular/core';
 import {
     Http,
@@ -16,13 +18,23 @@ import {
 } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/operators/map';
+import * as _ from 'lodash';
 
 import {
-    StackReportModel
-} from '../model/stack-response.model';
+    StackReportModel,
+    DependencySnapshotItem,
+    ComponentInformationModel,
+    CveResponseModel,
+    DependencySearchItem,
+    EventDataModel
+} from '../model/data.model';
+import {
+    DependencySnapshot
+} from '../utils/dependency-snapshot';
 
 @Injectable()
 export class DependencyEditorService {
+    @Output() dependencySelected = new EventEmitter < DependencySearchItem > ();
 
     private headersProd: Headers = new Headers({
         'Content-Type': 'application/json'
@@ -65,7 +77,7 @@ export class DependencyEditorService {
         }
     }
 
-    getStackAnalyses(url: string, params ?: any): Observable < any > {
+    getStackAnalyses(url: string): Observable < any > {
         const options = new RequestOptions({
             headers: this.headersProd
         });
@@ -79,35 +91,63 @@ export class DependencyEditorService {
             .catch(this.handleError);
     }
 
-    getDepData(url, payload) {
+    getDependencies(url: string): Observable < any > {
         const options = new RequestOptions({
-            headers: this.headersStage
+            headers: this.headersProd
         });
-        let stackReport: StackReportModel = null;
-        return this.http.post(url, payload, options)
+        return this.http.get(url, options)
             .map(this.extractData)
             .map((data) => {
-                stackReport = data;
-                return stackReport;
+                return data;
             })
             .catch(this.handleError);
     }
 
-    getCvssObj(score: number): any {
-        if (score) {
-            let iconClass: string = this.cvssScale.medium.iconClass;
-            let displayClass: string = this.cvssScale.medium.displayClass;
-            if (score >= this.cvssScale.high.start) {
-                iconClass = this.cvssScale.high.iconClass;
-                displayClass = this.cvssScale.high.displayClass;
-            }
-            return {
-                iconClass: iconClass,
-                displayClass: displayClass,
-                value: score,
-                percentScore: (score / 10 * 100)
+    getDependencyData(url, payload): Observable < any > {
+        const options = new RequestOptions({
+            headers: this.headersStage
+        });
+        return this.http.post(url, payload, options)
+            .map(this.extractData)
+            .map((data: StackReportModel | CveResponseModel | any) => {
+                return data;
+            })
+            .catch(this.handleError);
+    }
+
+    updateDependencyAddedSnapshot(depObj: EventDataModel) {
+        let depToAdd;
+        if (depObj.depFull) {
+            depToAdd = {
+                package: depObj.depFull.name,
+                version: depObj.depFull.version
             };
+            if (depObj.action === 'add') {
+                DependencySnapshot.DEP_FULL_ADDED.push(depObj.depFull);
+            }
+        } else if (depObj.depSnapshot) {
+            depToAdd = depObj.depSnapshot;
         }
+        if (depObj.action === 'add') {
+            DependencySnapshot.DEP_SNAPSHOT_ADDED.push(depToAdd);
+        } else {
+            _.remove(DependencySnapshot.DEP_SNAPSHOT_ADDED, (dep) => {
+                return dep.package === depToAdd.package;
+            });
+            _.remove(DependencySnapshot.DEP_FULL_ADDED, (dep) => {
+                return dep.name === depToAdd.package;
+            });
+        }
+        console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
+    }
+
+    getPayload() {
+        const payload = {};
+        const deps = DependencySnapshot.DEP_SNAPSHOT.concat(DependencySnapshot.DEP_SNAPSHOT_ADDED);
+        payload['_resolved'] = deps;
+        payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
+        payload['request_id'] = DependencySnapshot.REQUEST_ID;
+        return payload;
     }
 
     private extractData(res: Response) {
