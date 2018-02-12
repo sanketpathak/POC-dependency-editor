@@ -36,7 +36,6 @@ export class LicenseComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges() {
-    console.log(this.licenseData);
     if (this.licenseData) {
       this.stackLicense = this.licenseData.f8a_stack_licenses[0];
       if (this.licenseData.status.toLowerCase() !== 'successful') {

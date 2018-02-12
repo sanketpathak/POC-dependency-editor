@@ -45,10 +45,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
   }
 
   getDependencies() {
-    console.log('component search string', this.dependencySearchString);
     this.service.getDependencies(this.searchDepsUrl + this.dependencySearchString)
       .subscribe((response: any) => {
-        console.log('dependency search result', response);
         this.dependencySearchResult = response['result'];
       });
   }

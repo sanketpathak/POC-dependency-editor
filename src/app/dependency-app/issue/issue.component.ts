@@ -33,7 +33,6 @@ export class IssueComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges() {
-    console.log(this.issueStatus, typeof this.issueStatus);
   }
 
   ngOnInit() {

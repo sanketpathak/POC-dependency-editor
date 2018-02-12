@@ -35,6 +35,7 @@ import {
 @Injectable()
 export class DependencyEditorService {
     @Output() dependencySelected = new EventEmitter < DependencySearchItem > ();
+    @Output() dependencyRemoved = new EventEmitter < EventDataModel > ();
 
     private headersProd: Headers = new Headers({
         'Content-Type': 'application/json'
@@ -138,7 +139,6 @@ export class DependencyEditorService {
                 return dep.name === depToAdd.package;
             });
         }
-        console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
     }
 
     getPayload() {
@@ -172,5 +172,14 @@ export class DependencyEditorService {
             };
         }
         return Observable.throw(body);
+    }
+
+    removeDependency(dependency: ComponentInformationModel) {
+        const objToEmit: EventDataModel = {
+            depFull: dependency,
+            depSnapshot: null,
+            action: 'remove'
+        };
+        this.dependencyRemoved.emit(objToEmit);
     }
 }
