@@ -14,10 +14,12 @@ export class CurrentprojectComponent implements OnInit {
   @Input() dependencies: Array<DependencySnapshotItem>;
   @Input() metadata: any;
 
-  public component: string[]  ;
-
+  public projectDependencies: string[]  ;
+  
   constructor() { }
 
   ngOnInit() {
+    this.projectDependencies = ['Hystrix',  'Hystrix01', 'Comp with big name 01', 'Comp with big name 02'];
+    debugger;
   }
 }

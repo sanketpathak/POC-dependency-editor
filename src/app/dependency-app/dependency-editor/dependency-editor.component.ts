@@ -42,7 +42,9 @@ import {
   styleUrls: ['./dependency-editor.component.less']
 })
 export class DependencyEditorComponent implements OnInit {
-  @ViewChild('previewModal') previewModal: any;
+  // @ViewChild('previewModal') previewModal: any;
+  @ViewChild('dependencyPreview') modalDependencyPreview : any;
+  
   public dependencies: Array < DependencySnapshotItem > ;
   public companions: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
@@ -177,7 +179,13 @@ export class DependencyEditorComponent implements OnInit {
     });
   }
 
-  showPreviewModal() {
-    this.previewModal.open();
+  // showPreviewModal() {
+  //   this.previewModal.open();
+  // }
+  public showDependencyModal(event: Event) {
+    this.modalDependencyPreview.open();
+  }
+  public closemodal(){
+    this.modalDependencyPreview.close();
   }
 }

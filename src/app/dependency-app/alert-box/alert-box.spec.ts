@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurrentprojectComponent } from './currentproject.component';
+import { AlertBoxComponent } from './alert-box.component';
 
 describe('CurrentprojectComponent', () => {
-  let component: CurrentprojectComponent;
-  let fixture: ComponentFixture<CurrentprojectComponent>;
+  let component: AlertBoxComponent;
+  let fixture: ComponentFixture<AlertBoxComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentprojectComponent ]
+      declarations: [ AlertBoxComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentprojectComponent);
+    fixture = TestBed.createComponent(AlertBoxComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

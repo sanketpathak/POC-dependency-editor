@@ -1,12 +1,12 @@
 
-  <div class="cards-pf alert-box" [style.border]="colored + ' ' + '1px solid'">
+  <div class="cards-pf success failure alert-box" [style.border]="colored + ' ' + '1px solid'">
     <div class="container-fluid container-cards-pf">
       <div class="row row-cards-pf">
         <div class="col-xs-6 col-sm-4 col-md-4">
           <!-- <div class="card-pf"> -->
           <div class="card-pf-heading alert-heading" [style.background]="colored">
             <h2 class="card-pf-title alert-title">
-              <span class="issue_symbol">{{alert_title}}</span> <span>{{issue_status}}</span>
+              <span [class]="issue_symbol">{{alert_title}}</span> <span>{{issue_status}}</span>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
                 <span class="pficon pficon-close" (onclick)="get_secure()"></span>
               </button><!-- <div class="a_symbol"></div> -->
@@ -15,8 +15,29 @@
                   <span class="fa fa-angle-right"></span>
             </div> -->
          </div>
-          <div class="card-pf-body">
-
+          <div class="card-pf-body" style="width:325px;margin-left: -30px;">
+              <div class="list-group list-view-pf" *ngIf="secure_issue" style="border-top: none;border-bottom: 1px solid #ededed;">
+                  <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">                     
+                <div class="list-view-pf-expand">
+                  <span class="fa fa-angle-right" style="border-right: 1px solid #d1d1d1;"></span>
+                </div>
+                <div class="list-view-pf-main-info">
+                  <div class="list-view-pf-body">
+                    <div class="list-view-pf-description">
+                    CVE-2017-1223
+                    </div>
+                    <div class="list-view-pf-additional-info">
+                    Dependency Affected
+                    </div>
+                  </div>
+                </div>
+                </div> 
+              </div>
+              <div *ngIf="license_issue">
+                <div class="row">
+                    <f8-chart id="chart" [data]="charts['data']" [chartOptions]="charts['options']" bind-configs="charts['configs']" style="left: 0px"></f8-chart>
+                </div>
+              </div>
           </div>
         </div>
       </div>
