@@ -33,10 +33,27 @@
       <div style="margin-left: 20px;margin-top: 74px;display: flex;">
         <p style="font-size:14px;">Not sure about dependencies? Click to view the full list of dependencies</p>
         <button class="btn btn-default" style="margin-left: 7px;background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:173px;">
-          <p style="font-size:14px;color:#4d5258;text-align:center;">View dependency list</p>
+          <p (click)="viewList()" style="font-size:14px;color:#4d5258;text-align:center;">{{listView}}</p>
         </button>
       </div>
-      <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;margin-top: 172px;">
+      <app-packages [showList]="showList"></app-packages>      
+      <!-- <div class="panel-group" id="fixed-accordion" style="margin-left: 20px;margin-top: 74px;display: flex;height: 350px;">
+          <div class="panel panel-default">
+            <div class="panel-heading" data-component="collapse-heading">
+              <h4 class="panel-title">
+                <p style="font-size:14px;">Not sure about dependencies? Click to view the full list of dependencies</p>                  
+                <a data-toggle="collapse" data-parent="#fixed-accordion" href="#fixedCollapseOne" style="margin-left: 7px;">
+                    View dependency list
+                </a>
+              </h4>
+            </div>
+            <div id="fixedCollapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+              </div>
+            </div>
+          </div>
+      </div> -->
+      <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;margin-top: 110px;">
         <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#dependencyPreview" (click)="showDependencyModal($event)"
           style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;">OK</button>
         <span style="margin-top: 25px;position: absolute;margin-left: 9px;font-size:14px;color:#8b8d8f;">or press
@@ -125,7 +142,7 @@
                                                           margin-top: 6px;">
                   <div class="list-group list-view-pf" style="border-bottom: none;">
                     <div class="list-view-pf-main-info" style="padding: 0px; margin-top: 16px;">
-                      <div class="list-view-pf-body" id="style-1" style="display: block;overflow-y:scroll;overflow-x:hidden;height:495px;">
+                      <div class="list-view-pf-body" id="style-1" style="display: block;;overflow-x:hidden;height:495px;">
                         <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" style="border-bottom: 1px solid #ededed;
                                                                                                               margin: -4px;
                                                                                                               margin-bottom: 10px;

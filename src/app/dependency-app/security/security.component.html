@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-sm-12">
-    <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="noOfCves" [hasIssue]="hasIssue">
+    <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="noOfCves" [responseReady]="responseReady" [hasIssue]="hasIssue" (notifyParent)="getShow($event)">
     </app-issue>
-    <app-alert-box [title]="title" [issueStatus]="noOfCves" [colored]="'#6ca100'" [issueSymbol]="icon" *ngIf="secureIssue">
+    <app-alert-box [title]="title" [issueStatus]="noOfCves" [colored]="'#6ca100'" [issueSymbol]="icon" [toShow]="toHave" [hasIssue]="hasIssue" *ngIf="secureIssue">
     </app-alert-box>
   </div>
 </div>

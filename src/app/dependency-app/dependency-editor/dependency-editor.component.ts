@@ -56,6 +56,10 @@ export class DependencyEditorComponent implements OnInit {
   private getCveUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
+  public listView: string = "View Dependency List";
+  private showList: boolean = false;
+  
+
 
   constructor(private service: DependencyEditorService) {}
 
@@ -182,6 +186,17 @@ export class DependencyEditorComponent implements OnInit {
   // showPreviewModal() {
   //   this.previewModal.open();
   // }
+  public viewList() {
+    this.showList = !this.showList;
+    console.log("show list variable",this.showList);
+    if(this.showList === false) {
+      this.listView = "View Dependency List";
+    }
+    if(this.showList === true) {
+      this.listView = "Hide Dependency List";
+    }
+  }
+
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();
   }

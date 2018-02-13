@@ -1,10 +1,9 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="license">
-      <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="stackLicense" [hasIssue]="hasIssue">
+      <app-issue [issueName]="title" [issueSymbol]="icon" [issueStatus]="stackLicense" [responseReady]="responseReady" [hasIssue]="hasIssue" (notifyParent)="getShow($event)">
       </app-issue>
-      <app-alert-box [title]="title" [issueStatus]="stackLicense" [colored]="'#6ca100'" [issueSymbol]="icon" [secureIssue]="false"
-        *ngIf="hasIssue">
+      <app-alert-box [title]="title" [issueStatus]="stackLicense" [colored]="'#6ca100'" [issueSymbol]="icon" [toShow]="toHave" [hasIssue]="hasIssue" [secureIssue]="false" *ngIf="hasIssue">
       </app-alert-box>
     </div>
   </div>

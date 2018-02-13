@@ -32,7 +32,9 @@ export class AlertBoxComponent implements OnInit {
   @Input() secureIssue: boolean;
   @Input() licenseIssue: boolean;
   @Input() licenseData: string;
-   
+  @Input() toShow:boolean;
+  @Input() hasIssue: boolean;
+  
   public charts: any = {};
   
   constructor() { }
