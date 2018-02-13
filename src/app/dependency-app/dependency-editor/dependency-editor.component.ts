@@ -141,7 +141,6 @@ export class DependencyEditorComponent implements OnInit {
   private getCveData(payload: any) {
     this.service.getDependencyData(this.getCveUrl, payload)
     .subscribe((response: CveResponseModel) => {
-      console.log('response after get cve call', response);
       this.cveData = response;
     });
   }
