@@ -80,7 +80,7 @@ export class DependencyEditorService {
 
     getStackAnalyses(url: string): Observable < any > {
         const options = new RequestOptions({
-            headers: this.headersProd
+            headers: this.headersStage
         });
         let stackReport: StackReportModel = null;
         return this.http.get(url, options)
@@ -94,7 +94,7 @@ export class DependencyEditorService {
 
     getDependencies(url: string): Observable < any > {
         const options = new RequestOptions({
-            headers: this.headersProd
+            headers: this.headersStage
         });
         return this.http.get(url, options)
             .map(this.extractData)

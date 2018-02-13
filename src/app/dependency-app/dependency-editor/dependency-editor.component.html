@@ -10,25 +10,26 @@
       <app-current-project [dependencies]="dependencies"></app-current-project>
       <div class="row">
         <div class="col-sm-5">
-            <app-add-dependency [dependencies]="dependenciesAdded"></app-add-dependency>
+          <app-add-dependency [dependencies]="dependenciesAdded"></app-add-dependency>
         </div>
         <div class="col-sm-5">
-            <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>
+          <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>
         </div>
         <div class="col-sm-2">
-            <app-security [cveData]="cveData"></app-security>
-            <div style="height: 23px"></div>
-            <app-license [licenseData]="licenseData"></app-license>
+          <app-security [cveData]="cveData"></app-security>
+          <div style="height: 23px"></div>
+          <app-license [licenseData]="licenseData"></app-license>
         </div>
       </div>
       <div style="margin: 30px 0;">
         <p style="font-size:14px;display: inline-block">Not sure about dependencies? Click to view the full list of dependencies</p>
-        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;margin-left: 10px;" (click)="showPreviewModal()">
+        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;margin-left: 10px;">
           <p style="font-size:14px;color:#4d5258;text-align:center;margin: 0;padding: 5px;">View dependency list</p>
         </button>
       </div>
       <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;">
-        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;">OK</button>
+        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;"
+          (click)="showPreviewModal()">OK</button>
         <span style="margin-top: 25px;position: absolute;margin-left: 9px;font-size:14px;color:#8b8d8f;">or press
           <strong>ENTER</strong>
         </span>
@@ -36,18 +37,49 @@
     </div>
   </div>
   <modal #previewModal title="Dependency Editor Preview" modalClass="modal-lg modal-width-class">
-      <modal-content>
-        <div class="row">
-          <div class="col-sm-12">
-            
-          </div>
-          <div class="col-sm-12">
-
-          </div>
-          <div class="col-sm-12">
-
+    <modal-content>
+      <div class="row">
+        <div class="col-sm-12">
+          Current Project
+          <div class="row">
+            <div class="col-sm-4">
+              <p style="border: 1px solid;width:100%;height:58px;background:#ffffff;border:1px solid #bbbbbb;box-shadow:inset 0 2px 2px 0 rgba(0,0,0,0.08);height:72px;">
+                <img style="height:54px;width:59px;padding-right:10px;padding-left:5px;margin-right: 25px;margin-bottom: -8px;" src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Vert.x_Logo.svg">
+                <span style="font-size:14px;color:#545b64;">Vert.x</span>
+                <span style="font-size:12px;color:#545b64;margin-left: 82px">2017.9.5</span>
+              </p>
+            </div>
+            <div class="col-sm-8">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-4">Group id</label>
+                  <div class="col-sm-8" style="margin-left: -30px">
+                    <p class="form-control">group</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4">Artifact id</label>
+                  <div class="col-sm-8" style="margin-left: -30px">
+                    <p class="form-control">aftifact</p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4">Version</label>
+                  <div class="col-sm-8" style="margin-left: -30px">
+                    <p class="form-control">version</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </modal-content>
+        <div class="col-sm-12">
+
+        </div>
+        <div class="col-sm-12">
+
+        </div>
+      </div>
+    </modal-content>
   </modal>
 </div>
