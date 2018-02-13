@@ -31,7 +31,8 @@ export class SecurityComponent implements OnInit, OnChanges {
   public icon = 'fa fa-shield';
   public noOfCves = 0;
   public hasIssue = false;
-
+  public toHave: boolean = false;
+  
   constructor() {}
 
   ngOnChanges() {
@@ -50,6 +51,11 @@ export class SecurityComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
+  }
+
+  public getShow(event) {
+    this.toHave = event.toShow;
+    console.log("show toHave variable ",this.toHave);
   }
 
 }

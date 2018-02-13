@@ -29,7 +29,7 @@ import {
   CveResponseModel,
   DependencySearchItem,
   EventDataModel
-} from '../model/data.model';
+} from '../../model/data.model';
 import {
   DependencySnapshot
 } from '../utils/dependency-snapshot';
@@ -45,12 +45,16 @@ export class DependencyEditorComponent implements OnInit {
   public licenseData: StackLicenseAnalysisModel;
   public cveData: CveResponseModel;
   public dependenciesAdded: Array< ComponentInformationModel> = [];
+  public listView: string = 'View Dependency List';
 
   private stackUrl: string;
   private getDepInsightsUrl: string;
   private getCveUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
+  private showList: boolean = false;
+
+
 
   constructor(private service: DependencyEditorService) {
   }
@@ -138,4 +142,26 @@ export class DependencyEditorComponent implements OnInit {
       this.cveData = response;
     });
   }
+
+  // showPreviewModal() {
+  //   this.previewModal.open();
+  // }
+  // tslint:disable-next-line:member-ordering
+  public viewList() {
+    this.showList = !this.showList;
+    console.log('show list variable', this.showList);
+    if (this.showList === false) {
+      this.listView = 'View Dependency List';
+    }
+    if (this.showList === true) {
+      this.listView = 'Hide Dependency List';
+    }
+  }
+
+  // public showDependencyModal(event: Event) {
+  //   this.modalDependencyPreview.open();
+  // }
+  // public closemodal(){
+  //   this.modalDependencyPreview.close();
+  // }
 }

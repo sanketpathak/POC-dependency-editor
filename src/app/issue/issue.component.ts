@@ -25,12 +25,12 @@ export class IssueComponent implements OnInit, OnChanges {
   @Input() issueSymbol: string;
   @Input() issueStatus: string | number;
   @Input() hasIssue: boolean;
-  @Input() responseReady: boolean;
-  @Output() notifyParent: EventEmitter < boolean > = new EventEmitter();
+
+  @Output() notifyParent: EventEmitter<boolean> = new EventEmitter();
 
   public isLoading = false;
 
-  public toShow = false;
+  public toShow: boolean = false;
   constructor() {}
 
   ngOnChanges() {
@@ -45,5 +45,10 @@ export class IssueComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
+  }
+
+  public change() {
+    this.toShow = true;
+    this.notifyParent.emit(this.toShow);
   }
 }

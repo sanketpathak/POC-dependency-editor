@@ -16,7 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { StackLicenseAnalysisModel } from '../model/data.model';
+import { StackLicenseAnalysisModel } from '../../model/data.model';
 
 @Component({
   selector: 'app-license',
@@ -31,6 +31,8 @@ export class LicenseComponent implements OnInit, OnChanges {
   public icon = 'fa fa-file-text-o';
   public stackLicense: string;
   public hasIssue: boolean | string = false;
+  public responseReady = false;
+  public toHave : boolean = false;
 
   constructor() {}
 
@@ -53,4 +55,7 @@ export class LicenseComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
+  public getShow(event) {
+    this.toHave = event.toShow;
+  }
 }
