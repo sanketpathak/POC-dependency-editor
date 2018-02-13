@@ -5,7 +5,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ViewChild
 } from '@angular/core';
 import {
   TagInputModule
@@ -41,6 +42,7 @@ import {
   styleUrls: ['./dependency-editor.component.less']
 })
 export class DependencyEditorComponent implements OnInit {
+  @ViewChild('previewModal') previewModal: any;
   public dependencies: Array < DependencySnapshotItem > ;
   public companions: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
@@ -56,9 +58,13 @@ export class DependencyEditorComponent implements OnInit {
   constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
-    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d78398d31eab456d85bc1801aeee0aef';
+    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d211493b7c6944e6a14ba8b18a42fb06';
+    this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
     // 718c0b279b474efe85d7e8af3cf9c521
     // d78398d31eab456d85bc1801aeee0aef
+    // 097d603a811a4609b177383f5170856d
+    // d211493b7c6944e6a14ba8b18a42fb06 - vertx http - prod
+    // 9c0a853530de498492aa8bac461c9a91 - vertx http - stage
     this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
     this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
     this.service.getStackAnalyses(this.stackUrl)
@@ -134,6 +140,7 @@ export class DependencyEditorComponent implements OnInit {
           this.isDepSelectedFromSearch = false;
         }
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
+        this.checkIfSecurityPresent(response.result[0].user_stack_info.analyzed_dependencies);
         console.log(DependencySnapshot.DEP_FULL_ADDED);
         console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
         console.log(DependencySnapshot.DEP_SNAPSHOT);
@@ -144,6 +151,7 @@ export class DependencyEditorComponent implements OnInit {
   private getCveData(payload: any) {
     this.service.getDependencyData(this.getCveUrl, payload)
       .subscribe((response: CveResponseModel) => {
+        console.log('cve data', response);
         this.cveData = response;
       });
   }
@@ -156,5 +164,20 @@ export class DependencyEditorComponent implements OnInit {
         }
       });
     });
+  }
+
+  checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {
+    DependencySnapshot.DEP_FULL_ADDED.forEach((depFullAdded: ComponentInformationModel) => {
+      if (!depFullAdded.security) {
+        const objWithSecurity = _.find(analyzedDependencies, (dep) => {
+          return dep.name === depFullAdded.name;
+        });
+        depFullAdded.security = objWithSecurity.security;
+      }
+    });
+  }
+
+  showPreviewModal() {
+    this.previewModal.open();
   }
 }

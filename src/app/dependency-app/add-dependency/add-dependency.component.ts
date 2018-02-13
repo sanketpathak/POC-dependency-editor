@@ -37,7 +37,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
   public dependencySearchResult: Array < DependencySearchItem > = [];
   public isLoading = false;
 
-  private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
+  // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
+  private searchDepsUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/component-search/';
 
   constructor(private service: DependencyEditorService) {}
 
