@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
+import { ModalModule } from 'ngx-modal';
 
 import { DependencyEditorComponent } from './dependency-editor.component';
 import { InsightModule } from '../insights/insights.module';
@@ -22,6 +23,7 @@ import { DependencyEditorService } from '../shared/dependency-editor.service';
     FormsModule,
     TagInputModule,
     BrowserModule,
+    ModalModule,
     InsightModule,
     AddDependencyModule,
     SecurityModule,

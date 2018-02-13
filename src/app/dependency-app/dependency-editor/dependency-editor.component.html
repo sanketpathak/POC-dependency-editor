@@ -21,10 +21,10 @@
             <app-license [licenseData]="licenseData"></app-license>
         </div>
       </div>
-      <div style="margin-left: 20px;">
-        <p style="font-size:14px;">Not sure about dependencies? Click to view the full list of dependencies</p>
-        <button class="btn btn-default" style="margin-left: 7px;background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:173px;">
-          <p style="font-size:14px;color:#4d5258;text-align:center;">View dependency list</p>
+      <div style="margin: 30px 0;">
+        <p style="font-size:14px;display: inline-block">Not sure about dependencies? Click to view the full list of dependencies</p>
+        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;margin-left: 10px;" (click)="showPreviewModal()">
+          <p style="font-size:14px;color:#4d5258;text-align:center;margin: 0;padding: 5px;">View dependency list</p>
         </button>
       </div>
       <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;">
@@ -35,4 +35,19 @@
       </div>
     </div>
   </div>
+  <modal #previewModal title="Dependency Editor Preview" modalClass="modal-lg modal-width-class">
+      <modal-content>
+        <div class="row">
+          <div class="col-sm-12">
+            
+          </div>
+          <div class="col-sm-12">
+
+          </div>
+          <div class="col-sm-12">
+
+          </div>
+        </div>
+      </modal-content>
+  </modal>
 </div>
