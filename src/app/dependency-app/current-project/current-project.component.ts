@@ -15,7 +15,9 @@ export class CurrentprojectComponent implements OnInit {
   @Input() metadata: any;
 
   public projectDependencies: string[]  ;
-  
+  public isOpen : boolean = false; 
+  public upDown: string = "fa fa-angle-up";
+
   constructor() { }
 
   ngOnInit() {
