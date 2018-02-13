@@ -35,6 +35,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
   @Input() dependencies: Array < ComponentInformationModel > ;
   public dependencySearchString: string;
   public dependencySearchResult: Array < DependencySearchItem > = [];
+  public isLoading = false;
 
   private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
 
@@ -45,9 +46,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
   }
 
   getDependencies() {
+    this.isLoading = true;
     this.service.getDependencies(this.searchDepsUrl + this.dependencySearchString)
       .subscribe((response: any) => {
         this.dependencySearchResult = response['result'];
+        this.isLoading = false;
       });
   }
 
@@ -67,5 +70,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
     this.dependencies = [];
     this.dependencySearchResult = [];
     this.dependencySearchString = '';
+    this.isLoading = false;
   }
 }

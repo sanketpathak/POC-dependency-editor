@@ -32,6 +32,8 @@ export class ListElementComponent implements OnInit {
   @Output() companionAdded = new EventEmitter<EventDataModel> ();
   @Output() companionRemoved = new EventEmitter<ComponentInformationModel> ();
 
+  public showAlternateSection = true;
+
   constructor(private service: DependencyEditorService) {
   }
 
@@ -53,5 +55,13 @@ export class ListElementComponent implements OnInit {
 
   removeDependency() {
     this.service.removeDependency(this.dependency);
+  }
+
+  useAlternate() {
+    console.log('user alternate clicked');
+  }
+
+  ignoreAlternate() {
+    this.showAlternateSection = false;
   }
 }
