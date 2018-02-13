@@ -15,6 +15,9 @@
               <span class="pficon-search"></span>
             </span>
           </div>
+          <div class="pre-loader" *ngIf="isLoading">
+            <div class="pre-loader-spinner spinner"></div>
+          </div>
           <ul class="dropdown-menu" *ngIf="dependencySearchResult?.length">
             <li *ngFor="let dep of dependencySearchResult">
               <a (click)="addDependency(dep)">
