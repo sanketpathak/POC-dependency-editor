@@ -50,7 +50,9 @@ export class DependencyEditorComponent implements OnInit {
   public licenseData: StackLicenseAnalysisModel;
   public cveData: CveResponseModel;
   public dependenciesAdded: Array < ComponentInformationModel > = [];
-
+  public packageLength: number = 0;
+  public addPackageLength: number = 0;
+  
   private stackUrl: string;
   private getDepInsightsUrl: string;
   private getCveUrl: string;
@@ -199,6 +201,9 @@ export class DependencyEditorComponent implements OnInit {
 
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();
+    this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
+    this.addPackageLength = DependencySnapshot.DEP_SNAPSHOT_ADDED.length;
+    console.log(this.packageLength,this.addPackageLength);
   }
   public closemodal(){
     this.modalDependencyPreview.close();

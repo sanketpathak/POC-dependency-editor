@@ -28,7 +28,7 @@ export class IssueComponent implements OnInit, OnChanges {
   @Input() issueSymbol: string;
   @Input() issueStatus: string | number;
   @Input() hasIssue: boolean;
-  
+  @Input() responseReady: boolean;
   @Output() notifyParent: EventEmitter<boolean> = new EventEmitter();
 
   public isLoading = false;

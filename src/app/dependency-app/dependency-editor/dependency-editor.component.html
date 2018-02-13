@@ -116,7 +116,7 @@
             </div>
             <div class="modal-title" style="width:795px;height:22px">
               Total no. of dependencies
-              <span class="total">(20)</span>
+              <span class="total">{{(packageLength + addPackageLength)}}</span>
             </div>
             <div class="modal-body second-body" style="background:#ffffff;
                                                         border:1px solid #bbbbbb;
@@ -127,10 +127,10 @@
                                                         margin-left: 16px;">
               <div class="row-heading"style="font-weight:600;">
                 <span class="col-sm-4">Project Dependencies
-                  <span class="project-dep">(16)</span>
+                  <span class="project-dep">{{packageLength}}</span>
                 </span>
                 <span class="col-sm-6">Added Dependencies
-                  <span class="add-dep">(4)</span>
+                  <span class="add-dep">{{addPackageLength}}</span>
                 </span>
               </div>
               <div class="row-body">
@@ -149,11 +149,11 @@
                                                                                                               padding-bottom: 10px;
                                                                                                               padding-top: 6px;">
                           <div class="list-view-pf-description" *ngFor="let dependency of dependencies" style="width: auto;margin-right: 15px;">
-                            <span>{{dependency}}</span>
+                            <span>{{dependency.package}}</span>
                           </div>
                           <div class="list-view-pf-additional-info">
-                            <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-                              {{version}}
+                            <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked" *ngFor="let dependency of dependencies">
+                              {{dependency.version}}
                             </div>
                           </div>
                         </div>
