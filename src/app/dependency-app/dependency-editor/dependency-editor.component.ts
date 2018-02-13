@@ -16,6 +16,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
+import * as _ from 'lodash';
 
 import {
   DependencyEditorService
@@ -44,7 +45,7 @@ export class DependencyEditorComponent implements OnInit {
   public companions: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
   public cveData: CveResponseModel;
-  public dependenciesAdded: Array< ComponentInformationModel> = [];
+  public dependenciesAdded: Array < ComponentInformationModel > = [];
 
   private stackUrl: string;
   private getDepInsightsUrl: string;
@@ -52,11 +53,12 @@ export class DependencyEditorComponent implements OnInit {
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
 
-  constructor(private service: DependencyEditorService) {
-  }
+  constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
-    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/66ecaa97429a48fd90663d1c9bfe05b0';
+    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d78398d31eab456d85bc1801aeee0aef';
+    // 718c0b279b474efe85d7e8af3cf9c521
+    // d78398d31eab456d85bc1801aeee0aef
     this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
     this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
     this.service.getStackAnalyses(this.stackUrl)
@@ -123,25 +125,36 @@ export class DependencyEditorComponent implements OnInit {
     const persist = false;
     const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
     this.service.getDependencyData(urlToHit, payload)
-    .subscribe((response: StackReportModel) => {
-      console.log('response after get dependency insights', response);
-      this.setCompanions(response.result[0]);
-      this.setLicenseData(response.result[0]);
-      if (this.isDepSelectedFromSearch) {
-        DependencySnapshot.DEP_FULL_ADDED.push(<ComponentInformationModel>this.depToAdd);
-        this.isDepSelectedFromSearch = false;
-      }
-      console.log(DependencySnapshot.DEP_FULL_ADDED);
-      console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
-      console.log(DependencySnapshot.DEP_SNAPSHOT);
-      console.log(DependencySnapshot.ECOSYSTEM);
-    });
+      .subscribe((response: StackReportModel) => {
+        console.log('response after get dependency insights', response);
+        this.setCompanions(response.result[0]);
+        this.setLicenseData(response.result[0]);
+        if (this.isDepSelectedFromSearch) {
+          DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
+          this.isDepSelectedFromSearch = false;
+        }
+        this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
+        console.log(DependencySnapshot.DEP_FULL_ADDED);
+        console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
+        console.log(DependencySnapshot.DEP_SNAPSHOT);
+        console.log(DependencySnapshot.ECOSYSTEM);
+      });
   }
 
   private getCveData(payload: any) {
     this.service.getDependencyData(this.getCveUrl, payload)
-    .subscribe((response: CveResponseModel) => {
-      this.cveData = response;
+      .subscribe((response: CveResponseModel) => {
+        this.cveData = response;
+      });
+  }
+
+  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {
+    alternates.forEach((alternate: ComponentInformationModel) => {
+      DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
+        if (alternate.name === depAdded.name) {
+          depAdded.alternate = alternate.alternate;
+        }
+      });
     });
   }
 }
