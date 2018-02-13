@@ -44,6 +44,7 @@
           </div>
         </div>
         <div class="card-pf-body" *ngIf="dependencies?.length" style="overflow-y: scroll;height: 289px;">
+          <b style="padding-left: 15px;">Recently added dependencies</b>
           <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element>
         </div>
         <div class="card-pf-body" *ngIf="!dependencies">

@@ -3,6 +3,7 @@ import { CommonModule} from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { TooltipModule } from 'ngx-bootstrap';
 
 import { ListElementComponent } from './list-element.component';
 
@@ -12,7 +13,8 @@ import { ListElementComponent } from './list-element.component';
     CommonModule,
     HttpModule,
     FormsModule,
-    BrowserModule
+    BrowserModule,
+    TooltipModule.forRoot()
 ],
  declarations: [
     ListElementComponent
