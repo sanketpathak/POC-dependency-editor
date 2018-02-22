@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'ngx-bootstrap';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -21,8 +21,8 @@ import { CurrentprojectComponent } from './current-project.component';
     CurrentprojectComponent
 ],
  exports: [
-    CurrentprojectComponent,
+    CurrentprojectComponent
 ],
-    providers: [],
+    providers: []
 })
 export class CurrentprojectModule { }

@@ -43,6 +43,7 @@ export class DependencyEditorComponent implements OnInit {
   public dependencies: Array < DependencySnapshotItem > ;
   public companions: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
+  public allLicenses: Array<any> = [];  
   public cveData: CveResponseModel;
   public dependenciesAdded: Array< ComponentInformationModel> = [];
   public listView: string = 'View Dependency List';
@@ -74,6 +75,7 @@ export class DependencyEditorComponent implements OnInit {
         this.setCompanions(result);
         this.setLicenseData(result);
         this.getCveData(this.service.getPayload());
+        console.log("dependency-editor stack anlyses result",result);
       });
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
@@ -118,6 +120,7 @@ export class DependencyEditorComponent implements OnInit {
 
   private setLicenseData(result: ResultInformationModel) {
     this.licenseData = result.user_stack_info.license_analysis;
+    this.allLicenses = result.user_stack_info.distinct_licenses;
   }
 
   private getDependencyInsights(payload: any) {

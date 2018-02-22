@@ -5,7 +5,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ViewChild
 } from '@angular/core';
 import {
   TagInputModule
@@ -17,6 +18,7 @@ import {
   AccordionModule
 } from 'ngx-bootstrap';
 import { StackLicenseAnalysisModel } from '../../model/data.model';
+import { AlertBoxComponent } from '../alert-box/alert-box.component';
 
 @Component({
   selector: 'app-license',
@@ -26,13 +28,22 @@ import { StackLicenseAnalysisModel } from '../../model/data.model';
 
 export class LicenseComponent implements OnInit, OnChanges {
   @Input() licenseData: StackLicenseAnalysisModel;
+  @Input() allLicenses: Array<any> = [];
+
+  @ViewChild(AlertBoxComponent) private alertBoxComponent:AlertBoxComponent;
 
   public title = 'License';
-  public icon = 'fa fa-file-text-o';
+  public icon = 'pficon pficon-on-running'; // fa-file-text-o
   public stackLicense: string;
   public hasIssue: boolean | string = false;
   public responseReady = false;
   public toHave : boolean = false;
+  public licenseIssue :  boolean = true;
+  public licenseDt: Array<any> = [];
+  // public allLicenses: Array<any> = [];
+  public licenseCount = {};
+  public liData = [];
+  public charts: any = {};
 
   constructor() {}
 
@@ -50,7 +61,10 @@ export class LicenseComponent implements OnInit, OnChanges {
       }
     } else {
       this.stackLicense = null;
-    }
+    }console.log("ssssssstack License",this.stackLicense);
+    this.licenseChange();
+    console.log('initial licenseData : ' + this.licenseDt);
+    this.displayLicenses();
   }
 
   ngOnInit() {}
@@ -58,4 +72,57 @@ export class LicenseComponent implements OnInit, OnChanges {
   public getShow(event) {
     this.toHave = event.toShow;
   }
+
+  public licenseChange() {debugger;
+    if (this.allLicenses) {
+      // this.licenseData = []; 
+      this.licenseCount = {};
+      debugger;
+       this.allLicenses.forEach(d => {
+       this.licenseDt = this.licenseDt.concat(
+            d
+          );
+        console.log('license data from all license data', this.licenseDt);
+        });
+      this.licenseDt.forEach(item => {
+        this.licenseCount[item] = (this.licenseCount[item] || 0) + 1;
+      });
+      this.liData = [];
+      Object.keys(this.licenseCount).forEach(k => {
+        this.liData.push([
+          k,
+          Math.round(this.licenseCount[k] * 100 / this.licenseDt.length)
+        ]);
+      });
+      console.log('license data for chart is :', this.liData);
+    }    this.displayLicenses();
+  }
+
+  public displayLicenses(): void {debugger;
+    this.charts['data'] = {
+      columns: this.liData,
+    //   columns: [
+    //     // ['data1', 30],
+    //     // ['data2', 70],
+    //     this.liData,
+    // ],
+      type: 'donut'
+    };
+    this.charts['options'] = {
+      donut: {
+        title: ' Licenses',// + this.licenseData.length
+        width: 10,
+    },
+    size: {
+      height: 200,
+      width: 230
+    }
+  };
+    this.charts['configs'] = {
+      legend: {
+        show: true,
+      }
+    };
+  }
+
 }

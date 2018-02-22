@@ -47,8 +47,6 @@ export class IssueComponent implements OnInit, OnChanges {
 
   }
 
-  public change() {
-    this.toShow = true;
-    this.notifyParent.emit(this.toShow);
-  }
+  
+  
 }
