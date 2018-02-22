@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { BrowserModule } from '@angular/platform-browser';
+import { ModalModule } from 'ngx-modal';
 
 import { AddDependencyComponent } from './add-dependency.component';
 import { ListElementModule } from '../list-element/list-element.module';
@@ -18,6 +19,7 @@ import { ListElementModule } from '../list-element/list-element.module';
     FormsModule,
     TagInputModule,
     BrowserModule,
+    ModalModule,
     ListElementModule
 ],
  declarations: [

@@ -1,26 +1,33 @@
 <div class="container-default" style="background:#ededed;padding: 0 20px;">
-  <div class="row">
-    <div class="col-sm-10">
-      <div>
-        <span style="font-size:24px;">Dependency Editor </span>
-        <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:78px;color:#fff;">Skip</button>
-        <p>Some description of dependency editor</p>
+  <div class="row" style="width: 100%;">
+    <div style="margin-left:40px;">
+      <span style="font-size:24px;">Dependency Editor </span>
+      <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:78px;color:#fff;">Skip</button>
+      <p>Some description of dependency editor</p>
+    </div>
+    <div class="row" style="margin-left:20px;">
+      <div class="col-sm-8">        
+        <div class="row" style="margin-top:20px;">
+          <!-- <div class="col-sm-5"> -->
+            <app-add-dependency [dependencies]="dependenciesAdded" [existDependencies]="dependencies" ></app-add-dependency>
+          <!-- </div> -->
+          <!-- <div class="col-sm-5"> -->
+            <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>
+          <!-- </div> -->
+          <!-- <div class="col-sm-2">
+            <app-security [cveData]="cveData"></app-security>
+            <div style="height: 23px"></div>
+            <app-license [licenseData]="licenseData"></app-license>
+          </div> -->
+        </div>
       </div>
+      <div class="col-sm-4">
+        
 
-      <app-current-project [dependencies]="dependencies"></app-current-project>
-      <div class="row">
-        <div class="col-sm-5">
-          <app-add-dependency [dependencies]="dependenciesAdded"></app-add-dependency>
-        </div>
-        <div class="col-sm-5">
-          <app-insights (companionAdded)="callDepServices($event)" [companions]="companions"></app-insights>
-        </div>
-        <div class="col-sm-2">
-          <app-security [cveData]="cveData"></app-security>
-          <div style="height: 23px"></div>
-          <app-license [licenseData]="licenseData"></app-license>
-        </div>
+        <app-current-project [dependencies]="dependencies" [licenseData]="licenseData" [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
       </div>
+      
+    </div>
       <!-- <div style="margin: 30px 0;">
         <p style="font-size:14px;display: inline-block">Not sure about dependencies? Click to view the full list of dependencies</p>
         <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;margin-left: 10px;">
@@ -29,14 +36,14 @@
       </div>
       <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;">
         <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;"
-          (click)="showPreviewModal()">OK</button> -->
-      <div style="margin-left: 20px;margin-top: 74px;display: flex;">
-        <p style="font-size:14px;">Not sure about dependencies? Click to view the full list of dependencies</p>
-        <button class="btn btn-default" style="margin-left: 7px;background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:173px;">
-          <p (click)="viewList()" style="font-size:14px;color:#4d5258;text-align:center;">{{listView}}</p>
-        </button>
-      </div>
-      <app-packages [showList]="showList"></app-packages>      
+        (click)="showPreviewModal()">OK</button> -->
+    <!-- <div style="margin-left: 20px;margin-top: 74px;">
+      <p style="font-size:14px;">Not sure about dependencies? Click to view the full list of dependencies</p>
+      <button class="btn btn-default" style="margin-left: 7px;background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:173px;">
+        <p (click)="viewList()" style="font-size:14px;color:#4d5258;text-align:center;">{{listView}}</p>
+      </button>
+    </div>
+     <app-packages [showList]="showList"></app-packages>       -->
       <!-- <div class="panel-group" id="fixed-accordion" style="margin-left: 20px;margin-top: 74px;display: flex;height: 350px;">
           <div class="panel panel-default">
             <div class="panel-heading" data-component="collapse-heading">
@@ -53,13 +60,13 @@
             </div>
           </div>
       </div> -->
-      <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;margin-top: 110px;">
-        <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#dependencyPreview" (click)="showDependencyModal($event)"
-          style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;">OK</button>
-        <span style="margin-top: 25px;position: absolute;margin-left: 9px;font-size:14px;color:#8b8d8f;">or press
-          <strong>ENTER</strong>
-        </span>
-      </div>
+    <div style="background-image:linear-gradient(90deg, rgba(255,255,255,0.00) 0%, #ffffff 26%, #ffffff 74%, rgba(255,255,255,0.00) 100%);width:1165px;height:73px;margin-top: 110px;">
+      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#dependencyPreview" (click)="showDependencyModal($event)"
+        style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);color:#fff;border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:41px;margin-top: 20px;margin-left: 493px;">OK</button>
+      <span style="margin-top: 25px;position: absolute;margin-left: 9px;font-size:14px;color:#8b8d8f;">or press
+        <strong>ENTER</strong>
+      </span>
+    </div>
 
       <modal #dependencyPreview modalClass="modal-lg modal-fullscreen modal-width-class" title="Dependency Editor Preview" role="dialog">
         <!-- <div style="font-family:OpenSans-Semibold;font-size:16px;color:#494949;"> -->
@@ -223,8 +230,8 @@
 
         <!-- </div> -->
       </modal>
+
     </div>
-  </div>
   <!-- <modal #previewModal title="Dependency Editor Preview" modalClass="modal-lg modal-width-class">
     <modal-content>
       <div class="row">

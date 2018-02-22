@@ -6,7 +6,8 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
-  OnDestroy
+  OnDestroy,
+  ViewChild
 } from '@angular/core';
 import {
   TagInputModule
@@ -19,7 +20,8 @@ import {
 } from 'ngx-bootstrap';
 import {
   ComponentInformationModel,
-  DependencySearchItem
+  DependencySearchItem,
+  DependencySnapshotItem
 } from '../model/data.model';
 import {
   DependencyEditorService
@@ -31,8 +33,11 @@ import {
   styleUrls: ['./add-dependency.component.less']
 })
 
-export class AddDependencyComponent implements OnInit, OnDestroy {
+export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dependencies: Array < ComponentInformationModel > ;
+  @Input() existDependencies: Array<DependencySnapshotItem>;
+  @ViewChild('PackagePreview') modalPackagePreview : any;
+  
   public dependencySearchString: string;
   public dependencySearchResult: Array < DependencySearchItem > = [];
   public isLoading = false;
@@ -44,6 +49,10 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+  }
+
+  ngOnChanges() {
+    console.log(this.dependencies);
   }
 
   getDependencies() {
@@ -72,5 +81,16 @@ export class AddDependencyComponent implements OnInit, OnDestroy {
     this.dependencySearchResult = [];
     this.dependencySearchString = '';
     this.isLoading = false;
+  }
+  
+  removeDependency(dependency) {
+    this.service.removeDependency(dependency);console.log("remove of added dependency",dependency);
+  }
+
+  public showPackageModal(event: Event) {
+    this.modalPackagePreview.open();
+  }
+  public closemodal(){
+    this.modalPackagePreview.close();
   }
 }

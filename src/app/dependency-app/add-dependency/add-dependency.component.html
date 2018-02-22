@@ -1,20 +1,23 @@
-<div class="cards-pf" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);background:#fff;height: 411px;">
+<div class="cards-pf" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);background:#fff;height: 460px;">
   <div class="row">
     <div class="col-sm-12">
       <p style="font-size: 16px;padding: 15px; background: #f5f5f5; margin: 0">
-        <span>Add Dependencies</span>
-        <span style="margin-left:4px;" *ngIf="dependencies">({{ dependencies?.length }})</span>
+        <span>Dependencies</span>
+        <span style="margin-left:4px;" *ngIf="dependencies">({{ existDependencies?.length+dependencies?.length }})</span>
       </p>
     </div>
     <div class="col-sm-12">
       <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding: 0;margin-bottom: 0;box-shadow: none">
         <h2 class="card-pf-title search-box">
-          <div id="date-2" class="input-group date">
-            <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
-            <span class="input-group-addon" (click)="getDependencies()" style="cursor: pointer">
-              <span class="pficon-search"></span>
-            </span>
-          </div>
+          <span style="font-size:12px;">You can add dependencies either by searching or by browsing the list of dependencies</span>
+          <div class="row" style="padding-top:3px;margin-left: auto;display: flex;">
+              <div id="date-2" class="input-group date col-sm-8">
+              <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
+              <span class="input-group-addon" (click)="getDependencies()" style="cursor: pointer">
+                <span class="pficon-search"></span>
+              </span>
+            </div>
+            
           <div class="pre-loader" *ngIf="isLoading">
             <div class="pre-loader-spinner spinner"></div>
           </div>
@@ -28,28 +31,50 @@
               </a>
             </li>
           </ul>
+          <div class="col-sm-4" (click)="showPackageModal($event)" style="font-size:12px;color:#049cd4;cursor:pointer;">Browse All Dependencies</div>
+        </div>
         </h2>
-        <div class="card-pf-body" *ngIf="dependencies?.length === 0">
-          <p class="card-pf-aggregate-status-notifications">
-            <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
-              <span class="pficon pficon-add-circle-o" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
-              <span style="padding-top:17px;">No Dependencies Added</span>
-            </span>
-          </p>
-          <div style="padding-top:18px;text-align: center">
-            <p>
-              You can add dependencies either by searching or by going to 'choose dependencies' section by clicking 'View Dependency List'
-            </p>
-            <p>OR</p>
-            <p>
-              You can choose to add dependenciec mentioned in the insights section.
-            </p>
+        <section style="padding: 5px 17px;">
+          <div *ngIf="existDependencies?.length">
+            <span *ngFor="let dependency of existDependencies" class="package-chip">{{dependency.package}}</span>
           </div>
+          <div *ngIf="!existDependencies?.length" class="pre-loader">
+            <div class="pre-loader-spinner spinner spinner-lg"></div>
+          </div>
+        </section>
+        <div class="card-pf-body" *ngIf="dependencies?.length === 0">
+          <section style="padding: 5px 17px;">
+              <p class="card-pf-aggregate-status-notifications">
+              <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
+                <span class="pficon pficon-add-circle-o" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
+                <span style="padding-top:17px;">No Dependencies Added</span>
+              </span>
+            </p>
+            <div style="padding-top:18px;text-align: center">
+              <p>
+                You can add dependencies either by searching or by going to 'choose dependencies' section by clicking 'View Dependency List'
+              </p>
+              <p>OR</p>
+              <p>
+                You can choose to add dependencies mentioned in the insights section.
+              </p>
+            </div>
+          </section>
         </div>
+        <section style="padding: 5px 17px;">
         <div class="card-pf-body" *ngIf="dependencies?.length" style="overflow-y: scroll;height: 289px;">
-          <b style="padding-left: 15px;">Recently added dependencies</b>
-          <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element>
+          <!-- <b style="padding-left: 15px;">Recently added dependencies</b> -->
+          <!-- <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element> -->
+          <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
+              <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
+                <span class="pficon pficon-close" (onclick)="get_secure()"></span>
+              </button> -->
+              <button class="btn btn-default close" (click)="removeDependency(dependency)"> <!--*ngIf="fromAddDependency !== 'true'"-->
+                  <span class="pficon pficon-close"></span>
+                </button>
+          </span>          
         </div>
+      </section>
         <div class="card-pf-body" *ngIf="!dependencies">
           <div class="pre-loader">
             <div class="pre-loader-spinner spinner spinner-lg"></div>
@@ -59,3 +84,190 @@
     </div>
   </div>
 </div>
+
+<modal #PackagePreview modalClass="modal-lg modal-fullscreen modal-width-class" title="Choose Dependency" role="dialog">
+    <!-- <div style="font-family:OpenSans-Semibold;font-size:16px;color:#494949;"> -->
+    <!-- <div class="modal-header" style="font-size: 20px;"></div> -->
+      <!-- <modal-header style="font-family:OpenSans-Semibold;font-size:24px;color:#494949;background:#ffffff;width:692px;height:33px;">
+            Dependency Editor Preview
+        </modal-header> -->
+      <modal-content class="contents">
+        <!-- <div class="modal-header" > -->
+        <!-- <div class="modal-title">
+          Current Project
+        </div> -->
+        <!-- </div> -->
+        <div class="modal-body" style="margin-top: 5px;border: none;display: flex;">
+            <!-- <div class="app-joint" style=" margin-top: 75px;"> -->
+                <!-- <div class="packages"> -->
+                  <!-- <div class="header"><h2 style="font-family:OpenSans-Semibold;font-size:16px;color:#4a4a4a;">Choose Dependencies </h2></div> -->
+                  <div class="content">
+                    <div class="categories"><!--*ngIf="objectKeys(categories).length > 0"-->
+                       <div class="card-pf card-pf-view catagories-card"[style.height.px]="categoriesHeight">
+                        <div class="card-pf-body">
+                          <div class="card-pf-items">
+                            <table class="tag-table"><!--  *ngFor="let key of categories"-->
+                              <tr>
+                                 <td class="tag-table-td-left"></td> <!--(click)="tagClick(key[0])" [class.tag-color]="selectedTags.has(key[0])" > {{key[0].substring(0, 1).toUpperCase() + key[0].substring(1)}}</td> -->
+                                <td class="tag-table-td-left">
+                                  <label class="tag-table-td-label"></label><!-- {{key[1]}} -->
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dependencies">
+                    <div class="search-dependencies">
+                      <!-- <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" [typeahead]="masterTags" (keypress)="test($event)" class="search-box"  type="text" placeholder="Search for Packages..">  -->
+                      <input [(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)" class="search-box"  type="text" placeholder="Search for Dependencies..">
+                      <span class="fa fa-search search-icon" aria-hidden="true" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
+                      <!-- <button type="button" class="filter-button"><span class="pficon-settings"></span> Filter </button> -->
+                       <section> <!--[class.dependency-typeahead]="suggestions.length > 0"> -->
+                          <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0">
+                              <span (click)="suggestions = [];"> </span>
+                              <div *ngFor="let suggestion of suggestions | slice:0:1;" class="typeahead-text-first">
+                                <strong>{{suggestion}}</strong>
+                              </div>
+                              <div *ngFor="let suggestion of suggestions | slice:1:10; let i=index" class="typeahead-text">
+                                  <span>{{suggestion}}</span>
+                              </div>
+                          </div>
+                      </section>
+                    </div>
+                    <div class="depn">
+                    <div class="depn-select">0 Dependencies selected
+                    <div class="display-dependencies" *ngFor="let dependency of dependencies;let i = index">
+                     <!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 dependency-cards"> -->
+                       <!-- <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select " [class.card-border]="unselectedPackages.has(dependency.name)" [class.active]="selectedPackages.has(dependency.name)">
+                         <div class="card-pf-body">
+                           <div class="card-pf-items">
+                             <div class="card-pf-item" style="float:left;">
+                               <label class="control control--checkbox">{{dependency.name}}
+                                 <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
+                                 <div class="control__indicator"></div>
+                               </label>
+                             </div>
+                             <div class="card-pf-item"> <label></label></div>
+                             <span dropdown  class="dropdown-position">
+                               <label href dropdownToggle (click)="false" class="dropbtn">
+                                 {{dependency.latest_version}}
+                                 <span class="fa fa-angle-down">
+                                 </span>
+                               </label>
+                               <ul *dropdownMenu class="dropdown-menu">
+                                 <li *ngFor="let ver of dependency.version" style="cursor:pointer" onmouseover="this.style.background='#beedf9';" onmouseout="this.style.background='white';" (click)="changeVersion(dependency, ver)">
+                                   <label class="dropdown-item version"  >{{ver}}</label>
+                                 </li>
+                               </ul>
+                             </span> -->
+                             <!-- <div class="card-pf-item" *ngIf="dependency.name == 'logback-core'" title="Has a CVE with cvss score of 9">
+                               <label class="pficon-error-circle-o">
+                               </label>
+                             </div> -->
+                             <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p>
+                             <div>
+                               <div *ngFor="let tag of dependency.topic_list">
+                                 <div class="tag-border" >{{tag}}</div>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div> -->
+                       <div class="list-group list-view-pf">
+                          <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">
+                            <div class="check">
+                              <div class="list-view-pf-checkbox">
+                                <input type="checkbox" style="position: relative;top: -8px;left: -1px;width: 15px;">
+                              </div>
+                              <!-- <div class="list-view-pf-expand">
+                                <span class="fa fa-angle-right"></span>
+                              </div> -->
+                            </div>
+                            <div class="list-view-pf-actions">
+                              <button class="btn btn-default check" (click)="addDependency(companion)" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
+                              border:1px solid #00659c;
+                              box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);
+                              border-radius:1px;
+                              width:54px;
+                              margin-top: 27px;" >
+                                Add
+                              </button>
+                            </div>
+                            <div class="list-view-pf-main-info">
+                              <div class="list-view-pf-body">
+                                <div class="list-view-pf-description">
+                                  <div class="list-group-item-heading">
+                                      <label class="control control--checkbox">{{dependency.name}}
+                                          <!-- <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
+                                          <div class="control__indicator"></div> -->
+                                      </label>
+                                  </div>
+                                  <div class="list-group-item-text">
+                                      <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p> -->
+                                  </div>
+                                  <div>
+                                      <div *ngFor="let tag of dependency.topic_list">
+                                        <div class="tag-border" >{{tag}}</div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="list-view-pf-additional-info">
+                                  <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+                                      <div class="list-pf-item"> <label></label></div>
+                                      <span dropdown  class="dropdown-position" style="margin-right:-20px">
+                                        <div style="border-radius: 2px;padding-left: 10px;padding-right: 10px;cursor: pointer;position: relative;margin-left: -470px;">
+                                          <label href dropdownToggle (click)="false" class="dropbtn">
+                                          {{dependency.latest_version}}
+                                          <span class="fa fa-angle-down" style="margin-left: 6px;">
+                                          </span>
+                                        </label>
+                                      </div>
+                                        <ul *dropdownMenu class="dropdown-menu">
+                                          <li *ngFor="let ver of dependency.version" style="cursor:pointer" onmouseover="this.style.background='#beedf9';" onmouseout="this.style.background='white';" (click)="changeVersion(dependency, ver)">
+                                            <label class="dropdown-item version"  >{{ver}}</label>
+                                          </li>
+                                        </ul>
+                                      </span>
+                                  </div>
+                                  <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+                                    <strong *ngIf="companion?.security?.length">
+                                      <span class="pficon-warning-triangle-o"></span>
+                                    </strong>
+                                    <strong *ngIf="!companion?.security?.length">
+                                      <span class="pficon-ok"></span>
+                                    </strong>
+                                    <span style="font-family:OpenSans;font-size:12px;color:#545b64;">Security</span>
+                                  </div>
+                                  <!-- <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
+                                    <strong>
+                                      <span class="license-symbol"></span>
+                                    </strong>
+                                    <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Lisence</span>
+                                  </div> -->              
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                     <!-- </div> -->
+                    </div>
+                    </div>
+                    </div>
+                  </div>
+                <!-- </div> -->
+              <!-- </div> -->
+        
+        </div>
+      
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg foot-button-confirm" style="background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);width: 94px;">Done</button>
+          <button type="button" class="btn btn-default foot-button-edit" (click)="closemodal()" data-dismiss="modal" style="width: 94px;height: 30px;">Cancel</button>
+        </div>
+  </modal-content>
+    <!-- </div> -->
+  </modal>
