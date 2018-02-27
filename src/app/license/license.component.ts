@@ -17,7 +17,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { StackLicenseAnalysisModel } from '../model/data.model';
+import { StackLicenseAnalysisModel, LicenseStackAnalysisModel } from '../model/data.model';
 import { AlertBoxComponent } from '../alert-box/alert-box.component';
 
 @Component({
@@ -28,6 +28,7 @@ import { AlertBoxComponent } from '../alert-box/alert-box.component';
 
 export class LicenseComponent implements OnInit, OnChanges {
   @Input() licenseData: StackLicenseAnalysisModel;
+  @Input() lisData: LicenseStackAnalysisModel;  
   @Input() allLicenses: Array<any> = [];  
   
   @ViewChild(AlertBoxComponent) private alertBoxComponent:AlertBoxComponent;
@@ -38,6 +39,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   public hasIssue: boolean | string = false;
   public responseReady = false;
   public toHave : boolean = false;
+  public licenseAll: Array<string> = [];  
   public licenseIssue :  boolean = true;
   public licenseDt: Array<any> = [];
   // public allLicenses: Array<any> = [];
@@ -48,14 +50,14 @@ export class LicenseComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges() {
-    if (this.licenseData) {
-      if (this.licenseData.status.toLowerCase() === 'successful') {
+    if (this.licenseData || this.lisData) {console.log("lis data =>",this.lisData,this.licenseData);
+      if (this.lisData.status.toLowerCase() === 'successful') {// || this.licenseData.status.toLowerCase() === 'successful') {
         this.hasIssue = false;
-        this.stackLicense = this.licenseData.f8a_stack_licenses[0];
-      } else if (this.licenseData.status.toLowerCase() === 'failure') {
+        this.stackLicense = this.licenseData.f8a_stack_licenses[0] || this.lisData.stack_license;
+      } else if (this.lisData.status.toLowerCase() === 'failure') {// || this.licenseData.status.toLowerCase() === 'failure') {
         this.hasIssue = 'na';
         this.stackLicense = 'Unknown';
-      } else if (this.licenseData.status.toLowerCase() === 'conflict' || this.licenseData.status.toLowerCase() === 'unknown') {
+      } else if (this.lisData.status.toLowerCase() === 'conflict' || this.lisData.status.toLowerCase() === 'unknown') {// || this.licenseData.status.toLowerCase() === 'conflict' || this.licenseData.status.toLowerCase() === 'unknown') {
         this.hasIssue = true;
         this.stackLicense = 'None';
       }
@@ -67,7 +69,21 @@ export class LicenseComponent implements OnInit, OnChanges {
     this.displayLicenses();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    for(let x=0;x<this.allLicenses.length;x++) {
+      if(typeof(this.allLicenses[0]) !== "string") {
+        this.allLicenses.forEach( i => {
+                          this.allLicenses[i].licenses.forEach( j => {
+                            this.licenseAll.push(this.allLicenses[i].licenses[j]);
+                          })                         
+        })
+      }
+      else {
+        this.allLicenses.forEach( i => {
+          this.licenseAll.push(this.allLicenses[i])});
+      }
+    }
+  }
 
   public getShow(event) {
     this.toHave = event.toShow;
@@ -75,11 +91,11 @@ export class LicenseComponent implements OnInit, OnChanges {
   }
 
   public licenseChange() {debugger;
-    if (this.allLicenses) {
+    if (this.licenseAll) {
       // this.licenseData = []; 
       this.licenseCount = {};
       debugger;
-       this.allLicenses.forEach(d => {
+       this.licenseAll.forEach(d => {
        this.licenseDt = this.licenseDt.concat(
             d
           );
@@ -101,7 +117,8 @@ export class LicenseComponent implements OnInit, OnChanges {
   }
 
   public displayLicenses(): void {debugger;
-    this.charts['data'] = {
+    if(this.stackLicense === "Successful") {
+      this.charts['data'] = {
       columns: this.liData,
     //   columns: [
     //     // ['data1', 30],
@@ -119,12 +136,13 @@ export class LicenseComponent implements OnInit, OnChanges {
       height: 200,
       width: 230
     }
-  };
+   };
     this.charts['configs'] = {
       legend: {
         show: true,
       }
     };
+   }
   }
 
 }

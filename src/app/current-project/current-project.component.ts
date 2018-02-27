@@ -2,7 +2,7 @@ import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewE
 import { TagInputModule } from 'ngx-chips';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
-import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel } from '../model/data.model';
+import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, LicenseStackAnalysisModel } from '../model/data.model';
 
 @Component({
   selector: 'app-current-project',
@@ -14,6 +14,7 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
   @Input() dependencies: Array<DependencySnapshotItem>;
   @Input() metadata: any;
   @Input() licenseData: StackLicenseAnalysisModel;
+  @Input() lisData: LicenseStackAnalysisModel;
   @Input() cveData: CveResponseModel;
   @Input() allLicenses: Array<any> = [];  
   

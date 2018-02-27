@@ -33,7 +33,7 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   @Input() secureIssue: boolean;
   @Input() licenseIssue: boolean;
   @Input() itSecurity: boolean;
-  @Input() allLicenses: Array<any> = [];
+  @Input() licenseAll: Array<string> = [];
   // @Input() toShow:boolean;
   @Input() hasIssue: boolean;
   @Input() cveName= [];
@@ -66,7 +66,7 @@ export class AlertBoxComponent implements OnInit, OnChanges {
     } else if (typeof this.issueStatus === 'number') {
       this.isLoading = false;
     }
-    this.getCves();
+    this.getCves();console.log("loading is ",this.isLoading);
     console.log("liscence issue",this.licenseIssue);
     console.log("security issue",this.secureIssue);
     console.log("Bcoz It's security issue",this.itSecurity);

@@ -97,39 +97,26 @@ export class GithubModel {
 
 export class SentimentModel {
     latest_comment: string;
-    overall_score: number;
+
+    _representative_licenses: String;
 }
 
-export class OutlierInformationModel {
-    outlier_probabilty: number;
-    package_name: string;
+export class LicenseModel {
+    license_analysis: LicenseResponseModel;
+    licenses: Array<String>;
+    package: String;
+    version: String;
 }
 
-export class ConflictPackageModel {
-    package1: string;
-    license1: string;
-    package2: string;
-    license2: string;
-}
-
-export class ReallyUnknownLicenseModel {
-    package: string;
-    license: string;
-}
-
-export class ComponentConflictLicenseModel {
-    license1: string;
-    license2: string;
-}
-
-export class ComponentConflictUnknownModel {
-    package: string;
-    conflict_licenses: Array<ComponentConflictLicenseModel>;
-}
-
-export class UnknownLicensesModel {
-    really_unknown: Array<ReallyUnknownLicenseModel> = [];
-    component_conflict: Array<ComponentConflictUnknownModel> = [];
+export class LicenseStackAnalysisModel {
+    conflict_packages: Array<ConflictPackageModel> = [];
+    message: String;
+    outlier_packages: Array<ReallyUnknownLicenseModel> = [];
+    packages: Array<LicenseModel>;
+    stack_license: string;
+    status: string;
+    statusCode: number;
+    statusText: String;
 }
 
 export class StackLicenseAnalysisModel {
@@ -193,6 +180,72 @@ export class DependencySearchItem {
     ecosystem: string;
     version: string;
     name: string;
+}
+
+export class CategorySearchItem {
+    // core: CategoryDataModel;    overall_score: number;
+}
+
+export class OutlierInformationModel {
+    outlier_probabilty: number;
+    package_name: string;
+}
+
+export class ConflictPackageModel {
+    package1: string;
+    license1: string;
+    package2: string;
+    license2: string;
+}
+
+export class ReallyUnknownLicenseModel {
+    package: string;
+    license: string;
+}
+
+export class ComponentConflictLicenseModel {
+    license1: string;
+    license2: string;
+}
+
+export class ComponentConflictUnknownModel {
+    package: string;
+    conflict_licenses: Array<ComponentConflictLicenseModel>;
+}
+
+export class UnknownLicensesModel {
+    really_unknown: Array<ReallyUnknownLicenseModel> = [];
+    component_conflict: Array<ComponentConflictUnknownModel> = [];
+}
+
+export class SynonymLicenseModel {
+    license1: string;
+    license2: string;
+}
+
+export class LicenseResponseModel {
+    conflict_licenses: Array<ConflictPackageModel> = [];;
+    outlier_licenses: Array<ReallyUnknownLicenseModel> = [];
+    status: String;
+    synonyms: Array<any>;//SynonymLicenseModel;
+    unknown_licenses: UnknownLicensesModel;
+    _message: String;
+    // web: CategoryDataModel;
+    // web_Client: CategoryDataModel;
+    // data_Access: CategoryDataModel;
+    // integration: CategoryDataModel;
+    package_name: CategoryDataModel;
+}
+
+export class CategoryDataModel {
+    count: number;
+    package: Array<CategoryResponseResultModel>;
+}
+
+export class CategoryResponseResultModel {
+    name: string;
+    version: string;
+    category: string;
 }
 
 export class EventDataModel {

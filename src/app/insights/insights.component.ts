@@ -30,6 +30,7 @@ import {
 
 export class InsightComponent implements OnInit, OnChanges {
   @Input() companions: Array < ComponentInformationModel > ;
+  @Input() alternate: Array < ComponentInformationModel > ;
   @Output() companionAdded = new EventEmitter < any > ();
 
   public hasIssue = false;

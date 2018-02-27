@@ -4,7 +4,7 @@
       <p style="font-size: 16px;padding: 15px;position: relative;/*background: #f5f5f5;*/margin: 0;border-top: 1px solid #e6e6e6;">
         <span class="pficon-zone"></span>
         <span style="margin-left: 5px;">Insights</span>
-        <span style="margin-left:4px;" *ngIf="companions">({{companions?.length}})</span>
+        <span style="margin-left:4px;" *ngIf="companions">({{companions?.length + alternate?.length}})</span>
         <!-- <span style="background-color:#f8a33a; padding: 6px 13px;color: #fff;position: absolute;top: 0;right: 0;height: 40px;width: 40px;"
           *ngIf="companions?.length && hasIssue">
           <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
@@ -19,11 +19,14 @@
       <div class="card-pf-body" *ngIf="companions?.length">
         <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion" (companionRemoved)="removeCompanion($event)"></app-list-element>
       </div>
+      <div class="card-pf-body" *ngIf="alternate?.length">
+        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of alternate" [dependency]="companion" (companionRemoved)="removeCompanion($event)"></app-list-element>
+      </div>
       <div class="card-pf-body">
-        <div class="pre-loader" *ngIf="!companions">
+        <div class="pre-loader" *ngIf="!companions||!alternate">
           <div class="pre-loader-spinner spinner spinner-lg"></div>
         </div>
-        <p class="card-pf-aggregate-status-notifications" *ngIf="companions?.length === 0">
+        <p class="card-pf-aggregate-status-notifications" *ngIf="companions?.length === 0 && alternate?.length === 0">
           <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
             <span class="pficon pficon-info" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
             <span style="padding-top:17px;">No Insights Found</span>

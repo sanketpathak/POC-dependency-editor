@@ -1,6 +1,6 @@
 FROM registry.centos.org/centos/centos:7
 
-MAINTAINER Arunkumar Srisailapathi <asrisail@redhat.com>
+MAINTAINER Sanket Pathak <spathak@redhat.com>
 
 RUN mkdir -p /opt/scripts /var/www/html
 

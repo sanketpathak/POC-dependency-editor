@@ -62,7 +62,7 @@
           </section>
         </div>
         <section style="padding: 5px 17px;">
-        <div class="card-pf-body" *ngIf="dependencies?.length" style="overflow-y: scroll;height: 289px;">
+        <div class="card-pf-body" *ngIf="dependencies?.length" style="/*overflow-y: scroll;*/height: 289px;">
           <!-- <b style="padding-left: 15px;">Recently added dependencies</b> -->
           <!-- <app-list-element *ngFor="let dependency of dependencies" [dependency]="dependency" [fromAddDependency]="'true'"></app-list-element> -->
           <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
@@ -107,10 +107,14 @@
                         <div class="card-pf-body">
                           <div class="card-pf-items">
                             <table class="tag-table"><!--  *ngFor="let key of categories"-->
-                              <tr>
-                                 <td class="tag-table-td-left"></td> <!--(click)="tagClick(key[0])" [class.tag-color]="selectedTags.has(key[0])" > {{key[0].substring(0, 1).toUpperCase() + key[0].substring(1)}}</td> -->
-                                <td class="tag-table-td-left">
-                                  <label class="tag-table-td-label"></label><!-- {{key[1]}} -->
+                              <tr style="display: grid;">
+                                <td class="tag-table-td-left">All<!--</td> (click)="tagClick(key[0])" [class.tag-color]="selectedTags.has(key[0])" > {{key[0].substring(0, 1).toUpperCase() + key[0].substring(1)}}</td> -->
+                                <!-- <td class="tag-table-td-left"> -->
+                                  <label class="tag-table-td-label" style="float: right;">{{tagZero}}</label><!-- {{key[1]}} -->
+                                </td>
+                                <td class="tag-table-td-left" *ngFor="let tags of categoryResult">{{tags.package[0].category}}<!--</td> (click)="tagClick(key[0])" [class.tag-color]="selectedTags.has(key[0])" > {{key[0].substring(0, 1).toUpperCase() + key[0].substring(1)}}</td> -->
+                                <!-- <td class="tag-table-td-left" *ngFor="let tags of categoryResult"> -->
+                                  <label class="tag-table-td-label" style="float: right;">{{tags.count}}</label><!-- {{key[1]}} -->
                                 </td>
                               </tr>
                             </table>
@@ -126,7 +130,7 @@
                       <span class="fa fa-search search-icon" aria-hidden="true" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
                       <!-- <button type="button" class="filter-button"><span class="pficon-settings"></span> Filter </button> -->
                        <section> <!--[class.dependency-typeahead]="suggestions.length > 0"> -->
-                          <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0">
+                          <!-- <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngIf="suggestions && suggestions.length > 0">
                               <span (click)="suggestions = [];"> </span>
                               <div *ngFor="let suggestion of suggestions | slice:0:1;" class="typeahead-text-first">
                                 <strong>{{suggestion}}</strong>
@@ -134,12 +138,12 @@
                               <div *ngFor="let suggestion of suggestions | slice:1:10; let i=index" class="typeahead-text">
                                   <span>{{suggestion}}</span>
                               </div>
-                          </div>
+                          </div> -->
                       </section>
                     </div>
                     <div class="depn">
                     <div class="depn-select">0 Dependencies selected
-                    <div class="display-dependencies" *ngFor="let dependency of dependencies;let i = index">
+                    <div class="display-dependencies" *ngFor="let dep of categoryResult">
                      <!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 dependency-cards"> -->
                        <!-- <div class="card-pf card-pf-view card-pf-view-select card-pf-view-multi-select " [class.card-border]="unselectedPackages.has(dependency.name)" [class.active]="selectedPackages.has(dependency.name)">
                          <div class="card-pf-body">
@@ -176,8 +180,8 @@
                            </div>
                          </div>
                        </div> -->
-                       <div class="list-group list-view-pf">
-                          <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">
+                       <div class="list-group list-view-pf" *ngFor="let package of dep.package; let master of masterTags">
+                          <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" >
                             <div class="check">
                               <div class="list-view-pf-checkbox">
                                 <input type="checkbox" style="position: relative;top: -8px;left: -1px;width: 15px;">
@@ -187,20 +191,20 @@
                               </div> -->
                             </div>
                             <div class="list-view-pf-actions">
-                              <button class="btn btn-default check" (click)="addDependency(companion)" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
+                              <button class="btn btn-default check" (click)="addDependency(master)" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
                               border:1px solid #00659c;
                               box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);
                               border-radius:1px;
                               width:54px;
-                              margin-top: 27px;" >
+                              margin-top: 5px;" >
                                 Add
                               </button>
                             </div>
-                            <div class="list-view-pf-main-info">
-                              <div class="list-view-pf-body">
+                            <div class="list-view-pf-main-info" >
+                              <div class="list-view-pf-body" >
                                 <div class="list-view-pf-description">
                                   <div class="list-group-item-heading">
-                                      <label class="control control--checkbox">{{dependency.name}}
+                                      <label class="control control--checkbox">{{master.name}}
                                           <!-- <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
                                           <div class="control__indicator"></div> -->
                                       </label>
@@ -209,27 +213,28 @@
                                       <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p> -->
                                   </div>
                                   <div>
-                                      <div *ngFor="let tag of dependency.topic_list">
-                                        <div class="tag-border" >{{tag}}</div>
+                                      <div >
+                                        <div class="tag-border" >{{package.category}}</div>
                                       </div>
                                     </div>
                                 </div>
                                 <div class="list-view-pf-additional-info">
                                   <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
                                       <div class="list-pf-item"> <label></label></div>
-                                      <span dropdown  class="dropdown-position" style="margin-right:-20px">
-                                        <div style="border-radius: 2px;padding-left: 10px;padding-right: 10px;cursor: pointer;position: relative;margin-left: -470px;">
-                                          <label href dropdownToggle (click)="false" class="dropbtn">
-                                          {{dependency.latest_version}}
+                                      <span dropdown  class="dropdown-position" style="/*margin-right:-20px*/">
+                                        <div style="/*border-radius: 2px;padding-left: 10px;padding-right: 10px;margin-left: -470px;*/cursor: pointer;position: relative;top: -20px;/*left: -90px*/;border-left: 1px solid #bbbbbb;">
+                                          <label href dropdownToggle (click)="false" class="dropbtn" style="padding-left: 3px;">
+                                          {{master.version}}
                                           <span class="fa fa-angle-down" style="margin-left: 6px;">
                                           </span>
                                         </label>
+                                        <!-- <span style="color:#8db554;">Added</span>                                     -->
                                       </div>
-                                        <ul *dropdownMenu class="dropdown-menu">
+                                        <!-- <ul *dropdownMenu class="dropdown-menu">
                                           <li *ngFor="let ver of dependency.version" style="cursor:pointer" onmouseover="this.style.background='#beedf9';" onmouseout="this.style.background='white';" (click)="changeVersion(dependency, ver)">
                                             <label class="dropdown-item version"  >{{ver}}</label>
                                           </li>
-                                        </ul>
+                                        </ul> -->
                                       </span>
                                   </div>
                                   <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
@@ -265,7 +270,7 @@
       
         
         <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-lg foot-button-confirm" style="background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);width: 94px;">Done</button>
+          <button type="button" class="btn btn-info btn-lg foot-button-confirm" style="background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);width: 94px;" (click)="closemodal()">Done</button>
           <button type="button" class="btn btn-default foot-button-edit" (click)="closemodal()" data-dismiss="modal" style="width: 94px;height: 30px;">Cancel</button>
         </div>
   </modal-content>
