@@ -3,3 +3,4 @@ node_modules/
 dist/
 dist-watch/
 src/environments/token.ts
+npm-debug.log

@@ -1,1 +1,1 @@
-export { DependencyModule } from './src/app/dependency-editor/dependency-editor.module';
+export { DependencyEditorModule } from './src/app/dependency-editor/dependency-editor.module';

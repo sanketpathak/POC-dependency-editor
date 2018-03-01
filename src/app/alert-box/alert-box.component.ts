@@ -17,7 +17,7 @@ import {
   AccordionModule
 } from 'ngx-bootstrap';
 import * as c3 from 'c3';
-import { StackLicenseAnalysisModel } from 'app/dependency-app/model/data.model';
+import { StackLicenseAnalysisModel } from '../model/data.model';
 
 @Component({
   selector: 'app-alert-box',

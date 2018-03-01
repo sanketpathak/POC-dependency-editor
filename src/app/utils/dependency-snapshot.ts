@@ -4,6 +4,6 @@ export class DependencySnapshot {
     public static DEP_SNAPSHOT: Array<DependencySnapshotItem> = [];
     public static DEP_SNAPSHOT_ADDED: Array<DependencySnapshotItem> = [];
     public static DEP_FULL_ADDED: Array<ComponentInformationModel> = [];
-    public static ECOSYSTEM: string;
-    public static REQUEST_ID: string;
+    public static ECOSYSTEM = '';
+    public static REQUEST_ID = '';
 }

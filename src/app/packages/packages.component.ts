@@ -20,6 +20,7 @@ export class PackagesComponent implements OnInit {
   @Output('onPackageSelect') onPackageSelect = new EventEmitter();
   @Input('mygui') appName: string;
   @Input('deletedDependencies') deletedDependencies;
+  @Input('showList') showList;
   public dependencies: Array<any> = [];
   public dependenciesData: Array<any> = [];
   public masterTags: Array<any> = [

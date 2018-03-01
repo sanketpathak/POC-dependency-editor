@@ -1,0 +1,47 @@
+.alert-box {
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .30);
+    width: 346px;
+    height: 239px;
+    margin-left: 20px;
+    position: absolute;
+    top: -39px;
+    left: 452px;
+    z-index: 9;
+    .alert-heading {
+        width: 346px;
+        height: 46px;
+        position: relative;
+        top: -42px;
+        left: -40px;
+        border-bottom: none;
+        .alert-title {
+            font-family: OpenSans-Semibold;
+            font-size: 16px;
+            color: #fff;
+            .issue_symbol {
+                margin: 11px;
+                font-family: FontAwesome;
+                font-size: 16px;
+                color: #fff;
+            }
+            .alert_symbol:before {
+                padding-right: 4px;
+            }
+        }
+    }
+    #chart {
+        overflow: visible;
+        margin: 0px auto;
+        position: relative;
+        max-height: 200px;
+        left: 25px;
+        top: -88px;
+        .svg {
+            overflow: visible;
+        }
+    }
+    .pficon-warning-triangle-o:before {
+        color: #fff;
+    }
+}

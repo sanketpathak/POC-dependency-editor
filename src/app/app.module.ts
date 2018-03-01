@@ -1,20 +1,11 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import {BrowserModule} from '@angular/platform-browser';
+
+import { AuthenticationService } from 'ngx-login-client';
+
 import { AppComponent } from './app.component';
-import {DependencyModule} from './dependency-editor/dependency-editor.module';
-
-
-import { FormsModule } from '@angular/forms';
-
-// import { UsersService } from './user/users.service';
-// import { ThreadsService } from './thread/threads.service';
-// import { MessagesService } from './message/messages.service';
-
-// import { ChatMessageComponent } from './chat-message/chat-message.component';
-// import { ChatWindowComponent } from './chat-window/chat-window.component';
-// import { FromNowPipe } from './pipes/from-now.pipe';
-
+import { DependencyEditorModule } from './dependency-editor/dependency-editor.module';
+import { MockAuthenticationService } from './shared/mock-auth.service';
 
 @NgModule({
   declarations: [
@@ -22,11 +13,13 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    DependencyModule,
-    HttpModule,
-    FormsModule
+    DependencyEditorModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthenticationService, useClass: MockAuthenticationService
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

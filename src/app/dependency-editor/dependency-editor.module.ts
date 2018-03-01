@@ -1,42 +1,45 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import {PackagesModule} from '../packages/packages.component.module';
-import {ApplicationModule} from '../application/application.module';
-
-
+import { CommonModule} from '@angular/common';
+import { AccordionModule } from 'ngx-bootstrap';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserModule } from '@angular/platform-browser';
+import { ModalModule } from 'ngx-modal';
 
-import { DependencyComponent } from './dependency-editor.component';
-import { PackagesComponent } from '../packages/packages.component';
+import { DependencyEditorComponent } from './dependency-editor.component';
+import { InsightModule } from '../insights/insights.module';
+import { AddDependencyModule } from '../add-dependency/add-dependency.module';
+import { SecurityModule } from '../security/security.module';
+import { LicenseModule } from '../license/license.module';
+import { CurrentprojectModule } from '../current-project/current-project.module';
+import { PackagesModule} from '../packages/packages.component.module';
+import { DependencyEditorService } from '../shared/dependency-editor.service';
 
-import { UsersService } from '../user/users.service';
-import { ThreadsService } from '../thread/threads.service';
-import { MessagesService } from '../message/messages.service';
-
-import { ChatMessageComponent } from '../chat-message/chat-message.component';
-import { ChatWindowComponent } from '../chat-window/chat-window.component';
-import { FromNowPipe } from '../pipes/from-now.pipe';
-
-@NgModule ({
-    imports: [
-        CommonModule,
-        PackagesModule,
-        ApplicationModule,
-        FormsModule
-    ],
-    declarations: [
-        DependencyComponent,
-        ChatMessageComponent,
-        ChatWindowComponent,
-        FromNowPipe
-    ],
-    providers: [MessagesService, ThreadsService, UsersService],
-    exports: [
-        DependencyComponent,
-        PackagesModule,
-        ApplicationModule
-    ]
+@NgModule({
+ imports: [
+    CommonModule,
+    AccordionModule.forRoot(),
+    HttpModule,
+    FormsModule,
+    TagInputModule,
+    BrowserModule,
+    ModalModule,
+    InsightModule,
+    AddDependencyModule,
+    SecurityModule,
+    LicenseModule,
+    CurrentprojectModule,
+    PackagesModule
+],
+ declarations: [
+    DependencyEditorComponent,
+],
+ exports: [
+    DependencyEditorComponent,
+],
+ providers: [
+     DependencyEditorService
+ ],
 })
-
-export class DependencyModule {}
+export class DependencyEditorModule {}
