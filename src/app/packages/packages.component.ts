@@ -18,6 +18,7 @@ import { concat } from 'rxjs/operator/concat';
 })
 export class PackagesComponent implements OnInit {
   @Output('onPackageSelect') onPackageSelect = new EventEmitter();
+  // tslint:disable-next-line:no-input-rename
   @Input('mygui') appName: string;
   @Input('deletedDependencies') deletedDependencies;
   @Input('showList') showList;
@@ -277,6 +278,8 @@ export class PackagesComponent implements OnInit {
       }
     }
   }
+  
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnChanges() {
     if (this.deletedDependencies) {
       console.log(this.deletedDependencies['packages']['name']);

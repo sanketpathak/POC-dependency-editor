@@ -126,7 +126,7 @@
                   <div class="dependencies">
                     <div class="search-dependencies">
                       <!-- <span class="fa fa-search search-icon" aria-hidden="true"></span><input [(ngModel)]="selected" [typeahead]="masterTags" (keypress)="test($event)" class="search-box"  type="text" placeholder="Search for Packages..">  -->
-                      <input [(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)" class="search-box"  type="text" placeholder="Search for Dependencies..">
+                      <input  class="search-box"  type="text" placeholder="Search for Dependencies.."><!--[(ngModel)]="selected" (keydown)="handleUserInputKeyPress($event)"-->
                       <span class="fa fa-search search-icon" aria-hidden="true" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
                       <!-- <button type="button" class="filter-button"><span class="pficon-settings"></span> Filter </button> -->
                        <section> <!--[class.dependency-typeahead]="suggestions.length > 0"> -->

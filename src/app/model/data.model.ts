@@ -227,7 +227,7 @@ export class LicenseResponseModel {
     conflict_licenses: Array<ConflictPackageModel> = [];;
     outlier_licenses: Array<ReallyUnknownLicenseModel> = [];
     status: String;
-    synonyms: Array<any>;//SynonymLicenseModel;
+    synonyms: Array<any>; // SynonymLicenseModel;
     unknown_licenses: UnknownLicensesModel;
     _message: String;
     // web: CategoryDataModel;

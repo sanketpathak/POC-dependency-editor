@@ -43,16 +43,15 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   public isLoading = false;
   public cveId = [];
   public cvePackage = [];
-  
-  
+
   constructor() { }
 
   ngOnInit() {
     console.log('issue status  ==', this.issueStatus);
-    console.log('issue symbol', this.issueSymbol);    
+    console.log('issue symbol', this.issueSymbol);
     // this.displayLicenses();
   }
-  
+
   ngOnChanges() { console.log("loading is ",this.isLoading);
   console.log('issue status  ==', this.issueStatus);
   console.log('issue symbol', this.issueSymbol);    

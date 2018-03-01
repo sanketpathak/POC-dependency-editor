@@ -31,41 +31,40 @@ export class SecurityComponent implements OnInit, OnChanges {
   public icon = 'fa fa-shield';
   public noOfCves = 0;
   public hasIssue = false;
-  public toHave: boolean = false;
-  public secureIssue: boolean = false;
-  public itSecurity: boolean = true;
+  public toHave = false;
+  public secureIssue = false;
+  public itSecurity = true;
   public cveName: any = [];
-  
+
   constructor() {}
 
   ngOnChanges() {
     this.hasIssue = false;
     this.secureIssue = false;
     this.cveName = [];
-    if (this.cveData) {debugger;
+    if (this.cveData) {
       this.noOfCves = 0;
       let count = -1;
       this.itSecurity = true;
       this.cveData.result.forEach(item => {
         count++;
-        if (item.cve) {debugger;
+        if (item.cve) {
           this.noOfCves++;
           this.hasIssue = true;
           this.secureIssue = true;
           // this.cveName[this.noOfCves] = {item.cve,item.package}
           // this.cveName[this.noOfCves] = this.cveName.assign(item.cve, item.package);
-          console.log("count for cve",count);
+          console.log('count for cve', count);
           // this.cveData.result.map(i => {
-            
-              if(item.cve !== null){
+
+              if (item.cve !== null) {
             this.cveName.push([
-                item.cve.details, //cve: 
-                item.package //package: 
+                item.cve.details, // cve:
+                item.package // package:
             ]);
             }
         // }).forEach(j => this.cveName.push(j));
-        
-        
+
         // Object.keys(this.item).forEach(k => {
         //   this.cveName.push([
         //     k.details.,
@@ -74,8 +73,8 @@ export class SecurityComponent implements OnInit, OnChanges {
         // });
           // this.cveName[item.package] = this.cveName[item.package];
         }
-      });debugger;
-      if(this.noOfCves>0){this.itSecurity = false;}
+      });
+      if (this.noOfCves > 0) { this.itSecurity = false;}
     } else {
       this.noOfCves = null;
     }
@@ -87,7 +86,7 @@ export class SecurityComponent implements OnInit, OnChanges {
 
   public getShow(event) {
     this.toHave = event.toShow;
-    console.log("show toHave variable ",this.toHave);
+    console.log('show toHave variable ', this.toHave);
   }
 
 }

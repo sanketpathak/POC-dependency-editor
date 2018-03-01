@@ -67,10 +67,21 @@ export class DependencyEditorService {
         }
     };
 
-    
+    constructor(
+        private http: Http,
+        private auth: AuthenticationService,
+    ) {
+        if (this.auth.getToken()) {
+            // pass your token here to run in local
+            this.headersProd.set('Authorization', 'Bearer ' + this.auth.getToken());
+        } else {
+            this.headersProd.set('Authorization', 'Bearer ' );
+            this.headersStage.set('Authorization', 'Bearer ' );
+        }
+    }
 
     getStackAnalyses(url: string): Observable < any > {
-        console.log("header stage ->",this.headersStage);
+        console.log('header stage ->', this.headersStage);
         const options = new RequestOptions({
             headers: this.headersStage
         });
@@ -90,7 +101,7 @@ export class DependencyEditorService {
         });
         return this.http.get(url, options)
             .map(this.extractData)
-            .map((data) => {
+            .map((data) => {console.log('the data ',data);
                 return data;
             })
             .catch(this.handleError);
@@ -107,7 +118,7 @@ export class DependencyEditorService {
             })
             .catch(this.handleError);
     }
-    
+
     getDependencyData1(url, payload): Observable < any > {
         const options = new RequestOptions({
             headers: this.headersProd
@@ -124,7 +135,7 @@ export class DependencyEditorService {
         const options = new RequestOptions({
             headers: this.headersStage
         });
-        return this.http.get(url)//, options)
+        return this.http.get(url)// , options)
         .map(this.extractData)
         .map((data) => {
             return data;

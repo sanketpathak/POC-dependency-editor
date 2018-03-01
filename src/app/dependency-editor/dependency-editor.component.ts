@@ -45,34 +45,37 @@ import {
 export class DependencyEditorComponent implements OnInit {
   // @ViewChild('previewModal') previewModal: any;
   @ViewChild('dependencyPreview') modalDependencyPreview : any;
-  
+
   public dependencies: Array < DependencySnapshotItem > ;
   public companions: Array < ComponentInformationModel > ;
   public alternate: Array < ComponentInformationModel > ;
   public licenseData: StackLicenseAnalysisModel;
   public lisData: LicenseStackAnalysisModel;
-  public allLicenses: Array<any> = [];  
+  public allLicenses: Array<any> = [];
   public cveData: CveResponseModel;
   public dependenciesAdded: Array < ComponentInformationModel > = [];
-  public packageLength: number = 0;
-  public addPackageLength: number = 0;
-  
+  public packageLength = 0;
+  public addPackageLength = 0;
+
   private stackUrl: string;
   private getDepInsightsUrl: string;
   private getCveUrl: string;
   private getLicenseUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
-  public listView: string = "View Dependency List";
-  private showList: boolean = false;
-  
+  public listView = 'View Dependency List';
+  private showList = false;
+
 
 
   constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
-    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d211493b7c6944e6a14ba8b18a42fb06';
-d    // 718c0b279b474efe85d7e8af3cf9c521
+    // this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d211493b7c6944e6a14ba8b18a42fb06';
+    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/61da63a454714f7f888f697141f15f3f';
+    // this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
+    this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/ae7e3dab645a48fa9e186e7d30521917';
+    // 718c0b279b474efe85d7e8af3cf9c521
     // d78398d31eab456d85bc1801aeee0aef
     // 097d603a811a4609b177383f5170856d
     // d211493b7c6944e6a14ba8b18a42fb06 - vertx http - prod
@@ -89,10 +92,10 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
         this.setDependencies(result);
         this.setCompanions(result);
         this.setAlternate(result);
-        // this.setLicenseData(result);
-        this.getLicenseData(this.service.getPayload());
+        this.setLicenseData(result);
+        // this.getLicenseData(this.service.getPayload());
         this.getCveData(this.service.getPayload());
-        console.log("dependency-editor stack anlyses result",result);console.log("This license data",result.user_stack_info.license_analysis);
+        console.log('dependency-editor stack anlyses result', result);
       });
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
@@ -152,7 +155,7 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
     this.service.getDependencyData1(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         console.log('licensesssssss data', response);
-        this.lisData = response;
+        this.lisData = response;console.log('lis data = ', this.lisData);
         this.allLicenses = response.packages;
       });
   }
@@ -164,7 +167,8 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
       .subscribe((response: StackReportModel) => {
         console.log('response after get dependency insights', response);
         this.setCompanions(response.result[0]);
-        this.setLicenseData(response.result[0]);
+        // this.setLicenseData(response.result[0]);
+        this.getLicenseData(this.service.getPayload());
         this.setAlternate(response.result[0]);
         if (this.isDepSelectedFromSearch) {
           DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
@@ -187,7 +191,7 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
       });
   }
 
-  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {console.log("Alternate if present :",alternates);
+  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {console.log('Alternate if present :', alternates);
     alternates.forEach((alternate: ComponentInformationModel) => {
       DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
         if (alternate.name === depAdded.name) {
@@ -197,12 +201,12 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
     });
   }
 
-  checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {debugger;
-    console.log("analysed dep :",analyzedDependencies);
+  checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {
+    console.log('analysed dep :', analyzedDependencies);
     DependencySnapshot.DEP_FULL_ADDED.forEach((depFullAdded: ComponentInformationModel) => {
-      console.log("dep full added",depFullAdded);
+      console.log('dep full added', depFullAdded);
       if (!depFullAdded.security) {
-        const objWithSecurity = _.find(analyzedDependencies, (dep) => {debugger;
+        const objWithSecurity = _.find(analyzedDependencies, (dep) => {
           return dep.name === depFullAdded.name;
         });
         // depFullAdded.security = objWithSecurity.security;
@@ -215,12 +219,12 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
   // }
   public viewList() {
     this.showList = !this.showList;
-    console.log("show list variable",this.showList);
-    if(this.showList === false) {
-      this.listView = "View Dependency List";
+    console.log('show list variable', this.showList);
+    if (this.showList === false) {
+      this.listView = 'View Dependency List';
     }
-    if(this.showList === true) {
-      this.listView = "Hide Dependency List";
+    if (this.showList === true) {
+      this.listView = 'Hide Dependency List';
     }
   }
 
@@ -228,9 +232,9 @@ d    // 718c0b279b474efe85d7e8af3cf9c521
     this.modalDependencyPreview.open();
     this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
     this.addPackageLength = DependencySnapshot.DEP_SNAPSHOT_ADDED.length;
-    console.log(this.packageLength,this.addPackageLength);
+    console.log(this.packageLength, this.addPackageLength);
   }
-  public closemodal(){
+  public closemodal() {
     this.modalDependencyPreview.close();
   }
 }
