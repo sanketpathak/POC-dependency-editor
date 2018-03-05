@@ -123,9 +123,8 @@ export class DependencyEditorComponent implements OnInit {
     this.service.updateDependencyAddedSnapshot(eventData);
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
     const payload = this.service.getPayload();
-    this.getDependencyInsights(payload);console.log('ttttttttttttttttttttt');
+    this.getDependencyInsights(payload);
     this.getCveData(payload);
-    this.getLicenseData(this.service.getPayload());
     this.getLicenseData(payload);
   }
 
