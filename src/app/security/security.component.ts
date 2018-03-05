@@ -8,20 +8,19 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
-  TagInputModule
-} from 'ngx-chips';
-import {
   FormsModule
 } from '@angular/forms';
 import {
   AccordionModule
 } from 'ngx-bootstrap';
-import { CveResponseModel } from '../model/data.model';
+import {
+  CveResponseModel
+} from '../model/data.model';
 
 @Component({
   selector: 'app-security',
-  templateUrl: './security.component.html',
-  styleUrls: ['./security.component.less']
+  styleUrls: ['./security.component.less'],
+  templateUrl: './security.component.html'
 })
 
 export class SecurityComponent implements OnInit, OnChanges {
@@ -52,29 +51,18 @@ export class SecurityComponent implements OnInit, OnChanges {
           this.noOfCves++;
           this.hasIssue = true;
           this.secureIssue = true;
-          // this.cveName[this.noOfCves] = {item.cve,item.package}
-          // this.cveName[this.noOfCves] = this.cveName.assign(item.cve, item.package);
-          console.log('count for cve', count);
-          // this.cveData.result.map(i => {
 
-              if (item.cve !== null) {
+          if (item.cve !== null) {
             this.cveName.push([
-                item.cve.details, // cve:
-                item.package // package:
+              item.cve.details, // cve:
+              item.package // package:
             ]);
-            }
-        // }).forEach(j => this.cveName.push(j));
-
-        // Object.keys(this.item).forEach(k => {
-        //   this.cveName.push([
-        //     k.details.,
-        //     this.licenseCount[k] * 100 / this.allLicenses.length
-        //   ]);
-        // });
-          // this.cveName[item.package] = this.cveName[item.package];
+          }
         }
       });
-      if (this.noOfCves > 0) { this.itSecurity = false;}
+      if (this.noOfCves > 0) {
+        this.itSecurity = false;
+      }
     } else {
       this.noOfCves = null;
     }
@@ -86,7 +74,6 @@ export class SecurityComponent implements OnInit, OnChanges {
 
   public getShow(event) {
     this.toHave = event.toShow;
-    console.log('show toHave variable ', this.toHave);
   }
 
 }

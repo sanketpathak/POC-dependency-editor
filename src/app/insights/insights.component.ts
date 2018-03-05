@@ -8,9 +8,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
-  TagInputModule
-} from 'ngx-chips';
-import {
   FormsModule
 } from '@angular/forms';
 import {
@@ -24,8 +21,8 @@ import {
 
 @Component({
   selector: 'app-insights',
-  templateUrl: './insights.component.html',
-  styleUrls: ['./insights.component.less']
+  styleUrls: ['./insights.component.less'],
+  templateUrl: './insights.component.html'
 })
 
 export class InsightComponent implements OnInit, OnChanges {

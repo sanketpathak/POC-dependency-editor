@@ -1,16 +1,17 @@
 import {
     Component,
     ElementRef,
-    ViewEncapsulation
+    ViewEncapsulation,
+    OnChanges
 } from '@angular/core';
 
 import * as c3 from 'c3';
 // require('../../node_modules/c3/c3');
 
 /**
- * 
+ *
  * This chart uses C3 for generating and rendering charts.
- * 
+ *
  * Minimum Requirements:
  * C3, D3 (As C3 internally uses D3)
  *
@@ -32,8 +33,7 @@ import * as c3 from 'c3';
         `
     ]
 })
-export class ChartComponent {
-
+export class ChartComponent implements OnChanges {
     // All Inputs for this component declaration
     private data: any; // Configuration for series to be used for generating C3 has to be here
     private chartOptions: any;
@@ -41,7 +41,7 @@ export class ChartComponent {
     private element: HTMLElement; // Element to which the chart has to be attached to
     private configs: any;
 
-    // Below configs have been captured from C3 Reference Doc's Need 
+    // Below configs have been captured from C3 Reference Doc's Need
     // to be updated if in case c3 includes new options
     private c3Configs: Array<string> = [
                                         'axis',
@@ -54,7 +54,7 @@ export class ChartComponent {
                                         ];
 
     /**
-     *  Below options have been captured from C3 Reference Doc's 
+     *  Below options have been captured from C3 Reference Doc's
      *  This doesnot include call back methods those options would be captured seperately
      */
     private c3Options: Array<string> = [
@@ -86,19 +86,19 @@ export class ChartComponent {
     }
 
     // Checks for the changes made in the data and re-renders the charts accordingly
-    public ngOnChanges(): void {
+    ngOnChanges(): void {
         try {
             this.__render(this.data, this.chartOptions, this.configs);
         } catch (err) {
-            console.log(err);
+
         }
     }
 
     private __render(inputData: any, chartOptionsData: any, chartConfigsData: any): void {
-        let _this: ChartComponent = this;
+        const _this: ChartComponent = this;
         if (this.isValid(inputData)) {
 
-            let c3InputData: any = {};
+            const c3InputData: any = {};
 
             c3InputData['bindto'] = _this.element;
             c3InputData['data'] = inputData;
@@ -118,7 +118,7 @@ export class ChartComponent {
              * Chart Configuration could have multiple Options
              * Size, padding, color Pattern, Transition
              * Some callback initializers like OnInit, Onrendered, OnMouseOver, OnMouseOut
-             *  
+             *
              */
 
             if (this.isValid(chartOptionsData)) {
@@ -130,13 +130,10 @@ export class ChartComponent {
              * if(!this.isValidInput(c3InputData)) {
              *     throw new Error('Invalid Configuration passed');
              * }
-             * 
+             *
              */
             c3.generate(c3InputData);
-            // Generates the C3 chart for the given configuration 
-            // and places it inside the directive's element.
         }
-
     }
 
     // A utility method to check if a provided value is valid
@@ -145,15 +142,15 @@ export class ChartComponent {
     }
 
     /**
-     * A utility method to traverse through teh input map, checks with the given config 
+     * A utility method to traverse through teh input map, checks with the given config
      *  Updates the  output map if input is present in config
      *  skips the field if the given input is not present in config map
-     *  
+     *
      */
     private updateIfValidInput(inputMap: any, outputMap: any, config: Array<string>) {
-        for (let key in inputMap) {
+        for (const key in inputMap) {
             if (inputMap.hasOwnProperty(key)) {
-                let isValidOption = config.indexOf(key);
+                const isValidOption = config.indexOf(key);
                 if (isValidOption >= 0) {
                     outputMap[key] = inputMap[key];
                 }

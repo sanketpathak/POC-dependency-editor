@@ -224,16 +224,12 @@ export class SynonymLicenseModel {
 }
 
 export class LicenseResponseModel {
-    conflict_licenses: Array<ConflictPackageModel> = [];;
+    conflict_licenses: Array<ConflictPackageModel> = [];
     outlier_licenses: Array<ReallyUnknownLicenseModel> = [];
     status: String;
     synonyms: Array<any>; // SynonymLicenseModel;
     unknown_licenses: UnknownLicensesModel;
     _message: String;
-    // web: CategoryDataModel;
-    // web_Client: CategoryDataModel;
-    // data_Access: CategoryDataModel;
-    // integration: CategoryDataModel;
     package_name: CategoryDataModel;
 }
 

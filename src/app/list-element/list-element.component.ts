@@ -8,9 +8,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
-  TagInputModule
-} from 'ngx-chips';
-import {
   FormsModule
 } from '@angular/forms';
 import {
@@ -24,8 +21,8 @@ import { DependencySnapshot } from '../utils/dependency-snapshot';
 
 @Component({
   selector: 'app-list-element',
-  templateUrl: './list-element.component.html',
-  styleUrls: ['./list-element.component.less']
+  styleUrls: ['./list-element.component.less'],
+  templateUrl: './list-element.component.html'
 })
 
 export class ListElementComponent implements OnInit {
@@ -63,8 +60,6 @@ export class ListElementComponent implements OnInit {
   }
 
   useAlternate() {
-    console.log('user alternate clicked');
-    // replace the alternate with DependencySnapshot in dep_full_added and dep_added
     const alternate = this.dependency.alternate;
     const indexFull = _.findIndex(DependencySnapshot.DEP_FULL_ADDED, { name: alternate.name });
     const indexSnapshot = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { name: alternate.name });

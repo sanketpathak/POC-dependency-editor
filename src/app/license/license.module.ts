@@ -3,9 +3,7 @@ import { CommonModule} from '@angular/common';
 import { AccordionModule } from 'ngx-bootstrap';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { TagInputModule } from 'ngx-chips';
-import { BrowserModule } from '@angular/platform-browser';
-import { AlertBoxModule } from '../alert-box/alert-box.module'
+import { AlertBoxModule } from '../alert-box/alert-box.module';
 import { LicenseComponent } from './license.component';
 import { IssueModule } from '../issue/issue.module';
 
@@ -16,8 +14,6 @@ import { IssueModule } from '../issue/issue.module';
     AccordionModule.forRoot(),
     HttpModule,
     FormsModule,
-    TagInputModule,
-    BrowserModule,
     IssueModule,
     AlertBoxModule
 ],
@@ -27,6 +23,6 @@ import { IssueModule } from '../issue/issue.module';
  exports: [
     LicenseComponent,
 ],
- providers: [],
+    providers: [],
 })
 export class LicenseModule { }

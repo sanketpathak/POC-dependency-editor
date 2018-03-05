@@ -1,13 +1,12 @@
 import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewEncapsulation } from '@angular/core';
-import { TagInputModule } from 'ngx-chips';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
 import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, LicenseStackAnalysisModel } from '../model/data.model';
 
 @Component({
   selector: 'app-current-project',
-  templateUrl: './current-project.component.html',
-  styleUrls: ['./current-project.component.less']
+  styleUrls: ['./current-project.component.less'],
+  templateUrl: './current-project.component.html'
 })
 
 export class CurrentprojectComponent implements OnInit, OnChanges {
@@ -24,10 +23,11 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
 
   constructor() { }
 
-  ngOnInit() {console.log('lis data in current project module = ', this.lisData , this.licenseData);
+  ngOnInit() {
+
   }
 
   ngOnChanges() {
-    console.log(this.dependencies);
+
   }
 }

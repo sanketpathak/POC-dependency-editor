@@ -9,9 +9,6 @@ import {
   ViewChild
 } from '@angular/core';
 import {
-  TagInputModule
-} from 'ngx-chips';
-import {
   FormsModule
 } from '@angular/forms';
 import {
@@ -39,12 +36,11 @@ import {
 
 @Component({
   selector: 'app-dependency-editor',
-  templateUrl: './dependency-editor.component.html',
-  styleUrls: ['./dependency-editor.component.less']
+  styleUrls: ['./dependency-editor.component.less'],
+  templateUrl: './dependency-editor.component.html'
 })
 export class DependencyEditorComponent implements OnInit {
-  // @ViewChild('previewModal') previewModal: any;
-  @ViewChild('dependencyPreview') modalDependencyPreview : any;
+  @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
   public dependencies: Array < DependencySnapshotItem > ;
   public companions: Array < ComponentInformationModel > ;
@@ -65,8 +61,6 @@ export class DependencyEditorComponent implements OnInit {
   private depToAdd: DependencySearchItem;
   public listView = 'View Dependency List';
   private showList = false;
-
-
 
   constructor(private service: DependencyEditorService) {}
 
@@ -93,9 +87,7 @@ export class DependencyEditorComponent implements OnInit {
         this.setCompanions(result);
         this.setAlternate(result);
         this.setLicenseData(result);
-        // this.getLicenseData(this.service.getPayload());
         this.getCveData(this.service.getPayload());
-        console.log('dependency-editor stack anlyses result', result);
       });
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
@@ -113,7 +105,6 @@ export class DependencyEditorComponent implements OnInit {
       });
     this.service.dependencyRemoved
       .subscribe((data: EventDataModel) => {
-        console.log(data);
         this.callDepServices(data);
       });
   }
@@ -152,11 +143,11 @@ export class DependencyEditorComponent implements OnInit {
   private setAlternate(result: ResultInformationModel) {
     this.alternate  = result.recommendation.alternate;
   }
+
   private getLicenseData(payload: any) {
     this.service.getDependencyData1(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
-        console.log('licensesssssss data', response);
-        this.lisData = response; console.log('lis data = ', this.lisData);
+        this.lisData = response;
         this.allLicenses = response.packages;
       });
   }
@@ -166,10 +157,7 @@ export class DependencyEditorComponent implements OnInit {
     const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
     this.service.getDependencyData(urlToHit, payload)
       .subscribe((response: StackReportModel) => {
-        console.log('response after get dependency insights', response);
         this.setCompanions(response.result[0]);
-        // this.setLicenseData(response.result[0]);
-        // this.getLicenseData(this.service.getPayload());
         this.setAlternate(response.result[0]);
         if (this.isDepSelectedFromSearch) {
           DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
@@ -177,22 +165,17 @@ export class DependencyEditorComponent implements OnInit {
         }
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
         this.checkIfSecurityPresent(response.result[0].user_stack_info.analyzed_dependencies);
-        console.log(DependencySnapshot.DEP_FULL_ADDED);
-        console.log(DependencySnapshot.DEP_SNAPSHOT_ADDED);
-        console.log(DependencySnapshot.DEP_SNAPSHOT);
-        console.log(DependencySnapshot.ECOSYSTEM);
       });
   }
 
   private getCveData(payload: any) {
     this.service.getDependencyData(this.getCveUrl, payload)
       .subscribe((response: CveResponseModel) => {
-        console.log('cve data', response);
         this.cveData = response;
       });
   }
 
-  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {console.log('Alternate if present :', alternates);
+  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {
     alternates.forEach((alternate: ComponentInformationModel) => {
       DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
         if (alternate.name === depAdded.name) {
@@ -203,24 +186,17 @@ export class DependencyEditorComponent implements OnInit {
   }
 
   checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {
-    console.log('analysed dep :', analyzedDependencies);
     DependencySnapshot.DEP_FULL_ADDED.forEach((depFullAdded: ComponentInformationModel) => {
-      console.log('dep full added', depFullAdded);
       if (!depFullAdded.security) {
         const objWithSecurity = _.find(analyzedDependencies, (dep) => {
           return dep.name === depFullAdded.name;
         });
-        // depFullAdded.security = objWithSecurity.security;
       }
     });
   }
 
-  // showPreviewModal() {
-  //   this.previewModal.open();
-  // }
   public viewList() {
     this.showList = !this.showList;
-    console.log('show list variable', this.showList);
     if (this.showList === false) {
       this.listView = 'View Dependency List';
     }
@@ -233,8 +209,8 @@ export class DependencyEditorComponent implements OnInit {
     this.modalDependencyPreview.open();
     this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
     this.addPackageLength = DependencySnapshot.DEP_SNAPSHOT_ADDED.length;
-    console.log(this.packageLength, this.addPackageLength);
   }
+
   public closemodal() {
     this.modalDependencyPreview.close();
   }

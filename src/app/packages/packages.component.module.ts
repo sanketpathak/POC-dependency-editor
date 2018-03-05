@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { TypeaheadModule} from 'ngx-bootstrap';
 import { BsDropdownModule } from 'ngx-bootstrap';
 import { AccordionModule } from 'ngx-bootstrap';
-
-
-
 import { PackagesComponent } from './packages.component';
 
 @NgModule ({

@@ -8,9 +8,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {
-  TagInputModule
-} from 'ngx-chips';
-import {
   FormsModule
 } from '@angular/forms';
 import {
@@ -19,8 +16,8 @@ import {
 
 @Component({
   selector: 'app-issue',
-  templateUrl: './issue.component.html',
-  styleUrls: ['./issue.component.less']
+  styleUrls: ['./issue.component.less'],
+  templateUrl: './issue.component.html'
 })
 
 export class IssueComponent implements OnInit, OnChanges {
@@ -29,11 +26,11 @@ export class IssueComponent implements OnInit, OnChanges {
   @Input() issueStatus: string | number;
   @Input() hasIssue: boolean;
   @Input() responseReady: boolean;
-  @Output() notifyParent: EventEmitter<boolean> = new EventEmitter();
+  @Output() notifyParent: EventEmitter < boolean > = new EventEmitter();
 
   public isLoading = false;
 
-  public toShow : boolean = false;
+  public toShow = false;
   constructor() {}
 
   ngOnChanges() {
@@ -49,5 +46,4 @@ export class IssueComponent implements OnInit, OnChanges {
   ngOnInit() {
 
   }
-
 }
