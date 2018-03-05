@@ -62,7 +62,7 @@ export class ListElementComponent implements OnInit {
   useAlternate() {
     const alternate = this.dependency.alternate;
     const indexFull = _.findIndex(DependencySnapshot.DEP_FULL_ADDED, { name: alternate.name });
-    const indexSnapshot = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { name: alternate.name });
+    const indexSnapshot = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { package: alternate.name });
     DependencySnapshot.DEP_FULL_ADDED.splice(indexFull, 1, alternate.alternate);
     DependencySnapshot.DEP_SNAPSHOT_ADDED.splice(indexSnapshot, 1, {
       package: alternate.alternate.name,

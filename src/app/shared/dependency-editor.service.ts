@@ -153,6 +153,15 @@ export class DependencyEditorService {
         return payload;
     }
 
+    removeDependency(dependency: ComponentInformationModel) {
+        const objToEmit: EventDataModel = {
+            depFull: dependency,
+            depSnapshot: null,
+            action: 'remove'
+        };
+        this.dependencyRemoved.emit(objToEmit);
+    }
+
     private extractData(res: Response) {
         const body = res.json() || {};
         body['statusCode'] = res.status;
@@ -175,14 +184,5 @@ export class DependencyEditorService {
             };
         }
         return Observable.throw(body);
-    }
-
-    removeDependency(dependency: ComponentInformationModel) {
-        const objToEmit: EventDataModel = {
-            depFull: dependency,
-            depSnapshot: null,
-            action: 'remove'
-        };
-        this.dependencyRemoved.emit(objToEmit);
     }
 }
