@@ -58,6 +58,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public selectedTags = new Set();
   public categories = [];
   public cveTemporaryData: CveResponseModel;
+  public cveName: any = [];
+  
   
     
   // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
@@ -81,7 +83,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.service.getDependencies(this.searchDepsUrl + this.dependencySearchString)
       .subscribe((response: any) => {
         this.dependencySearchResult = response['result'];
-        console.log("rrrrrrrrrrrrrrrrrrrresponse",this.dependencySearchResult);        
+        console.log('rrrrrrrrrrrrrrrrrrrresponse', this.dependencySearchResult);
         this.isLoading = false;
       });
   }
@@ -93,41 +95,42 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
         this.categorySearchResult = response['categories'];
         this.isLoading = false;
         this.categoryResult = [];
-        for(let key in this.categorySearchResult){
-         if(this.categorySearchResult.hasOwnProperty(key)){
+        for (let key in this.categorySearchResult) {
+         if (this.categorySearchResult.hasOwnProperty(key)) {
           this.categoryResult.push(this.categorySearchResult[key]);
          }
         }
         // const payload ;
-        var p = this.getCategoryPayload();
+        const p = this.getCategoryPayload();
         console.log('--------------------------', p);
         this.getCategoriesSecurity(p);
         this.addedTags();
         // this.masterTags = this.masterTags.concat(this.categorySearchResult.sort());
-        console.log("category search result", this.categoryResult,this.categoryResult.length);console.log("rrrrrrrrrrrrrrrrrrrresponse",this.dependencySearchResult);
+        console.log('category search result', this.categoryResult, this.categoryResult.length);
+        console.log('rrrrrrrrrrrrrrrrrrrresponse', this.dependencySearchResult);
       });
   }
 
   getCategoryPayload() {
-    var payload = {};
-    let j = 0; 
-    let category : Array<DependencySnapshotItem> = [];
-     this.categoryResult.forEach( i => {console.log("cat , i ",this.categoryResult[i],i);
+    const payload = {};
+    let j = 0;
+    const category: Array<DependencySnapshotItem> = [];
+     this.categoryResult.forEach( i => {console.log('cat , i ', this.categoryResult[i], i);
       // i.package.foreach(k => {
       i.package.map((k) => {debugger;
           // category.push([
             category['package'] = k.name;
             category['version'] = k.version;
           // ]);
-          console.log("categories ==>",category,k);
+          console.log('categories ==>', category,k);
           j++
-        if(j === 7){
+        if(j === 7) {
           payload['_resolved'] = category;
           payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
           payload['request_id'] = DependencySnapshot.REQUEST_ID;
           j = 0;
           // category = [];
-          console.log("Initial payload is :",payload);
+          console.log('Initial payload is :', payload);
           // return payload;
         }
       });
@@ -135,12 +138,42 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     return payload;
 }
 
-  getCategoriesSecurity(payload: any) {console.log("payload for categories",payload);
+  getCategoriesSecurity(payload: any) {console.log('payload for categories', payload);
     this.service.getDependencyData(this.getCveUrl, payload)
     .subscribe((response: CveResponseModel) => {
       console.log('cve data', response);
       this.cveTemporaryData = response;
-      console.log("this.cveTemporaryData =",this.cveTemporaryData)
+      console.log('this.cveTemporaryData =', this.cveTemporaryData);
+      if (this.cveTemporaryData) {
+        let count = -1;
+        this.cveTemporaryData.result.forEach(item => {
+          count++;
+          if (item.cve) {
+            // this.hasIssue = true;
+            // this.secureIssue = true;
+            // this.cveName[this.noOfCves] = {item.cve,item.package}
+            // this.cveName[this.noOfCves] = this.cveName.assign(item.cve, item.package);
+            console.log('count for cve', count);
+            // this.cveData.result.map(i => {
+  
+                if (item.cve !== null) {
+              this.cveName.push([
+                  item.cve.details, // cve:
+                  item.package // package:
+              ]);
+              }
+          // }).forEach(j => this.cveName.push(j));
+  
+          // Object.keys(this.item).forEach(k => {
+          //   this.cveName.push([
+          //     k.details.,
+          //     this.licenseCount[k] * 100 / this.allLicenses.length
+          //   ]);
+          // });
+            // this.cveName[item.package] = this.cveName[item.package];
+          }
+        });
+      }
     });
   }
 
@@ -165,16 +198,16 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.dependencySearchString = '';
     this.isLoading = false;
   }
-  
+
   removeDependency(dependency) {
-    this.service.removeDependency(dependency);console.log("remove of added dependency",dependency);
+    this.service.removeDependency(dependency); console.log('remove of added dependency', dependency);
   }
 
   public showPackageModal(event: Event) {
     this.modalPackagePreview.open();
     this.getCategories();
   }
-  public closemodal(){
+  public closemodal() {
     this.modalPackagePreview.close();
   }
 
@@ -263,7 +296,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       let count = 0;this.tagZero = 0;
       this.categoryResult.forEach(i => {count++;
       this.tagZero = this.tagZero + count;
-      console.log("categary name",i);debugger;
+      console.log('categary name', i); debugger;
         i.package.forEach( x => {
           // this.masterTags.push([
           this.masterTags['ecosystem'] = DependencySnapshot.ECOSYSTEM;
@@ -272,9 +305,9 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
         // ])
         } );
         // i.count
-      
+
     });
-    console.log("This is master tag list",this.masterTags);
+    console.log('This is master tag list', this.masterTags);
   }
   // public calculateCategories(dependencies) {
   //   const tempCategories = [];

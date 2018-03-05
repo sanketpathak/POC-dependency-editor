@@ -17,18 +17,18 @@ export class ApplicationServices {
   private headers: Headers = new Headers({
     'Content-Type': 'application/json'
   });
-  
+
   constructor(private http: Http) {}
-  
+
   private extractData(res: Response) {
     const body = res.json() || {};
     body['statusCode'] = res.status;
     body['statusText'] = res.statusText;
     return body;
   }
-  
+
   public intialConfig(ecosystem: string) {
-    let url = "https://forge.api.openshift.io/api/launchpad/commands/fabric8-new-project/validate";
+    let url = 'https://forge.api.openshift.io/api/launchpad/commands/fabric8-new-project/validate';
     let body: any = {};
     return this.http
       .get(url, body)

@@ -73,8 +73,8 @@ export class DependencyEditorComponent implements OnInit {
   ngOnInit() {
     // this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d211493b7c6944e6a14ba8b18a42fb06';
     this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/61da63a454714f7f888f697141f15f3f';
-    // this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
-    this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/ae7e3dab645a48fa9e186e7d30521917';
+    this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
+    // this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/ae7e3dab645a48fa9e186e7d30521917';
     // 718c0b279b474efe85d7e8af3cf9c521
     // d78398d31eab456d85bc1801aeee0aef
     // 097d603a811a4609b177383f5170856d
@@ -123,8 +123,10 @@ export class DependencyEditorComponent implements OnInit {
     this.service.updateDependencyAddedSnapshot(eventData);
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
     const payload = this.service.getPayload();
-    this.getDependencyInsights(payload);
+    this.getDependencyInsights(payload);console.log('ttttttttttttttttttttt');
     this.getCveData(payload);
+    this.getLicenseData(this.service.getPayload());
+    this.getLicenseData(payload);
   }
 
   private reset() {
@@ -155,7 +157,7 @@ export class DependencyEditorComponent implements OnInit {
     this.service.getDependencyData1(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         console.log('licensesssssss data', response);
-        this.lisData = response;console.log('lis data = ', this.lisData);
+        this.lisData = response; console.log('lis data = ', this.lisData);
         this.allLicenses = response.packages;
       });
   }
@@ -168,7 +170,7 @@ export class DependencyEditorComponent implements OnInit {
         console.log('response after get dependency insights', response);
         this.setCompanions(response.result[0]);
         // this.setLicenseData(response.result[0]);
-        this.getLicenseData(this.service.getPayload());
+        // this.getLicenseData(this.service.getPayload());
         this.setAlternate(response.result[0]);
         if (this.isDepSelectedFromSearch) {
           DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
