@@ -47,4 +47,5 @@ export class InsightComponent implements OnInit, OnChanges {
       return companion.name === dependency.name;
     });
   }
+// tslint:disable-next-line:eofline
 }

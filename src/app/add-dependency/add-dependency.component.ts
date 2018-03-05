@@ -47,7 +47,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public categoryResult = [];
   public tagZero = 0;
 
-  public search_key = '';
+  public searchKey = '';
   public selected: string;
   public suggestions: Array < any > = [];
   public dependenciesData: Array < any > = [];
@@ -72,7 +72,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-
   }
 
   getDependencies() {
@@ -86,7 +85,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   getCategories() {
     this.isLoading = true;
-    this.service.getCategories(this.categoryUrl) // + 'vertx')
+    this.service.getCategories(this.categoryUrl) // + '/vertx')
       .subscribe((response: any) => {
         this.categorySearchResult = response['categories'];
         this.isLoading = false;
@@ -96,7 +95,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
             this.categoryResult.push(this.categorySearchResult[key]);
           }
         }
-        // const payload ;
         const p = this.getCategoryPayload();
         this.getCategoriesSecurity(p);
         this.addedTags();
@@ -209,28 +207,28 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   handleUserInputKeyPress(event: KeyboardEvent): void {
     //   const key: string = event.key.trim();
     //   if (key && key.trim() === ',') {
-    //     this.search_key = '';
+    //     this.searchKey = '';
     //     this.suggestions = [];
     //   } else {
     //     if (key === 'Enter') {
-    //       this.search_key = '';
+    //       this.searchKey = '';
     //       this.suggestions = [];
     //       this.showDependency();
     //     } else if (key === 'Backspace') {
-    //       if (this.search_key !== '') {
-    //         this.search_key = this.search_key.slice(0, -1);
-    //         if (this.search_key !== '') {
+    //       if (this.searchKey !== '') {
+    //         this.searchKey = this.searchKey.slice(0, -1);
+    //         if (this.searchKey !== '') {
     //           this.suggestions = [];
     //         }
     //       } else {
     //         this.suggestions = [];
     //       }
     //     } else {
-    //       this.search_key += key.trim();
+    //       this.searchKey += key.trim();
     //     }
-    //     if (this.search_key) {
+    //     if (this.searchKey) {
     //       this.suggestions = this.masterTags.filter(tag => {
-    //         return tag.indexOf(this.search_key) !== -1;
+    //         return tag.indexOf(this.searchKey) !== -1;
     //       });
     //     }
     //   }

@@ -28,8 +28,8 @@ export class ApplicationServices {
   }
 
   public intialConfig(ecosystem: string) {
-    let url = 'https://forge.api.openshift.io/api/launchpad/commands/fabric8-new-project/validate';
-    let body: any = {};
+    const url = 'https://forge.api.openshift.io/api/launchpad/commands/fabric8-new-project/validate';
+    const body: any = {};
     return this.http
       .get(url, body)
       .map(this.extractData)
@@ -52,4 +52,5 @@ export class ApplicationServices {
     }
     return Observable.throw(body);
   }
+// tslint:disable-next-line:eofline
 }

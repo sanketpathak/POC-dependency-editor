@@ -83,16 +83,16 @@ export class LicenseComponent implements OnInit, OnChanges {
       }
     } else {
       this.stackLicense = null;
-      this.stackStatus = null;
+      // this.stackStatus = 'Unknown';
     }
     this.licenseAll = [];
     if (this.stackStatus === 'Successful') {
-      for (let x = 0; x < this.allLicenses.length; x++) {
-        if (typeof (this.allLicenses[0]) !== 'string') {
-          this.allLicenses.forEach((i) => {
-            i.licenses.forEach((j) => {
-              this.licenseAll.push(this.filter(j));
-            });
+      for (let x = 0 ; x < this.allLicenses.length ; x++) {
+        if (typeof(this.allLicenses[0]) !== 'string') {
+          this.allLicenses.forEach( (i) => {
+                            i.licenses.forEach( (j) => {
+                              this.licenseAll.push(this.filter(j));
+                            });
           });
         }
         // tslint:disable-next-line:one-line
@@ -119,49 +119,48 @@ export class LicenseComponent implements OnInit, OnChanges {
         this.licenseCount = {};
         this.licenseAll.forEach(d => {
           this.licenseDt = this.licenseDt.concat(
-            d
-          );
-        });
-        this.licenseDt.forEach(item => {
-          this.licenseCount[item] = (this.licenseCount[item] || 0) + 1;
-        });
-        this.liData = [];
-        Object.keys(this.licenseCount).forEach(k => {
-          this.liData.push([
-            k,
-            Math.round(this.licenseCount[k] * 100 / this.licenseDt.length)
-          ]);
-        });
-      }
-    }
-    this.displayLicenses(this.liData);
+                d
+              );
+            });
+          this.licenseDt.forEach(item => {
+            this.licenseCount[item] = (this.licenseCount[item] || 0) + 1;
+          });
+          this.liData = [];
+          Object.keys(this.licenseCount).forEach(k => {
+            this.liData.push([
+              k,
+              Math.round(this.licenseCount[k] * 100 / this.licenseDt.length)
+            ]);
+          });
+        }
+    }   this.displayLicenses(this.liData);
   }
 
   public displayLicenses(liData): void {
     if (this.stackStatus === 'Successful') {
       this.charts['data'] = {
-        columns: liData,
-        type: 'donut'
-      };
-      this.charts['options'] = {
-        donut: {
-          title: ' Licenses', // + this.licenseData.length
-          width: 10,
-          label: {
-            show: false
-          }
-        },
-        size: {
-          height: 200,
-          width: 230
-        }
-      };
-      this.charts['configs'] = {
-        legend: {
-          show: true,
-        }
-      };
+      columns: liData,
+      type: 'donut'
+    };
+    this.charts['options'] = {
+      donut: {
+        title: ' Licenses',
+        width: 10,
+        label: {
+           show: false
+           }
+    },
+    size: {
+      height: 200,
+      width: 230
     }
+   };
+    this.charts['configs'] = {
+      legend: {
+        show: true
+      }
+    };
+   }
   }
 
   public filter(key: string) {
@@ -516,4 +515,5 @@ export class LicenseComponent implements OnInit, OnChanges {
       return key;
     }
   }
+
 }

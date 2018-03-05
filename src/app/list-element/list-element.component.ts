@@ -60,6 +60,7 @@ export class ListElementComponent implements OnInit {
   }
 
   useAlternate() {
+    // replace the alternate with DependencySnapshot in dep_full_added and dep_added
     const alternate = this.dependency.alternate;
     const indexFull = _.findIndex(DependencySnapshot.DEP_FULL_ADDED, { name: alternate.name });
     const indexSnapshot = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { package: alternate.name });

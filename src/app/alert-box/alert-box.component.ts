@@ -7,7 +7,6 @@ import {
   EventEmitter,
   ViewEncapsulation
 } from '@angular/core';
-
 import {
   FormsModule
 } from '@angular/forms';
@@ -38,14 +37,13 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   @Input() cveName = [];
   @Input() liData = [];
   @Input() charts: any = {};
-  public isLoading = false;
+  public isLoading = true;
   public cveId = [];
   public cvePackage = [];
 
   constructor() {}
 
   ngOnInit() {
-
   }
 
   ngOnChanges() {

@@ -29,8 +29,8 @@ export class IssueComponent implements OnInit, OnChanges {
   @Output() notifyParent: EventEmitter<boolean> = new EventEmitter();
 
   public isLoading = false;
+  public toShow = false;
 
-  public toShow: boolean = false;
   constructor() {}
 
   ngOnChanges() {
