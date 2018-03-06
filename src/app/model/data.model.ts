@@ -250,7 +250,7 @@ export class EventDataModel {
     action: string;
 }
 
-class MissionInfo {
+export class MissionInfo {
     id: string;
     name: string;
     icon: string;
