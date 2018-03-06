@@ -32,7 +32,7 @@ import {
 @Component({
   selector: 'app-add-dependency',
   styleUrls: ['./add-dependency.component.less'],
-  templateUrl: './add-dependency.component.html',
+  templateUrl: './add-dependency.component.html'
 })
 
 export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
@@ -62,7 +62,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
   private searchDepsUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/component-search/';
   // private categoryUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/categories/';
-  private categoryUrl = 'https://gist.githubusercontent.com/sanketpathak/9c431733f0b75623e6c88ae239e9813b/raw/e325de8129a6c135813fb23804ef33e56aec783a/vertx_package.json';
+  private categoryUrl = 'https://gist.githubusercontent.com/sanketpathak/9c431733f0b75623e6c88ae239e9813b/raw/494965a93039376f40116378c23404c1a5aeb5dd/vertx_package.json';
   private getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
 
   constructor(private service: DependencyEditorService) {}

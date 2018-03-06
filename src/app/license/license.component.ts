@@ -25,7 +25,7 @@ import {
 @Component({
   selector: 'app-license',
   styleUrls: ['./license.component.less'],
-  templateUrl: './license.component.html',
+  templateUrl: './license.component.html'
 })
 
 export class LicenseComponent implements OnInit, OnChanges {
@@ -33,7 +33,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() allLicenses: Array < any > = [];
 
-  @ViewChild(AlertBoxComponent) private alertBoxComponent: AlertBoxComponent;
+  @ViewChild(AlertBoxComponent);
 
   public title = 'License';
   public icon = 'pficon pficon-on-running'; // fa-file-text-o
@@ -45,11 +45,11 @@ export class LicenseComponent implements OnInit, OnChanges {
   public licenseAll: Array < string > = [];
   public licenseIssue = true;
   public licenseDt: Array < any > = [];
-  // public allLicenses: Array<any> = [];
   public licenseCount = {};
   public liData = [];
-  // public licenseSynonym = {};
   public charts: any = {};
+
+  private alertBoxComponent: AlertBoxComponent;
 
   constructor() {}
 
@@ -511,8 +511,12 @@ export class LicenseComponent implements OnInit, OnChanges {
       'EPL 1.0': 'epl 1.0',
       'CDDL 2': 'cddlv1.1+',
       'CDDL 1.0': 'cddlv1.1+',
-      'MPL 2.0': 'mpl 2.0',
+      'MPL 2.0': 'mpl 2.0'
     };
-    return licenseSynonym[key];
+    if (licenseSynonym[key]) {
+      return licenseSynonym[key];
+    } else {
+      return key;
+    }
   }
 }

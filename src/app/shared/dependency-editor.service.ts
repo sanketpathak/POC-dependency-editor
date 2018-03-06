@@ -54,11 +54,11 @@ export class DependencyEditorService {
         private auth: AuthenticationService
     ) {
         // pass your prod token here to run in local
-        const prodToken = 'replace-this-text-with-prod-token';
+        const prodToken = '';
         this.headersProd.set('Authorization', 'Bearer ' + prodToken);
         this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
         // pass your stage token here to run in local
-        this.headersStage.set('Authorization', 'Bearer replace-this-text-with-stage-token');
+        this.headersStage.set('Authorization', 'Bearer ');
     }
 
     postStackAnalyses(githubUrl: string) {

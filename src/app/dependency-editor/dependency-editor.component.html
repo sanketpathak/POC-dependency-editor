@@ -1,4 +1,4 @@
-<div class="container-default" style="background:#ededed;padding: 0 20px;">
+<div class="container-default" style="background:#ededed;padding: 0 20px;max-width: 1100px">
   <div class="row" style="width: 100%;">
     <div style="margin-left:40px;">
       <span style="font-size:24px;">Dependency Editor </span>
@@ -6,13 +6,13 @@
       <p>Some description of dependency editor</p>
     </div>
     <div class="row" style="margin-left:20px;">
-      <div class="col-sm-8">
+      <div class="col-sm-7">
         <div class="row" style="margin-top:20px;">
           <app-add-dependency [dependencies]="dependenciesAdded" [existDependencies]="dependencies"></app-add-dependency>
           <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData" [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
       </div>
     </div>

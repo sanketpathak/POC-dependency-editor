@@ -41,7 +41,7 @@ import {
   templateUrl: './dependency-editor.component.html'
 })
 export class DependencyEditorComponent implements OnInit {
-  @Input() githubUrl = 'https://github.com/ravsa/testManifest';
+  @Input() githubUrl = 'https://github.com/sara-02/testquickstart1';
   @Input() boosterInfo: BoosterInfo;
   @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
@@ -175,11 +175,15 @@ export class DependencyEditorComponent implements OnInit {
   }
 
   private setDependencies(result: ResultInformationModel) {
-    this.dependencies = result.user_stack_info.dependencies;
+    if (result && result.user_stack_info && result.user_stack_info.dependencies) {
+      this.dependencies = result.user_stack_info.dependencies;
+    }
   }
 
   private setCompanions(result: ResultInformationModel) {
-    this.companions = result.recommendation.companion;
+    if (result && result.recommendation && result.recommendation.companion) {
+      this.companions = result.recommendation.companion;
+    }
   }
 
   private setLicenseData(result: ResultInformationModel) {
@@ -188,7 +192,9 @@ export class DependencyEditorComponent implements OnInit {
   }
 
   private setAlternate(result: ResultInformationModel) {
-    this.alternate  = result.recommendation.alternate;
+    if (result && result.recommendation && result.recommendation.alternate) {
+      this.alternate  = result.recommendation.alternate;
+    }
   }
 
   private getLicenseData(payload: any) {

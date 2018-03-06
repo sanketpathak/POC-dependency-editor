@@ -36,6 +36,6 @@ import { DependencyEditorService } from '../shared/dependency-editor.service';
 ],
  providers: [
      DependencyEditorService
- ],
+ ]
 })
 export class DependencyEditorModule {}
