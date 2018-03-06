@@ -1,7 +1,7 @@
 import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from 'ngx-bootstrap';
-import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, LicenseStackAnalysisModel } from '../model/data.model';
+import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, LicenseStackAnalysisModel, BoosterInfo } from '../model/data.model';
 
 @Component({
   selector: 'app-current-project',
@@ -11,7 +11,7 @@ import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, Li
 
 export class CurrentprojectComponent implements OnInit, OnChanges {
   @Input() dependencies: Array<DependencySnapshotItem>;
-  @Input() metadata: any;
+  @Input() boosterInfo: BoosterInfo;
   @Input() licenseData: StackLicenseAnalysisModel;
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() cveData: CveResponseModel;

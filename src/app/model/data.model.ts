@@ -249,3 +249,15 @@ export class EventDataModel {
     depSnapshot: DependencySnapshotItem;
     action: string;
 }
+
+class MissionInfo {
+    id: string;
+    name: string;
+    icon: string;
+    version: string;
+}
+
+export class BoosterInfo {
+    mission: MissionInfo;
+    runtime: MissionInfo;
+}

@@ -42,6 +42,9 @@ export class DependencyEditorService {
     private headersProd: Headers = new Headers({
         'Content-Type': 'application/json'
     });
+    private headersProdPost: Headers = new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+    });
     private headersStage: Headers = new Headers({
         'Content-Type': 'application/json'
     });
@@ -51,22 +54,37 @@ export class DependencyEditorService {
         private auth: AuthenticationService
     ) {
         // pass your prod token here to run in local
-        this.headersProd.set('Authorization', 'Bearer ');
+        const prodToken = 'replace-this-text-with-prod-token';
+        this.headersProd.set('Authorization', 'Bearer ' + prodToken);
+        this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
         // pass your stage token here to run in local
-        this.headersStage.set('Authorization', 'Bearer ');
+        this.headersStage.set('Authorization', 'Bearer replace-this-text-with-stage-token');
+    }
+
+    postStackAnalyses(githubUrl: string) {
+        const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
+        const options = new RequestOptions({
+            headers: this.headersProdPost
+        });
+        const payload = 'github_url=' + githubUrl;
+        return this.http.post(url, payload, options)
+            .map(this.extractData)
+            .map((data) => {
+                return data;
+            })
+            .catch(this.handleError);
     }
 
     getStackAnalyses(url: string): Observable < any > {
-        console.log(this.headersStage);
         const options = new RequestOptions({
-            headers: this.headersStage
+            headers: this.headersProd
         });
         let stackReport: StackReportModel = null;
         return this.http.get(url, options)
             .map(this.extractData)
             .map((data) => {
                 stackReport = data;
-                return stackReport;
+                return data;
             })
             .catch(this.handleError);
     }

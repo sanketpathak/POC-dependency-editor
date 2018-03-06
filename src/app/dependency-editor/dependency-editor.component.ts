@@ -28,7 +28,8 @@ import {
   CveResponseModel,
   DependencySearchItem,
   EventDataModel,
-  LicenseStackAnalysisModel
+  LicenseStackAnalysisModel,
+  BoosterInfo
 } from '../model/data.model';
 import {
   DependencySnapshot
@@ -40,6 +41,8 @@ import {
   templateUrl: './dependency-editor.component.html'
 })
 export class DependencyEditorComponent implements OnInit {
+  @Input() githubUrl = 'https://github.com/ravsa/testManifest';
+  @Input() boosterInfo: BoosterInfo;
   @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
   public dependencies: Array < DependencySnapshotItem > ;
@@ -52,22 +55,23 @@ export class DependencyEditorComponent implements OnInit {
   public dependenciesAdded: Array < ComponentInformationModel > = [];
   public packageLength = 0;
   public addPackageLength = 0;
+  public listView = 'View Dependency List';
 
   private stackUrl: string;
+  private stackUrlDev: string;
   private getDepInsightsUrl: string;
   private getCveUrl: string;
   private getLicenseUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
-  public listView = 'View Dependency List';
   private showList = false;
 
   constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
     // this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/d211493b7c6944e6a14ba8b18a42fb06';
-    this.stackUrl = 'https://recommender.api.openshift.io/api/v1/stack-analyses/61da63a454714f7f888f697141f15f3f';
-    this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
+    // this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/9c0a853530de498492aa8bac461c9a91';
+    this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
     // this.stackUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/stack-analyses/ae7e3dab645a48fa9e186e7d30521917';
     // 718c0b279b474efe85d7e8af3cf9c521
     // d78398d31eab456d85bc1801aeee0aef
@@ -77,17 +81,20 @@ export class DependencyEditorComponent implements OnInit {
     this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
     this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
     this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
-    this.service.getStackAnalyses(this.stackUrl)
-      .subscribe((response: StackReportModel) => {
-        const result = response.result[0];
-        DependencySnapshot.ECOSYSTEM = result.user_stack_info.ecosystem;
-        DependencySnapshot.DEP_SNAPSHOT = result.user_stack_info.dependencies;
-        DependencySnapshot.REQUEST_ID = response.request_id;
-        this.setDependencies(result);
-        this.setCompanions(result);
-        this.setAlternate(result);
-        this.setLicenseData(result);
-        this.getCveData(this.service.getPayload());
+    this.service.postStackAnalyses(this.githubUrl)
+      .subscribe((data: any) => {
+        this.service.getStackAnalyses(this.stackUrl + data['id'])
+        .subscribe((response) => {
+          const result = response.result[0];
+          DependencySnapshot.ECOSYSTEM = result.user_stack_info.ecosystem;
+          DependencySnapshot.DEP_SNAPSHOT = result.user_stack_info.dependencies;
+          DependencySnapshot.REQUEST_ID = response.request_id;
+          this.setDependencies(result);
+          this.setCompanions(result);
+          this.setAlternate(result);
+          this.setLicenseData(result);
+          this.getCveData(this.service.getPayload());
+        });
       });
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
@@ -117,6 +124,46 @@ export class DependencyEditorComponent implements OnInit {
     this.getDependencyInsights(payload);
     this.getCveData(payload);
     this.getLicenseData(payload);
+  }
+
+  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {
+    alternates.forEach((alternate: ComponentInformationModel) => {
+      DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
+        if (alternate.name === depAdded.name) {
+          depAdded.alternate = alternate.alternate;
+        }
+      });
+    });
+  }
+
+  checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {
+    DependencySnapshot.DEP_FULL_ADDED.forEach((depFullAdded: ComponentInformationModel) => {
+      if (!depFullAdded.security) {
+        const objWithSecurity = _.find(analyzedDependencies, (dep) => {
+          return dep.name === depFullAdded.name;
+        });
+      }
+    });
+  }
+
+  public viewList() {
+    this.showList = !this.showList;
+    if (this.showList === false) {
+      this.listView = 'View Dependency List';
+    }
+    if (this.showList === true) {
+      this.listView = 'Hide Dependency List';
+    }
+  }
+
+  public showDependencyModal(event: Event) {
+    this.modalDependencyPreview.open();
+    this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
+    this.addPackageLength = DependencySnapshot.DEP_SNAPSHOT_ADDED.length;
+  }
+
+  public closemodal() {
+    this.modalDependencyPreview.close();
   }
 
   private reset() {
@@ -173,45 +220,5 @@ export class DependencyEditorComponent implements OnInit {
       .subscribe((response: CveResponseModel) => {
         this.cveData = response;
       });
-  }
-
-  checkIfAlternatePresent(alternates: ComponentInformationModel[]) {
-    alternates.forEach((alternate: ComponentInformationModel) => {
-      DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
-        if (alternate.name === depAdded.name) {
-          depAdded.alternate = alternate.alternate;
-        }
-      });
-    });
-  }
-
-  checkIfSecurityPresent(analyzedDependencies: ComponentInformationModel[]) {
-    DependencySnapshot.DEP_FULL_ADDED.forEach((depFullAdded: ComponentInformationModel) => {
-      if (!depFullAdded.security) {
-        const objWithSecurity = _.find(analyzedDependencies, (dep) => {
-          return dep.name === depFullAdded.name;
-        });
-      }
-    });
-  }
-
-  public viewList() {
-    this.showList = !this.showList;
-    if (this.showList === false) {
-      this.listView = 'View Dependency List';
-    }
-    if (this.showList === true) {
-      this.listView = 'Hide Dependency List';
-    }
-  }
-
-  public showDependencyModal(event: Event) {
-    this.modalDependencyPreview.open();
-    this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
-    this.addPackageLength = DependencySnapshot.DEP_SNAPSHOT_ADDED.length;
-  }
-
-  public closemodal() {
-    this.modalDependencyPreview.close();
   }
 }
