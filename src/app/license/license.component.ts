@@ -48,6 +48,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   public liData = [];
   public charts: any = {};
 
+
   constructor() {}
 
   ngOnChanges() {

@@ -47,6 +47,4 @@ export class IssueComponent implements OnInit, OnChanges {
 
   }
 
-  
-  
 }

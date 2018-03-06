@@ -203,17 +203,4 @@ export class DependencyEditorService {
         }
         return Observable.throw(body);
     }
-<<<<<<< 3b2e80d049d2c4165c9e4e756bb3c1d4876b86a5
-=======
-
-    // tslint:disable-next-line:member-ordering
-    removeDependency(dependency: ComponentInformationModel) {
-        const objToEmit: EventDataModel = {
-            depFull: dependency,
-            depSnapshot: null,
-            action: 'remove'
-        };
-        this.dependencyRemoved.emit(objToEmit);
-    }
->>>>>>> features added
 }
