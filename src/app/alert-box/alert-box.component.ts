@@ -49,6 +49,7 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.isLoading = true;
     if (this.issueStatus === null) {
       this.isLoading = true;
     } else if (typeof this.issueStatus === 'string' && this.issueStatus) {

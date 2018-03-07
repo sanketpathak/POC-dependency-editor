@@ -1,5 +1,6 @@
 import {  Component,  OnInit,  OnChanges,  Input,  Output,  EventEmitter,  ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AccordionModule } from 'ngx-bootstrap';
 import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, LicenseStackAnalysisModel, BoosterInfo } from '../model/data.model';
 
@@ -21,7 +22,9 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
   public isOpen = false;
   public upDown = 'fa fa-angle-up';
 
-  constructor() { }
+  constructor(
+    public dom: DomSanitizer
+  ) { }
 
   ngOnInit() {
 

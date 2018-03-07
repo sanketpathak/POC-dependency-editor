@@ -22,7 +22,7 @@ import {
   providers: [PackagesServices],
   templateUrl: './packages.component.html'
 })
-export class PackagesComponent implements OnInit {
+export class PackagesComponent implements OnInit, OnChanges {
   @Output('onPackageSelect') onPackageSelect = new EventEmitter();
   // tslint:disable-next-line:no-input-rename
   @Input('mygui') appName: string;
@@ -64,6 +64,30 @@ export class PackagesComponent implements OnInit {
 
   constructor(private packagesServices: PackagesServices) {}
 
+  ngOnInit() {
+    this.processPackages();
+    this.processCompanionPackages();
+    if (this.appName) {
+      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
+        this.ecosystem = 'node';
+      } else {
+        this.ecosystem = 'maven';
+      }
+    }
+  }
+
+  ngOnChanges() {
+    if (this.deletedDependencies) {
+      this.isDependencySelected({
+          target: {
+            checked: false
+          }
+        },
+        this.deletedDependencies['packages']
+      );
+    }
+  }
+
   public isDependencySelected(event, dependency: string): void {
     if (event.target.checked) {
       this.selectedPackages.add(dependency['name']);
@@ -94,7 +118,7 @@ export class PackagesComponent implements OnInit {
     });
   }
 
-  public calculateCategories(dependencies) {
+  calculateCategories(dependencies) {
     const tempCategories = {};
     this.dependencies.map((d) => {
       tempCategories[d.category] = tempCategories[d.category] + 1 || 1;
@@ -128,6 +152,7 @@ export class PackagesComponent implements OnInit {
       }
     });
   }
+
   processMasterTags(): void {
     const masterTags: Observable < any > = this.packagesServices.getMasterTags();
     masterTags.subscribe(data => {
@@ -135,7 +160,7 @@ export class PackagesComponent implements OnInit {
     });
   }
 
-  public moveSelectedPackages() {
+  moveSelectedPackages() {
     this.selectedDependenciesObject.clear();
     this.selectedPackages.forEach(p => {
       this.dependencies.map(d => {
@@ -146,7 +171,7 @@ export class PackagesComponent implements OnInit {
     });
   }
 
-  public shuffle(array) {
+  shuffle(array) {
     let currentIndex = array.length,
       temporaryValue,
       randomIndex;
@@ -167,7 +192,7 @@ export class PackagesComponent implements OnInit {
     return new Set(this.companionPackages);
   }
 
-  public tagClick(tag: string) {
+  tagClick(tag: string) {
     if (tag !== 'All') {
       if (this.selectedTags.has('All')) {
         this.selectedTags.delete('All');
@@ -188,7 +213,7 @@ export class PackagesComponent implements OnInit {
   }
 
 
-  public showDependency() {
+  showDependency() {
     if (this.selected) {
       this.dependencies = [];
       // this.categories = [];
@@ -247,37 +272,7 @@ export class PackagesComponent implements OnInit {
     }
   }
 
-  public changeVersion(dependency: string, ver: string): void {
+  changeVersion(dependency: string, ver: string): void {
     dependency['latest_version'] = ver;
-  }
-
-  public test(varible) {
-    console.log(varible);
-    console.log(this.selected);
-  }
-
-  ngOnInit() {
-    this.processPackages();
-    this.processCompanionPackages();
-    if (this.appName) {
-      if (this.appName.toLocaleLowerCase().indexOf('node') !== -1) {
-        this.ecosystem = 'node';
-      } else {
-        this.ecosystem = 'maven';
-      }
-    }
-  }
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnChanges() {
-    if (this.deletedDependencies) {
-      this.isDependencySelected({
-          target: {
-            checked: false
-          }
-        },
-        this.deletedDependencies['packages']
-      );
-    }
   }
 }

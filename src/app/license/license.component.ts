@@ -32,8 +32,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   @Input() licenseData: StackLicenseAnalysisModel;
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() allLicenses: Array < any > = [];
-
-  @ViewChild(AlertBoxComponent);
+  @ViewChild(AlertBoxComponent) alertBoxComponent: AlertBoxComponent;
 
   public title = 'License';
   public icon = 'pficon pficon-on-running'; // fa-file-text-o
@@ -48,8 +47,6 @@ export class LicenseComponent implements OnInit, OnChanges {
   public licenseCount = {};
   public liData = [];
   public charts: any = {};
-
-  private alertBoxComponent: AlertBoxComponent;
 
   constructor() {}
 
@@ -118,7 +115,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   public licenseChange() {
     if (this.stackStatus === 'Successful') {
       if (this.licenseAll) {
-        // this.licenseData = [];
+        this.licenseDt = [];
         this.licenseCount = {};
         this.licenseAll.forEach(d => {
           this.licenseDt = this.licenseDt.concat(
