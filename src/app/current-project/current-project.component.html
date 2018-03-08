@@ -8,7 +8,7 @@
           </p>
         </div>
         <div class="col-sm-12">
-          <h2 class="card-pf-title" style="/*margin-left: -234px;*/font-weight: 600;margin-top: 20px;text-align: left;margin-left: 10px;">
+          <h2 class="card-pf-title" style="/*margin-left: -234px;margin-left: 10px;*/font-weight: 600;margin-top: 20px;text-align: left;">
             Current Runtime
           </h2>
           <div class="card-pf-body">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="col-sm-12">
-          <h2 #meta class="card-pf-title" style="/*margin-left: -277px;*/font-weight: 600;text-align: left;margin-left: 10px;">
+          <h2 #meta class="card-pf-title" style="/*margin-left: -277px;margin-left: 10px;*/font-weight: 600;text-align: left;">
             Metadata
           </h2>
           <div class="card-pf-body">
@@ -52,15 +52,15 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12">
-        <h2 class="card-pf-title" style="/*margin-left: -234px;*/font-weight: 600;text-align: left;">
-          Analytics Findings
-        </h2>
-        <div class="card-pf-body">
-          <app-security [cveData]="cveData"></app-security>
-          <div style="height: 23px">
-            <app-license [licenseData]="licenseData" [lisData]="lisData" [allLicenses]="allLicenses"></app-license>
+        <div class="col-sm-12">
+          <h2 class="card-pf-title" style="/*margin-left: -234px;*/font-weight: 600;text-align: left;">
+            Analytics Findings
+          </h2>
+          <div class="card-pf-body">
+            <app-security [cveData]="cveData"></app-security>
+            <div style="height: 23px">
+              <app-license [licenseData]="licenseData" [lisData]="lisData" [allLicenses]="allLicenses"></app-license>
+            </div>
           </div>
         </div>
       </div>

@@ -29,6 +29,8 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   @Input() colored: string;
   @Input() issueStatus: string;
   @Input() issueSymbol: string;
+  @Input() issueType: string;
+  @Input() licolor: string;
   @Input() secureIssue: boolean;
   @Input() licenseIssue: boolean;
   @Input() itSecurity: boolean;

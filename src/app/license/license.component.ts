@@ -158,7 +158,8 @@ export class LicenseComponent implements OnInit, OnChanges {
    };
     this.charts['configs'] = {
       legend: {
-        show: true
+        show: true,
+        position: 'right'
       }
     };
    }
