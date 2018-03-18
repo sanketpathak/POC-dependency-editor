@@ -35,6 +35,7 @@ import {
 import {
   DependencySnapshot
 } from '../utils/dependency-snapshot';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-dependency-editor',
@@ -54,6 +55,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public allLicenses: Array<any> = [];
   public cveData: CveResponseModel;
   public dependenciesAdded: Array < ComponentInformationModel > = [];
+  public dependencyAdded: Array < DependencySnapshotItem > = [];
   public packageLength = 0;
   public addPackageLength = 0;
   public listView = 'View Dependency List';
@@ -65,18 +67,23 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private getLicenseUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
-  private showList = false;
 
   constructor(
     private service: DependencyEditorService
-  ) {}
-
-  ngOnInit() {
-    this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
+  ) {
+    this.stackUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses/';
+    // this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
     this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
+    // this.getDepInsightsUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-analyses';
+    // this.getDepInsightsUrl = 'https://gist.githubusercontent.com/sanketpathak/94bac9aa6997eac5f32016e74cd8dc6c/raw/ddf40dbc0bb12a1a9338c008b8d980047546af5b/stack_analyses';
     this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
-    this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
+    // this.getCveUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-cve-analyses/';
+    // this.getCveUrl = 'https://gist.githubusercontent.com/sanketpathak/c0a7ccb4f6420fb783754f9454c347a0/raw/3d661bf010d6fe8b7adc23c305097334c10f510e/dependency%2520cve%2520analysis';
+    // this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
+    this.getLicenseUrl = 'https://license-analysis.api.prod-preview.openshift.io/api/v1/license-recommender';
+  }
 
+    ngOnInit() {
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
         this.isDepSelectedFromSearch = true;
@@ -98,7 +105,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['githubUrl']['currentValue']) {
+    if (changes['githubUrl'] && changes['githubUrl']['currentValue']) {
       this.postStackAnalyses(this.githubUrl);
     }
   }
@@ -106,6 +113,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public callDepServices(eventData: EventDataModel) {
     this.reset();
     this.service.updateDependencyAddedSnapshot(eventData);
+    if (this.isDepSelectedFromSearch) {
+      DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
+      this.isDepSelectedFromSearch = false;
+    }
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
     const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
@@ -131,16 +142,6 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         });
       }
     });
-  }
-
-  public viewList() {
-    this.showList = !this.showList;
-    if (this.showList === false) {
-      this.listView = 'View Dependency List';
-    }
-    if (this.showList === true) {
-      this.listView = 'Hide Dependency List';
-    }
   }
 
   public showDependencyModal(event: Event) {
@@ -187,9 +188,24 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private postStackAnalyses(githubUrl: string) {
     this.service.postStackAnalyses(githubUrl)
     .subscribe((data: any) => {
-      this.service.getStackAnalyses(this.stackUrl + data['id'])
-      .subscribe((response) => {
+        // });
+      let subs = null;
+      let rec = null;
+      const interval = 5000;
+      let alive: boolean = true;
+      let counter: number = 0;
+      let observable: any = this.service
+      .getStackAnalyses(this.stackUrl + data['id']);
+      TimerObservable.create(0, interval)
+      .takeWhile(() => alive)
+      .subscribe(() => {
+      if (rec) {
+        subs.unsubscribe();
+        alive = false;
+      }
+      subs = observable.subscribe((response) => {
         const result = response.result[0];
+        rec = result.recommendation;
         DependencySnapshot.ECOSYSTEM = result.user_stack_info.ecosystem;
         DependencySnapshot.DEP_SNAPSHOT = result.user_stack_info.dependencies;
         DependencySnapshot.REQUEST_ID = response.request_id;
@@ -199,31 +215,49 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         this.setLicenseData(result);
         this.getCveData(this.service.getPayload());
       });
+      if (counter ++ > 4) {
+        alive = false;
+    }
+    });
     });
   }
 
   private getLicenseData(payload: any) {
-    this.service.getDependencyData1(this.getLicenseUrl, payload)
+    this.service.getDependencyData(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
-        this.allLicenses = response.packages;
+        this.allLicenses = response.distinct_licenses;
       });
   }
 
   private getDependencyInsights(payload: any) {
+    let subs = null;
+    let rec = null;
+    const interval = 5000;
+    let alive: boolean = true;
+    let counter: number = 0;
     const persist = false;
     const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
-    this.service.getDependencyData(urlToHit, payload)
-      .subscribe((response: StackReportModel) => {
+    let observable: any = this.service
+    .getDependencyData(urlToHit, payload);
+    TimerObservable.create(0, interval)
+    .takeWhile(() => alive)
+    .subscribe(() => {
+    if (rec) {
+      subs.unsubscribe();
+      alive = false;
+    }
+    subs = observable.subscribe((response: StackReportModel) => {
+        rec = response;
         this.setCompanions(response.result[0]);
         this.setAlternate(response.result[0]);
-        if (this.isDepSelectedFromSearch) {
-          DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
-          this.isDepSelectedFromSearch = false;
-        }
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
         this.checkIfSecurityPresent(response.result[0].user_stack_info.analyzed_dependencies);
       });
+      if (counter ++ > 4) {
+        alive = false;
+    }
+    });
   }
 
   private getCveData(payload: any) {

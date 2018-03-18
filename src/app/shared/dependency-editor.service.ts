@@ -45,6 +45,9 @@ export class DependencyEditorService {
     private headersProdPost: Headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'
     });
+    private headersStagePost: Headers = new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+    });
     private headersStage: Headers = new Headers({
         'Content-Type': 'application/json'
     });
@@ -53,18 +56,24 @@ export class DependencyEditorService {
         private http: Http,
         private auth: AuthenticationService
     ) {
-        // pass your prod token here to run in local
-        const prodToken = '';
-        this.headersProd.set('Authorization', 'Bearer ' + prodToken);
-        this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
-        // pass your stage token here to run in local
-        this.headersStage.set('Authorization', 'Bearer ');
+    // pass your prod token here to run in local
+    const prodToken = '';
+    if (this.auth.getToken()) {
+        this.headersStage.set('Authorization', 'Bearer ' + this.auth.getToken());
+        this.headersStagePost.set('Authorization', 'Bearer ' + this.auth.getToken());
+    }
+    this.headersProd.set('Authorization', 'Bearer ' + prodToken);
+    this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
+    // pass your stage token here to run in local
+    // this.headersStage.set('Authorization', 'Bearer ');
     }
 
     postStackAnalyses(githubUrl: string) {
-        const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
+        // const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
+        const url = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses';
         const options = new RequestOptions({
-            headers: this.headersProdPost
+            // headers: this.headersProdPost
+            headers: this.headersStagePost
         });
         const payload = 'github_url=' + githubUrl;
         return this.http.post(url, payload, options)
@@ -77,7 +86,8 @@ export class DependencyEditorService {
 
     getStackAnalyses(url: string): Observable < any > {
         const options = new RequestOptions({
-            headers: this.headersProd
+            // headers: this.headersProd
+            headers: this.headersStage
         });
         let stackReport: StackReportModel = null;
         return this.http.get(url, options)
@@ -113,6 +123,15 @@ export class DependencyEditorService {
             .catch(this.handleError);
     }
 
+    getDependencyData2(url, payload): Observable < any > {
+    return this.http.get(url)
+        .map(this.extractData)
+        .map((data: StackReportModel | CveResponseModel | any) => {
+            return data;
+        })
+        .catch(this.handleError);
+    }
+
     getDependencyData1(url, payload): Observable < any > {
         const options = new RequestOptions({
             headers: this.headersProd
@@ -129,7 +148,7 @@ export class DependencyEditorService {
         const options = new RequestOptions({
             headers: this.headersStage
         });
-        return this.http.get(url) // , options)
+        return this.http.get(url)// , options)
             .map(this.extractData)
             .map((data) => {
                 return data;

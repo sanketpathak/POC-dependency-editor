@@ -1,45 +1,80 @@
 .alert-box {
     background: #fff;
-    // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .30);
-    width: 346px;
-    height: 239px;
+    // width: 346px;
+    // height: 239px;
     text-align: left;
-    margin-left: 20px;
-    position: absolute;
-    // top: -39px;
-    // left: 452px;
-    left: 0px;
+    // margin-left: 20px;
+    position: relative;
+    // left: 0px;
     z-index: 9;
     .alert-heading {
-        // width: 346px;
-        // height: 46px;
-        // position: relative;
-        // top: -42px;
-        // left: -40px;
         border-bottom: 1px solid #d1d1d1;
         .alert-title {
             font-family: OpenSans-Semibold;
             font-size: 16px;
-            // color: #fff;
-            .alert_symbol:before {
+            color:#000;
+            #symbol {
                 padding-right: 4px;
+            }
+            .issueSymbol:before {
+                padding-right: 4px;
+            }
+            .if-security {
+                display: inline-block;
+                background:#9c9c9c;
+                border-radius:1px;
+                width:36px;
+                // height:17px;
+                // padding:3px;
+                text-align:center;
+                #security-status {
+                    font-family:OpenSans-Bold;
+                    font-size:12px;
+                    text-align:center;
+                    color:#fff;
+                }
+            }
+            .if-license {
+                font-weight: bold;
+                padding-right:4px;
+            }
+            .licenseType {
+                font-size: 12px;
             }
         }
     }
-    #chart {
-        overflow: visible;
-        margin: 0px auto;
-        // position: relative;
-        max-height: 200px;
-        // left: 25px;
-        // top: -88px;
-        // position: absolute;
-        // top: 40px;
-        .svg {
-            overflow: visible;
+    .list-view-pf-stacked {
+        display: block;
+        .fa-angle-right {
+            border-right: 1px solid #d1d1d1;
         }
     }
-    .pficon-warning-triangle-o:before {
+    .row {
+        margin-left:50px;
+        #chart {
+            overflow: visible;
+            margin: 0px auto;
+            max-height: 200px;
+            .svg {
+                overflow: visible;
+            }
+        }
+    }
+    .alert-sign {
+        padding: 12px 13px;
         color: #fff;
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        top: 0px;
+        left: 305px;
+        .pficon-warning-triangle-o:before {
+            color: #fff;
+        }
+        .pficon-warning-triangle-o {
+            font-family: PatternFlyIcons-webfont;
+            font-size: 15px;
+            color: #fff;
+        }
     }
 }

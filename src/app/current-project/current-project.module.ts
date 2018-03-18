@@ -25,4 +25,4 @@ import { CurrentprojectComponent } from './current-project.component';
 ],
     providers: []
 })
-export class CurrentprojectModule { }
+export class CurrentprojectModule {}

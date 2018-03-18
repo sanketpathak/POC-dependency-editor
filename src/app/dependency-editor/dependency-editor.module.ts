@@ -18,8 +18,8 @@ import { AddDependencyModule } from '../add-dependency/add-dependency.module';
 import { SecurityModule } from '../security/security.module';
 import { LicenseModule } from '../license/license.module';
 import { CurrentprojectModule } from '../current-project/current-project.module';
-import { PackagesModule } from '../packages/packages.component.module';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
+import { MockAuthenticationService } from '../shared/mock-auth.service';
 
 @NgModule({
  imports: [
@@ -32,8 +32,7 @@ import { DependencyEditorService } from '../shared/dependency-editor.service';
     AddDependencyModule,
     SecurityModule,
     LicenseModule,
-    CurrentprojectModule,
-    PackagesModule
+    CurrentprojectModule
 ],
  declarations: [
     DependencyEditorComponent
@@ -42,13 +41,15 @@ import { DependencyEditorService } from '../shared/dependency-editor.service';
     DependencyEditorComponent
 ],
  providers: [
-    AuthenticationService,
     Broadcaster,
     ApiLocatorService,
     witApiUrlProvider,
     authApiUrlProvider,
     ssoApiUrlProvider,
     realmProvider,
+    {
+      provide: AuthenticationService, useClass: MockAuthenticationService
+    },
     DependencyEditorService
  ]
 })

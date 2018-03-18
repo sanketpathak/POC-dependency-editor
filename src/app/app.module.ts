@@ -34,4 +34,4 @@ import { realmProvider } from './shared/realm-token.provider';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

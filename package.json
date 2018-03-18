@@ -1,6 +1,6 @@
 {
   "name": "fabric8-analytics-dep-editor",
-  "version": "0.0.13-development",
+  "version": "0.0.16-development",
   "description": "Dependency editor",
   "main": "bundles/fabric8-analytics-dep-editor.umd.js",
   "module": "index.js",
@@ -82,10 +82,14 @@
     "ngx-bootstrap": "^1.8.0",
     "ngx-fabric8-wit": "^6.20.0",
     "ngx-login-client": "^1.2.0",
-    "ngx-modal": "^0.0.29",
+    "ngx-modal": "0.0.29",
     "rxjs": "^5.0.1"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@angular/core": "angular/core-builds",
+    "ngx-login-client": "^1.2.0",
+    "ngx-modal": "0.0.29"
+  },
   "devDependencies": {
     "@angular/compiler": "4.4.6",
     "@angular/compiler-cli": "4.4.6",
