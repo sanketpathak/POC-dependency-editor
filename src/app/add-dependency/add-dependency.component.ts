@@ -56,7 +56,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public categories = [];
   public cveTemporaryData: CveResponseModel;
   public cveName: any = [];
-
+  public noOfTags = 0;
+  public saveTagname = [];
+  public type = false;
+  public tags: Array < DependencySearchItem > = [];
+  public toast: boolean = false;
 
 
   // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
@@ -68,7 +72,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
-
   }
 
   ngOnChanges() {
@@ -142,16 +145,61 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       });
   }
 
+  changeTagname(master, t) {
+    this.type = !t;
+    for (let i = 0; i < this.masterTags.length; i++) {
+      if (this.masterTags[i].name === master.name && this.masterTags[i].version === master.version && this.masterTags[i].category === master.category) {
+        this.type = !t;
+       if (this.masterTags[i].type === true && this.type === true) {
+         continue;
+       } else if (this.masterTags[i].type === true && this.type === false) {
+         this.masterTags[i].type = false;
+           this.noOfTags--;
+           i++;
+           break;
+         } else if (this.masterTags[i].type === false) {
+         if (this.type === true) {
+           this.masterTags[i].type = true;
+           this.noOfTags++;
+           break;
+         } else if (this.type === false) {
+           this.masterTags[i].type = false;
+           this.noOfTags--;
+           break;
+         }
+       }
+     }
+    }
+  }
+
   listenInputSearch() {
     if (this.dependencySearchString === '') {
       this.dependencySearchResult = [];
     }
   }
 
-  addDependency(depItem: DependencySearchItem) {
+  addDependency() {
     this.dependencySearchResult = [];
     this.dependencySearchString = '';
-    this.service.dependencySelected.emit(depItem);
+    this.noOfTags = 0;
+    this.saveTagname = [];
+    for (let i = 0; i < this.masterTags.length; i++) {
+      if (this.masterTags[i].type === true) {
+        this.tags = [];
+        this.tags.push({
+          'ecosystem' : DependencySnapshot.ECOSYSTEM,
+          'version' : this.masterTags[i].version,
+          'name' : this.masterTags[i].name
+        });
+        this.saveTagname.push({
+          'name': this.masterTags[i].name
+        });
+        this.toast = true;
+        this.masterTags[i].grouped = true;
+        this.masterTags[i].type = false;
+        this.service.dependencySelected.emit(this.tags[0]);
+      }
+    }
   }
 
   ngOnDestroy() {
@@ -171,6 +219,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.modalPackagePreview.open();
     this.getCategories();
   }
+
   public closemodal() {
     this.modalPackagePreview.close();
   }
@@ -258,13 +307,23 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.tagZero = 0;
     this.categoryResult.forEach(i => {
       count++;
-      this.tagZero = this.tagZero + count;
+      this.tagZero = count;
       i.package.forEach(x => {
-        this.masterTags['ecosystem'] = DependencySnapshot.ECOSYSTEM;
-        this.masterTags['version'] = x.version;
-        this.masterTags['name'] = x.name;
+        this.masterTags.push({
+          'ecosystem' : DependencySnapshot.ECOSYSTEM,
+          'version' : x.version,
+          'name' : x.name,
+          'category' : x.category,
+          'type' : false,
+          'grouped' : false
+        });
       });
     });
+    this.categoryResult.forEach(i => {
+      i.package.forEach(x => {
+          this.saveTagname.push({'name' : x, 'type' : false});
+      });
+  });
   }
 
 }

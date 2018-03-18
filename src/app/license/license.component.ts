@@ -51,7 +51,7 @@ export class LicenseComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnChanges() {
+  ngOnChanges() { this.stackStatus = '';
     if (this.licenseData) {
       if (this.licenseData.status.toLowerCase() === 'successful') {
         this.hasIssue = false;
@@ -66,9 +66,7 @@ export class LicenseComponent implements OnInit, OnChanges {
         this.stackLicense = 'None';
         this.stackStatus = this.licenseData.status;
       }
-    }
-    // tslint:disable-next-line:one-line
-    else if (this.lisData) {
+    } else if (this.lisData) {
       if (this.lisData.status.toLowerCase() === 'successful') {
         this.hasIssue = false;
         this.stackLicense = this.lisData.stack_license;
@@ -84,7 +82,7 @@ export class LicenseComponent implements OnInit, OnChanges {
       }
     } else {
       this.stackLicense = null;
-      // this.stackStatus = 'Unknown';
+      this.stackStatus = null;
     }
     this.licenseAll = [];
     if (this.stackStatus === 'Successful') {
@@ -95,9 +93,7 @@ export class LicenseComponent implements OnInit, OnChanges {
                               this.licenseAll.push(this.filter(j));
                             });
           });
-        }
-        // tslint:disable-next-line:one-line
-        else {
+        } else {
           this.allLicenses.forEach((i) => {
             this.licenseAll.push(this.filter(i));
           });

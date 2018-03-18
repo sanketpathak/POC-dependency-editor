@@ -113,6 +113,15 @@ export class DependencyEditorService {
             .catch(this.handleError);
     }
 
+    getDependencyData2(url, payload): Observable < any > {
+    return this.http.get(url)
+        .map(this.extractData)
+        .map((data: StackReportModel | CveResponseModel | any) => {
+            return data;
+        })
+        .catch(this.handleError);
+    }
+
     getDependencyData1(url, payload): Observable < any > {
         const options = new RequestOptions({
             headers: this.headersProd

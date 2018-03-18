@@ -9,10 +9,10 @@
     <!-- [style.background]="colored" -->
     <h2 class=" alert-title" style="color:#000">
       <span [class]="issueSymbol" style="padding-right:4px;"></span>{{title}}
-      <span *ngIf="itSecurity" style="background:#9c9c9c;border-radius:1px;width:36px;height:17px;padding:3px;text-align:center;">
+      <span *ngIf="itSecurity || secureIssue" style="background:#9c9c9c;border-radius:1px;width:36px;height:17px;padding:3px;text-align:center;">
         <span style="font-size:12px;color:#ffffff;">{{issueStatus}}</span>
       </span>
-      <span *ngIf="!itSecurity" style="padding-right:4px;" [style.color]="licolor">{{issueStatus}}</span>
+      <span *ngIf="!itSecurity && !secureIssue" style="padding-right:4px;" [style.color]="licolor">{{issueStatus}}</span>
       <span style="font-size: 12px;">{{issueType}}</span>
       <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
                 <span class="pficon pficon-close" (onclick)="get_secure()"></span>
@@ -57,11 +57,11 @@
       </div>
     </div>
   </div>
-  <span [style.background-color]="colored" style="/*background-color:#d30025#f8a33a;*/ padding: 12px 13px;color: #fff;/*position: relative;top: -140px;left: 238px;*/height: 40px;width: 40px;position: absolute;top: -45px;left: 248px;"
+  <span [style.background-color]="colored" style="/*background-color:#d30025#f8a33a;*/ padding: 12px 13px;color: #fff;height: 40px;width: 40px;position: absolute;top: 0px;left: 305px;"
     *ngIf="!isLoading && hasIssue !== 'na' && hasIssue">
     <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
   </span>
-  <span style="/*background-color:#6ba100;*/ padding: 12px 13px;color: #fff;/*position: relative;top: -140px;left: 238px;*/height: 40px;width: 40px;position: absolute;top: -45px;left: 248px;"
+  <span style="/*background-color:#6ba100;*/ padding: 12px 13px;color: #fff;/*position: relative;top: -140px;left: 238px;*/height: 40px;width: 40px;position: absolute;top: 0px;left: 305px;"
     *ngIf="!isLoading && hasIssue !== 'na' && !hasIssue">
     <!-- <i class="pficon-ok" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i> -->
   </span>

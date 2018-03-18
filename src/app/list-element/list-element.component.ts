@@ -28,10 +28,15 @@ import { DependencySnapshot } from '../utils/dependency-snapshot';
 export class ListElementComponent implements OnInit {
   @Input() dependency: ComponentInformationModel;
   @Input() fromAddDependency: string;
-  @Output() companionAdded = new EventEmitter<EventDataModel> ();
+  @Output() companionAdded = new EventEmitter<ComponentInformationModel> ();
+  @Output() tagAdded = new EventEmitter<any> ();
+  @Output() companionReleased = new EventEmitter<ComponentInformationModel> ();
   @Output() companionRemoved = new EventEmitter<ComponentInformationModel> ();
 
+  public dep = [];
   public showAlternateSection = false;
+  public saveTagname: boolean = false;
+  public isOpen: boolean = false;
 
   constructor(private service: DependencyEditorService) {
   }
@@ -42,13 +47,25 @@ export class ListElementComponent implements OnInit {
     }
   }
 
+  changeTagname(saveTag: boolean) {
+    this.saveTagname = !saveTag;
+    this.dep.splice(0);
+    this.dep.push({name: this.dependency , type: this.saveTagname});
+    if (this.saveTagname === true) {
+      this.tagAdded.emit(this.dep);
+      this.companionAdded.emit(this.dependency);
+    } else {
+      this.tagAdded.emit(this.dep);
+      this.companionReleased.emit(this.dependency);
+    }
+  }
+
   addDependency() {
     const objToEmit: EventDataModel = {
       depFull: this.dependency,
       depSnapshot: null,
       action: 'add'
     };
-    this.companionAdded.emit(objToEmit);
   }
 
   removeCompanion() {
