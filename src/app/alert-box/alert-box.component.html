@@ -14,56 +14,41 @@
       </span>
       <span *ngIf="!itSecurity && !secureIssue" style="padding-right:4px;" [style.color]="licolor">{{issueStatus}}</span>
       <span style="font-size: 12px;">{{issueType}}</span>
-      <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close" >
-                <span class="pficon pficon-close" (onclick)="get_secure()"></span>
-              </button> -->
-      <!-- <div class="a_symbol"></div> -->
     </h2>
-    <!-- <div class="list-view-pf-expand">
-                  <span class="fa fa-angle-right"></span>
-            </div> -->
   </div>
   <div class="pre-loader" *ngIf="isLoading">
-    <div class="pre-loader-spinner spinner spinner-lg" style="/*margin-left: 96px;margin-top: -40px;*/"></div>
+    <div class="pre-loader-spinner spinner spinner-lg"></div>
   </div>
-  <div class="" *ngIf="itSecurity" style="/*width:325px;margin-left: -45px;position: absolute;top: 10px;*/">
+  <div class="" *ngIf="itSecurity">
     There are no security issues in your stack.
   </div>
-  <div class="" *ngIf="!isLoading" style="/*width:325px;margin-left: -30px;*/">
-    <div class="list-group list-view-pf" *ngIf="secureIssue" style="/*border-top: none;border-bottom: 1px solid #ededed;position: relative;top: -90px;left: -32px;*/">
-      <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" *ngFor="let cve of cveId" style="display: block;">
+  <div class="" *ngIf="!isLoading">
+    <div class="list-group list-view-pf" *ngIf="secureIssue">
+      <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" *ngFor="let cve of cveId" style="">
         <div class="list-view-pf-expand">
-          <span class="fa fa-angle-right" style="border-right: 1px solid #d1d1d1;"></span>
+          <span class="fa fa-angle-right" style=""></span>
         </div>
         <div class="list-view-pf-main-info">
           <div class="list-view-pf-body">
             <div class="list-view-pf-description">
-              <!-- *ngFor="let cve of cveId">  -->
               {{cve.id}}
-              <!-- CVE-2017-1223 -->
             </div>
             <div class="list-view-pf-additional-info">
-              <!-- *ngFor="let cve of cvePackage"> -->
               {{cve.package}}
-              <!-- Dependency Affected -->
             </div>
           </div>
         </div>
       </div>
     </div>
     <div *ngIf="licenseIssue">
-      <div class="row" style="margin-left:50px;">
+      <div class="row" style="/*margin-left:50px;*/">
         <f8-chart id="chart" [data]="charts['data']" [chartOptions]="charts['options']" [configs]="charts['configs']"></f8-chart>
       </div>
     </div>
   </div>
-  <span [style.background-color]="colored" style="/*background-color:#d30025#f8a33a;*/ padding: 12px 13px;color: #fff;height: 40px;width: 40px;position: absolute;top: 0px;left: 305px;"
+  <span class="alert-sign" [style.background-color]="colored" style="/*background-color:#d30025#f8a33a;*/ "
     *ngIf="!isLoading && hasIssue !== 'na' && hasIssue">
-    <i class="pficon-warning-triangle-o" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i>
-  </span>
-  <span style="/*background-color:#6ba100;*/ padding: 12px 13px;color: #fff;/*position: relative;top: -140px;left: 238px;*/height: 40px;width: 40px;position: absolute;top: 0px;left: 305px;"
-    *ngIf="!isLoading && hasIssue !== 'na' && !hasIssue">
-    <!-- <i class="pficon-ok" aria-hidden="true" style="font-family:PatternFlyIcons-webfont;font-size:15px;color:#ffffff;"></i> -->
+    <i class="pficon-warning-triangle-o" aria-hidden="true" style=""></i>
   </span>
   <!-- </div>
       </div> -->
