@@ -42,7 +42,7 @@
             <div class="pre-loader-spinner spinner spinner-lg"></div>
           </div>
         </section>
-        <div class="card-pf-body" *ngIf="dependencies?.length === 0">
+        <!-- <div class="card-pf-body" *ngIf="dependencies?.length === 0">
           <section style="padding: 5px 17px;">
             <p class="card-pf-aggregate-status-notifications">
               <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
@@ -60,7 +60,7 @@
               </p>
             </div>
           </section>
-        </div>
+        </div> -->
         <section style="padding: 5px 17px;">
           <div class="card-pf-body" *ngIf="dependencies?.length" style="/*overflow-y: scroll;*/height: 289px;">
             <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
@@ -89,20 +89,20 @@
       </div>
       <div class="main">
         <div class="toast-pf alert alert-success alert-dismissable" *ngIf="toast" style="top: -80px;right: -290px;position: absolute;z-index: 9999;">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="background: none;color: black;">
-              <span class="pficon pficon-close" (click)="toast=!toast"></span>
-            </button>
-            <span class="pficon pficon-ok"></span>
-            <span *ngFor="let tagname of saveTagname">
-              <b>{{tagname.name}}</b>, 
-            </span>has been added.
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="background: none;color: black;">
+            <span class="pficon pficon-close" (click)="toast=!toast"></span>
+          </button>
+          <span class="pficon pficon-ok"></span>
+          <span *ngFor="let tagname of saveTagname">
+            <b>{{tagname.name}}</b>,
+          </span>has been added.
         </div>
         <!-- <div class="content"> -->
-          <div class="categories">
-            <!-- <div class="card-pf card-pf-view catagories-card" [style.height.px]="categoriesHeight"> -->
-              <!-- <div class="card-pf-body">
+        <div class="categories">
+          <!-- <div class="card-pf card-pf-view catagories-card" [style.height.px]="categoriesHeight"> -->
+          <!-- <div class="card-pf-body">
                 <div class="card-pf-items"> -->
-                  <!-- <table class="tag-table">
+          <!-- <table class="tag-table">
                     <tr style="display: grid;">
                       <td class="tag-table-td-left depn-select">All
                         <label class="tag-table-td-label" style="float: right;">{{tagZero}}</label>
@@ -112,65 +112,67 @@
                       </td>
                     </tr>
                   </table> -->
-                  <div class="list-group list-view-pf list-view-pf-view" style="margin-top:0px">
-                    <div class="list-group-item" style="background-color: #f5f5f5;">
-                      <div class="list-view-pf-actions">
-                          <label class="mix-label" style="float: right;">{{tagZero}}</label>
-                      </div>
-                      <div class="list-view-pf-main-info">
-                        <div class="list-view-pf-body">
-                          <div class="list-view-pf-description">
-                            <div class="list-group-item-heading">
-                              All
-                            </div>
-                            <!-- <div class="list-group-item-text">
+          <div class="list-group list-view-pf list-view-pf-view" style="margin-top:0px">
+            <div class="list-group-item" style="background-color: #f5f5f5;height: 64px">
+              <div class="list-view-pf-actions">
+                <label class="mix-label" style="float: right;">{{tagZero}}</label>
+              </div>
+              <div class="list-view-pf-main-info">
+                <div class="list-view-pf-body">
+                  <div class="list-view-pf-description">
+                    <div class="list-group-item-heading">
+                      All
+                    </div>
+                    <!-- <div class="list-group-item-text">
                               {{tagZero}}
                             </div> -->
-                          </div>
-                        </div>
-                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="list-group-item" *ngFor="let tags of categoryResult" style="background-color: #fafafa;">
+              <div class="list-view-pf-actions">
+                <label class="mix-label" style="float: right;">{{tags.count}}</label>
+              </div>
+              <div class="list-view-pf-main-info">
+                <div class="list-view-pf-body">
+                  <div class="list-view-pf-description">
+                    <div class="list-group-item-heading">
+                      {{tags.package[0].category}}
                     </div>
-                    <div class="list-group-item" *ngFor="let tags of categoryResult" style="background-color: #fafafa;">
-                      <div class="list-view-pf-actions">
-                        <label class="mix-label" style="float: right;">{{tags.count}}</label>
-                      </div>
-                      <div class="list-view-pf-main-info">
-                        <div class="list-view-pf-body">
-                          <div class="list-view-pf-description">
-                            <div class="list-group-item-heading">
-                              {{tags.package[0].category}}
-                            </div>
-                            <!-- <div class="list-group-item-text">
+                    <!-- <div class="list-group-item-text">
                               {{tags.count}}
                             </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- </div>
+          <!-- </div>
               </div>
             </div> -->
-          </div>
+        </div>
         <!-- </div> -->
         <div class="dependencies">
           <div class="depn">
             <div class="depn-select">Dependencies selected
-                <span style="float:right;">
-                  <button class="added" (click)="addDependency()" [ngStyle]="{'border': noOfTags > 0 ? '1px solid #00659c' : '1px solid #d1d1d1' , 'background-image': noOfTags > 0 ? 'linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%)' : 'none','color': noOfTags > 0 ? '#fff' : '#8b8d8f'}">
-                    Add ({{noOfTags}})</button>
-                </span>
-              <div class="display-dependencies"> <!-- *ngFor="let dep of categoryResult; let m = index;" -->
-                <div class="list-group list-view-pf" *ngFor="let master of masterTags; let i = index;"> <!--let package of dep.package; -->
-                  <div class="list-group-item list-view-pf-stacked list-view-pf-top-align"  [ngStyle]="{ 'background-color' : master.type ? '#def3ff' : '#fff'}" >
-                    <div class="check">
-                      <div class="list-view-pf-checkbox">
-                        <input type="checkbox" style="position: relative;top: -8px;left: -1px;width: 15px;" 
-                        [checked]="master.type" (change)="changeTagname(master,master.type)">
-                      </div>
+              <span style="float:right;">
+                <button class="added" (click)="addDependency()" [ngStyle]="{'border': noOfTags > 0 ? '1px solid #00659c' : '1px solid #d1d1d1' , 'background-image': noOfTags > 0 ? 'linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%)' : 'none','color': noOfTags > 0 ? '#fff' : '#8b8d8f'}">
+                  Add ({{noOfTags}})</button>
+              </span>
+            </div>
+            <div class="display-dependencies">
+              <!-- *ngFor="let dep of categoryResult; let m = index;" -->
+              <div class="list-group list-view-pf" *ngFor="let master of masterTags; let i = index;">
+                <!--let package of dep.package; -->
+                <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" [ngStyle]="{ 'background-color' : master.type ? '#def3ff' : '#fff'}">
+                  <div class="check">
+                    <div class="list-view-pf-checkbox" *ngIf="!master.grouped">
+                      <input type="checkbox" style="position: relative;top: -8px;left: -1px;width: 15px;" [checked]="master.type" (change)="changeTagname(master,master.type)">
                     </div>
-                    <!-- <div class="list-view-pf-actions">
+                  </div>
+                  <!-- <div class="list-view-pf-actions">
                       <button class="btn btn-default check" (click)="addDependency(master)" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
                                 border:1px solid #00659c;
                                 box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);
@@ -180,51 +182,51 @@
                         Add
                       </button>
                     </div> -->
-                    <div class="list-view-pf-main-info">
-                      <div class="list-view-pf-body">
-                        <div class="list-view-pf-description">
-                          <div class="list-group-item-heading">
-                            <label class="control control--checkbox">{{master.name}}
-                              <!-- <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
+                  <div class="list-view-pf-main-info">
+                    <div class="list-view-pf-body">
+                      <div class="list-view-pf-description">
+                        <div class="list-group-item-heading">
+                          <label class="control control--checkbox">{{master.name}}
+                            <!-- <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
                                 <div class="control__indicator"></div> -->
-                            </label>
-                          </div>
-                          <div class="list-group-item-text">
-                            <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p> -->
-                          </div>
+                          </label>
+                        </div>
+                        <div class="list-group-item-text">
+                          <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p> -->
+                        </div>
+                        <div>
                           <div>
-                            <div>
-                              <div class="tag-border">{{master.category}}</div>
-                            </div>
+                            <div class="tag-border">{{master.category}}</div>
                           </div>
                         </div>
-                        <div class="list-view-pf-additional-info">
-                          <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10" style="">
-                            <!-- <div class="list-pf-item">
+                      </div>
+                      <div class="list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10" style="">
+                          <!-- <div class="list-pf-item">
                               <label></label>
                             </div> -->
-                            <!-- <span dropdown class="dropdown-position"> -->
-                              <div class="col-xs-8" style="/*border-radius: 2px;margin-left: -470px;*/cursor: pointer;/*position: relative;top: -20px;left: -90px*/;border-left: 1px solid #bbbbbb;width: 100px;padding-left: 0px;padding-right: 0px;">
-                                <label href dropdownToggle (click)="false" class="dropbtn" style="padding-left: 3px;">
-                                  {{master.version}}
-                                  <span class="fa fa-angle-down" style="margin-left: 6px;">
-                                  </span>
-                                </label>
-                              </div>
-                            <!-- </span> -->
-                            <div class="grouped col-xs-4" *ngIf="master.grouped">
-                              Added
-                            </div>
+                          <!-- <span dropdown class="dropdown-position"> -->
+                          <div class="col-xs-8" style="/*border-radius: 2px;margin-left: -470px;*/cursor: pointer;/*position: relative;top: -20px;left: -90px*/;border-left: 1px solid #bbbbbb;width: 100px;padding-left: 0px;padding-right: 0px;">
+                            <label href dropdownToggle (click)="false" class="dropbtn" style="padding-left: 3px;">
+                              {{master.version}}
+                              <span class="fa fa-angle-down" style="margin-left: 6px;">
+                              </span>
+                            </label>
                           </div>
-                          <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-2">
-                            <strong *ngIf="cveTemporaryData?.result[i]?.length">
-                              <span class="pficon-warning-triangle-o"></span>
-                            </strong>
-                            <strong *ngIf="!cveTemporaryData?.result[i]?.length">
-                              <span class="pficon-ok"></span>
-                            </strong>
-                            <span style="font-family:OpenSans;font-size:12px;color:#545b64;">Security</span>
+                          <!-- </span> -->
+                          <div class="grouped col-xs-4" *ngIf="master.grouped">
+                            Added
                           </div>
+                        </div>
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-2">
+                          <!-- <strong *ngIf="cveTemporaryData?.result[i]?.length"> -->
+                          <strong *ngIf="master?.security?.length">
+                            <span class="pficon-warning-triangle-o"></span>
+                          </strong>
+                          <strong *ngIf="!master?.security?.length">
+                            <span class="pficon-ok"></span>
+                          </strong>
+                          <span style="font-family:OpenSans;font-size:12px;color:#545b64;">Security</span>
                         </div>
                       </div>
                     </div>
@@ -232,6 +234,7 @@
                 </div>
               </div>
             </div>
+            <!-- </div> -->
           </div>
         </div>
       </div>
@@ -240,7 +243,7 @@
       <!-- <button type="button" class="btn btn-info btn-lg foot-button-confirm" style="background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);width: 94px;"
          (click)="closemodal()">Done</button> -->
       <button type="button" class="btn btn-default foot-button-edit" data-dismiss="modal" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:50spx;"
-      (click)="closemodal()">Done</button>
+        (click)="closemodal()">Done</button>
     </div>
   </modal-content>
 </modal>
