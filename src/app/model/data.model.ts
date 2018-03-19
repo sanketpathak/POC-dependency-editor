@@ -235,7 +235,7 @@ export class LicenseResponseModel {
 
 export class CategoryDataModel {
     count: number;
-    package: Array<CategoryResponseResultModel>;
+    package_name: Array<CategoryResponseResultModel>;
 }
 
 export class CategoryResponseResultModel {

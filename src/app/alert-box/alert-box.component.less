@@ -26,20 +26,43 @@
             }
         }
     }
-    #chart {
-        overflow: visible;
-        margin: 0px auto;
-        // position: relative;
-        max-height: 200px;
-        // left: 25px;
-        // top: -88px;
-        // position: absolute;
-        // top: 40px;
-        .svg {
-            overflow: visible;
+    .list-view-pf-stacked {
+        display: block;
+        .fa-angle-right {
+            border-right: 1px solid #d1d1d1;
         }
     }
-    .pficon-warning-triangle-o:before {
+    .row {
+        margin-left:50px;
+        #chart {
+            overflow: visible;
+            margin: 0px auto;
+            // position: relative;
+            max-height: 200px;
+            // left: 25px;
+            // top: -88px;
+            // position: absolute;
+            // top: 40px;
+            .svg {
+                overflow: visible;
+            }
+        }
+    }
+    .alert-sign {
+        padding: 12px 13px;
         color: #fff;
+        height: 40px;
+        width: 40px;
+        position: absolute;
+        top: 0px;
+        left: 305px;
+        .pficon-warning-triangle-o:before {
+            color: #fff;
+        }
+        .pficon-warning-triangle-o {
+            font-family: PatternFlyIcons-webfont;
+            font-size: 15px;
+            color: #fff;
+        }
     }
 }

@@ -65,8 +65,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
   private searchDepsUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/component-search/';
-  // private categoryUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/categories/';
-  private categoryUrl = 'https://gist.githubusercontent.com/sanketpathak/9c431733f0b75623e6c88ae239e9813b/raw/494965a93039376f40116378c23404c1a5aeb5dd/vertx_package.json';
+  private categoryUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/categories/';
+  // private categoryUrl = 'https://gist.githubusercontent.com/sanketpathak/9c431733f0b75623e6c88ae239e9813b/raw/494965a93039376f40116378c23404c1a5aeb5dd/vertx_package.json';
   private getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
 
   constructor(private service: DependencyEditorService) {}
@@ -88,7 +88,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   getCategories() {
     this.isLoading = true;
-    this.service.getCategories(this.categoryUrl) // + '/vertx')
+    this.service.getCategories(this.categoryUrl + '/vertx')
       .subscribe((response: any) => {
         this.categorySearchResult = response['categories'];
         this.isLoading = false;
@@ -112,15 +112,16 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       i.package.map((k) => {
         category['package'] = k.name;
         category['version'] = k.version;
-        j++;
-        if (j === 7) {
-          payload['_resolved'] = category;
-          payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
-          payload['request_id'] = DependencySnapshot.REQUEST_ID;
-          j = 0;
-        }
+        // j++;
+        // if (j === 7) {
+        //   j = 0;
+        // }
       });
     });
+    payload['_resolved'] = category;
+    payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
+    payload['request_id'] = DependencySnapshot.REQUEST_ID;
+    console.log('payload of add', payload);
     return payload;
   }
 
@@ -134,13 +135,19 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
             count++;
             if (item.cve) {
               if (item.cve !== null) {
-                this.cveName.push([
-                  item.cve.details, // cve:
-                  item.package // package:
-                ]);
+                this.cveName.push({
+                  'detail' : item.cve.details, // cve:
+                  'package': item.package // package:
+                });
               }
             }
           });
+        }
+      });
+      this.masterTags.forEach( i => {
+        for (let j = 0; j < this.cveName.length; j++)
+        if (i.name === this.cveName['j'].package) {
+          i.security = this.cveName['j'].detail;
         }
       });
   }
@@ -315,7 +322,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
           'name' : x.name,
           'category' : x.category,
           'type' : false,
-          'grouped' : false
+          'grouped' : false,
+          'security' : null
         });
       });
     });

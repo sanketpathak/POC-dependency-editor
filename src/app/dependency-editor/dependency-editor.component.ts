@@ -66,22 +66,23 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private getLicenseUrl: string;
   private isDepSelectedFromSearch = false;
   private depToAdd: DependencySearchItem;
-  private showList = false;
 
   constructor(
     private service: DependencyEditorService
-  ) {}
-
-  ngOnInit() {
-    this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
-    // this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
-    this.getDepInsightsUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-analyses';
+  ) {
+    this.stackUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses/';
+    // this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
+    this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
+    // this.getDepInsightsUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-analyses';
     // this.getDepInsightsUrl = 'https://gist.githubusercontent.com/sanketpathak/94bac9aa6997eac5f32016e74cd8dc6c/raw/ddf40dbc0bb12a1a9338c008b8d980047546af5b/stack_analyses';
-    // this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
-    this.getCveUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-cve-analyses/';
+    this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
+    // this.getCveUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-cve-analyses/';
     // this.getCveUrl = 'https://gist.githubusercontent.com/sanketpathak/c0a7ccb4f6420fb783754f9454c347a0/raw/3d661bf010d6fe8b7adc23c305097334c10f510e/dependency%2520cve%2520analysis';
-    this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
+    // this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
+    this.getLicenseUrl = 'http://license-analysis.api.prod-preview.openshift.io';
+  }
 
+    ngOnInit() {
     this.service.dependencySelected
       .subscribe((depSelected: DependencySearchItem) => {
         this.isDepSelectedFromSearch = true;
@@ -138,16 +139,6 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     });
   }
 
-  public viewList() {
-    this.showList = !this.showList;
-    if (this.showList === false) {
-      this.listView = 'View Dependency List';
-    }
-    if (this.showList === true) {
-      this.listView = 'Hide Dependency List';
-    }
-  }
-
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();
     this.packageLength = DependencySnapshot.DEP_SNAPSHOT.length;
@@ -192,13 +183,15 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private postStackAnalyses(githubUrl: string) {
     this.service.postStackAnalyses(githubUrl)
     .subscribe((data: any) => {
+        });
       let subs = null;
       let rec = null;
       const interval = 5000;
       let alive: boolean = true;
       let counter: number = 0;
+      let id = '30051b1328fd4377b707e3271a19ae1f';
       let observable: any = this.service
-      .getStackAnalyses(this.stackUrl + data['id']);
+      .getStackAnalyses(this.stackUrl + id  );
       TimerObservable.create(0, interval)
       .takeWhile(() => alive)
       .subscribe(() => {
@@ -222,11 +215,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         alive = false;
     }
     });
-    });
+    // });
   }
 
   private getLicenseData(payload: any) {
-    this.service.getDependencyData1(this.getLicenseUrl, payload)
+    this.service.getDependencyData(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
         this.allLicenses = response.packages;
@@ -242,9 +235,9 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     const persist = false;
     const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
     let observable: any = this.service
-    // .getDependencyData(urlToHit, payload);
+    .getDependencyData(urlToHit, payload);
     // .getDependencyData2(this.getDepInsightsUrl, payload);
-    .getDependencyData1(urlToHit, payload);
+    // .getDependencyData1(urlToHit, payload);
     TimerObservable.create(0, interval)
     .takeWhile(() => alive)
     .subscribe(() => {
@@ -270,7 +263,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private getCveData(payload: any) {
-    this.service.getDependencyData1(this.getCveUrl, payload)
+    this.service.getDependencyData(this.getCveUrl, payload)
       .subscribe((response: CveResponseModel) => {
         this.cveData = response;
       });

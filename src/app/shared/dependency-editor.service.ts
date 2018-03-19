@@ -53,18 +53,20 @@ export class DependencyEditorService {
         private http: Http,
         private auth: AuthenticationService
     ) {
-        // pass your prod token here to run in local
-        const prodToken = '';
-        this.headersProd.set('Authorization', 'Bearer ' + prodToken);
-        this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
-        // pass your stage token here to run in local
-        this.headersStage.set('Authorization', 'Bearer ');
+    // pass your prod token here to run in local
+    const prodToken = '';
+    this.headersProd.set('Authorization', 'Bearer ' + prodToken);
+    this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
+    // pass your stage token here to run in local
+    this.headersStage.set('Authorization', 'Bearer ');
     }
 
     postStackAnalyses(githubUrl: string) {
-        const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
+        // const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
+        const url = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses';
         const options = new RequestOptions({
-            headers: this.headersProdPost
+            // headers: this.headersProd
+            headers: this.headersStage
         });
         const payload = 'github_url=' + githubUrl;
         return this.http.post(url, payload, options)
@@ -77,7 +79,8 @@ export class DependencyEditorService {
 
     getStackAnalyses(url: string): Observable < any > {
         const options = new RequestOptions({
-            headers: this.headersProd
+            // headers: this.headersProd
+            headers: this.headersStage
         });
         let stackReport: StackReportModel = null;
         return this.http.get(url, options)
@@ -138,7 +141,7 @@ export class DependencyEditorService {
         const options = new RequestOptions({
             headers: this.headersStage
         });
-        return this.http.get(url) // , options)
+        return this.http.get(url , options)
             .map(this.extractData)
             .map((data) => {
                 return data;
