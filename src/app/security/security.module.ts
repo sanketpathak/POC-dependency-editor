@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AccordionModule } from 'ngx-bootstrap';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { SecurityComponent } from './security.component';
-import { IssueModule } from '../issue/issue.module';
 import { AlertBoxModule } from '../alert-box/alert-box.module';
 
 @NgModule({
@@ -14,15 +13,14 @@ import { AlertBoxModule } from '../alert-box/alert-box.module';
     AccordionModule.forRoot(),
     HttpModule,
     FormsModule,
-    IssueModule,
     AlertBoxModule
 ],
  declarations: [
     SecurityComponent
 ],
  exports: [
-    SecurityComponent,
+    SecurityComponent
 ],
-    providers: [],
+    providers: []
 })
-export class SecurityModule { }
+export class SecurityModule {}

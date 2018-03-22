@@ -44,8 +44,6 @@ export class InsightComponent implements OnInit, OnChanges {
   public addTag(eventData) {
         for (let i = 0; i < this.companions.length + this.alternate.length; i++) {
           if (this.added.length > 0 && this.added[i] && this.added[i].name === eventData[0].name) {
-            //  this.added.splice(i, 2);
-            //  this.added[i].push(eventData);
              if (this.added[i].type === true && eventData[0].type === true) {
                 continue;
               } else if (this.added[i].type === true && eventData[0].type === false) {
@@ -76,7 +74,7 @@ export class InsightComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.added.length; i++) {
       if (this.added[i].type === true) {
         this.objToEmit[i] = {
-          depFull: eventData,
+          depFull: this.added[i].name,
           depSnapshot: null,
           action: 'add'
         };
@@ -100,11 +98,11 @@ export class InsightComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.added.length; i++) {
       if ( this.added[i].type === true) {
         this.companionAdded.emit(this.objToEmit[i]);
-        this.noOfTags = 0;
-        this.added = [];
-        this.objToEmit = [];
       }
     }
+    this.noOfTags = 0;
+    this.added = [];
+    this.objToEmit = [];
   }
 
   public removeDependency(dependency: ComponentInformationModel) {
@@ -115,7 +113,6 @@ export class InsightComponent implements OnInit, OnChanges {
         action: 'remove'
       };
     }
-    // this.dependencyRemoved.emit(objToEmit);
 }
 
   public removeCompanion(dependency: ComponentInformationModel) {

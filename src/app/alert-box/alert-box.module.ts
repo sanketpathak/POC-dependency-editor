@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { AlertBoxComponent } from './alert-box.component';
-import { IssueModule } from '../issue/issue.module';
 import { ChartModule } from '../utils/chart/chart.module' ;
 
 
@@ -13,7 +12,6 @@ import { ChartModule } from '../utils/chart/chart.module' ;
     CommonModule,
     HttpModule,
     FormsModule,
-    IssueModule,
     ChartModule
 ],
  declarations: [
@@ -24,4 +22,4 @@ import { ChartModule } from '../utils/chart/chart.module' ;
 ],
  providers: []
 })
-export class AlertBoxModule { }
+export class AlertBoxModule {}

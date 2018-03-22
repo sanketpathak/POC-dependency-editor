@@ -37,6 +37,7 @@ import {
 
 export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dependencies: Array < ComponentInformationModel > ;
+  @Input() dependencyAdded: Array < DependencySnapshotItem > ;
   @Input() existDependencies: Array < DependencySnapshotItem > ;
   @ViewChild('PackagePreview') modalPackagePreview: any;
 
@@ -112,16 +113,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       i.package.map((k) => {
         category['package'] = k.name;
         category['version'] = k.version;
-        // j++;
-        // if (j === 7) {
-        //   j = 0;
-        // }
       });
     });
     payload['_resolved'] = category;
     payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
     payload['request_id'] = DependencySnapshot.REQUEST_ID;
-    console.log('payload of add', payload);
     return payload;
   }
 
@@ -137,7 +133,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
               if (item.cve !== null) {
                 this.cveName.push({
                   'detail' : item.cve.details, // cve:
-                  'package': item.package // package:
+                  'package': item.package
                 });
               }
             }
@@ -209,6 +205,12 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  addSearchDependency(depItem: DependencySearchItem) {
+    this.dependencySearchResult = [];
+    this.dependencySearchString = '';
+    this.service.dependencySelected.emit(depItem);
+  }
+
   ngOnDestroy() {
     this.dependencies = [];
     this.dependencySearchResult = [];
@@ -232,81 +234,9 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public showDependency() {
-    //   if (this.selected) {
-    //     this.dependencies = [];
-    //     // this.categories = [];
-    //     const tags = this.selected.split(',').map(item => {
-    //       return item.trim();
-    //     });
-    //     tags.forEach(i => {
-    //       this.dependenciesData.map(d => {
-    //         if (d['category'].indexOf(i) !== -1) {
-    //           let _flag = true;
-    //           this.dependencies.map(tmp => {
-    //             if (tmp.name === d.name) {
-    //               _flag = false;
-    //             }
-    //           });
-    //           if (_flag) {
-    //             this.dependencies.push(d);
-    //           }
-    //         }
-    //       });
-    //     });
-    //     // this.calculateCategories(this.dependencies);
-    //   }
-    //   if (this.selected.toLocaleLowerCase().indexOf('all') !== -1){
-    //     this.dependencies = this.dependenciesData;
-    //   }
   }
 
   handleUserInputKeyPress(event: KeyboardEvent): void {
-    //   const key: string = event.key.trim();
-    //   if (key && key.trim() === ',') {
-    //     this.searchKey = '';
-    //     this.suggestions = [];
-    //   } else {
-    //     if (key === 'Enter') {
-    //       this.searchKey = '';
-    //       this.suggestions = [];
-    //       this.showDependency();
-    //     } else if (key === 'Backspace') {
-    //       if (this.searchKey !== '') {
-    //         this.searchKey = this.searchKey.slice(0, -1);
-    //         if (this.searchKey !== '') {
-    //           this.suggestions = [];
-    //         }
-    //       } else {
-    //         this.suggestions = [];
-    //       }
-    //     } else {
-    //       this.searchKey += key.trim();
-    //     }
-    //     if (this.searchKey) {
-    //       this.suggestions = this.masterTags.filter(tag => {
-    //         return tag.indexOf(this.searchKey) !== -1;
-    //       });
-    //     }
-    //   }
-    // }
-    // public tagClick(tag: string) {
-    //   if (tag !== 'All') {
-    //     if (this.selectedTags.has('All')) {
-    //       this.selectedTags.delete('All');
-    //     }
-    //     if (!this.selectedTags.delete(tag)) {
-    //       this.selectedTags.add(tag);
-    //     }
-    //   } else {
-    //     if (this.selectedTags.has(tag)) {
-    //       this.selectedTags.clear();
-    //     } else {
-    //       this.selectedTags.clear();
-    //       this.selectedTags.add(tag);
-    //     }
-    //   }
-    //   this.selected = Array.from(this.selectedTags).join(', ');
-    //   this.showDependency();
   }
 
   public addedTags() {
@@ -333,5 +263,4 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       });
   });
   }
-
 }

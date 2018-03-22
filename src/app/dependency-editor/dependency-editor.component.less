@@ -1,3 +1,57 @@
+.container-default {
+    background: #ededed;
+    padding: 0 20px;
+    max-width: 1000px;
+    .row-main {
+        width: 100%;
+        .row-element {
+            margin-left: 40px;
+            .title {
+                font-size: 24px;
+            }
+            .skip {
+                background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
+                border: 1px solid #00659c;
+                box-shadow: 0 2px 3px 0 rgba(3, 3, 3, .10);
+                border-radius: 1px;
+                width: 78px;
+                color: #fff;
+            }
+        }
+        .row-defination {
+            margin-left: 20px;
+            .row-inside {
+                margin-top: 20px;
+            }
+        }
+        .bottom {
+            height: 73px;
+            .continue {
+                background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
+                color: #fff;
+                font-size: 14px;
+                text-align: left;
+                border: 1px solid #00659c;
+                box-shadow: 0 2px 3px 0 rgba(3, 3, 3, .10);
+                border-radius: 1px;
+                width: 83px;
+                margin-left: 390px;
+            }
+            .cancel {
+                background-image: linear-gradient(-180deg, #fafafa 0%, #ededed 100%);
+                font-size: 14px;
+                color: #4d5258;
+                text-align: center;
+                border: 1px solid #bbb;
+                box-shadow: 0 2px 3px 0 rgba(3, 3, 3, .10);
+                border-radius: 1px;
+                width: 65px;
+                margin-left: 19px;
+            }
+        }
+    }
+}
+
 .panel-group .panel-default {
     height: 335px;
     .panel-body .card-block .card-body {
@@ -96,156 +150,4 @@
     font-family: OpenSans-Bold;
     font-size: 12px;
     color: #545b64;
-}
-
-.modal-lg .modal-fullscreen .modal-width-class {
-    font-family: OpenSans-Semibold;
-    font-size: 16px;
-    color: #494949;
-    .h4 {
-        font-size: 24px;
-    }
-    .content {
-        font-family: OpenSans-Semibold;
-        font-size: 16px;
-        color: #494949;
-        background: #fff;
-        width: 692px;
-        height: 967px;
-        .content-1 {
-            background: #fff;
-            width: 795px;
-            height: 967px;
-            .modal-title {
-                font-family: OpenSans-Semibold;
-                font-size: 16px;
-                color: #494949;
-            }
-            .modal-body {
-                margin-top: 5px;
-                .row {
-                    .p {
-                        background: #fff;
-                        border: 1px solid #bbb;
-                        box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, .08);
-                        width: 207px;
-                        height: 72px;
-                    }
-                }
-            }
-            .modal-body .second-body {
-                background: #fff;
-                border: 1px solid #bbb;
-                box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, .08);
-                width: 795px;
-                height: 574px;
-                margin-top: 20px;
-                margin-left: 16px;
-                .row-body {
-                    .collapsein {
-                        font-size: 13px;
-                        border-right: 1px solid #bbb;
-                        height: 515px;
-                        display: grid;
-                        margin-top: 6px;
-                        overflow: auto;
-                        .list-group .list-view-pf {
-                            border-bottom: none;
-                            .list-view-pf-main-info {
-                                padding: 0px;
-                                .list-view-pf-body {
-                                    display: block;
-                                    overflow-y: scroll;
-                                    overflow-x: hidden;
-                                    height: 495px;
-                                    .list-group-item .list-view-pf-stacked .list-view-pf-top-align {
-                                        border-bottom: 1px solid #ededed;
-                                        margin: -4px;
-                                        margin-bottom: 10px;
-                                        padding-bottom: 10px;
-                                        padding-top: 6px;
-                                        .list-view-pf-description {
-                                            width: auto;
-                                            margin-right: 15px;
-                                        }
-                                        .list-view-pf-additional-info {
-                                            width: auto;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .modal-footer {
-                .foot-button-edit {
-                    background-image: linear-gradient(-180deg, #fafafa 0%, #ededed 100%);
-                    border: 1px solid #bbb;
-                    box-shadow: 0 2px 3px 0 rgba(3, 3, 3, .10);
-                    border-radius: 1px;
-                    width: 94px;
-                    height: 30px;
-                }
-                .foot-button-confirm {
-                    background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
-                    border: 1px solid #00659c;
-                    box-shadow: 0 2px 3px 0 rgba(3, 3, 3, .10);
-                    border-radius: 1px;
-                    width: 94px;
-                }
-            }
-        }
-    }
-}
-
-#style-1::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    border-radius: 10px;
-    background-color: #d1d1d1;
-    ;
-}
-
-#style-1::-webkit-scrollbar {
-    width: 12px;
-    background-color: #d1d1d1;
-    ;
-}
-
-#style-1::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #555;
-}
-
-.meta {
-    font-family: OpenSans;
-    font-size: 14px;
-    color: #545b64;
-}
-
-.continue {
-    background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
-    color:#fff;
-    font-size:14px;
-    text-align:left;
-    border:1px solid #00659c;
-    box-shadow:0 2px 3px 0 rgba(3, 3, 3, .10);
-    border-radius:1px;
-    width:83px;
-    margin-left: 390px;
-}
-
-.cancel {
-    background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);
-    font-size:14px;
-    color:#4d5258;
-    text-align:center;
-    border:1px solid #bbb;
-    box-shadow:0 2px 3px 0 rgba(3, 3, 3, .10);
-    border-radius:1px;
-    width:65px;
-    margin-left: 19px;
 }

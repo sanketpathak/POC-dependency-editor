@@ -1,19 +1,22 @@
-<div class="cards-pf" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);background:#fff;height: 400px;">
+<div class="cards-pf">
   <div class="row">
     <div class="col-sm-12">
-      <p style="font-size: 16px;padding: 15px; background: #f5f5f5; margin: 0">
+      <p id="heading">
         <span>Dependencies</span>
-        <span style="margin-left:4px;" *ngIf="dependencies">({{ existDependencies?.length+dependencies?.length }})</span>
+        <span class="number" *ngIf="dependencies">
+          <span class="dep-count">{{ existDependencies?.length+dependencies?.length }}</span>
+        </span>
       </p>
     </div>
-    <div class="col-sm-12">
-      <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding: 0;margin-bottom: 0;box-shadow: none">
+    <div class="col-sm-12 added-dep">
+      <div class="card-pf dep-card">
         <h2 class="card-pf-title search-box">
-          <span style="font-size:12px;">You can add dependencies either by searching or by browsing the list of dependencies</span>
-          <div class="row" style="padding-top:3px;margin-left: auto;display: flex;">
+          <span id="search-text">You can add dependencies either by searching or by browsing the list of dependencies</span>
+          <div class="row">
             <div id="date-2" class="input-group date col-sm-8">
-              <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
-              <span class="input-group-addon" (click)="getDependencies()" style="cursor: pointer">
+              <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()"
+                placeholder="Web, Devtools, SQL...">
+              <span class="input-group-addon" (click)="getDependencies()">
                 <span class="pficon-search"></span>
               </span>
             </div>
@@ -23,7 +26,7 @@
             </div>
             <ul class="dropdown-menu" *ngIf="dependencySearchResult?.length">
               <li *ngFor="let dep of dependencySearchResult">
-                <a (click)="addDependency(dep)">
+                <a (click)="addSearchDependency(dep)">
                   <div>
                     <b>{{ dep.name }}</b>
                   </div>
@@ -31,10 +34,10 @@
                 </a>
               </li>
             </ul>
-            <div class="col-sm-4" (click)="showPackageModal($event)" style="font-size:12px;color:#049cd4;cursor:pointer;">Browse All Dependencies</div>
+            <div class="col-sm-5 browse" (click)="showPackageModal($event)">Browse All Dependencies</div>
           </div>
         </h2>
-        <section style="padding: 5px 17px;">
+        <section>
           <div *ngIf="existDependencies?.length">
             <span *ngFor="let dependency of existDependencies" class="package-chip">{{dependency.package}}</span>
           </div>
@@ -42,27 +45,8 @@
             <div class="pre-loader-spinner spinner spinner-lg"></div>
           </div>
         </section>
-        <!-- <div class="card-pf-body" *ngIf="dependencies?.length === 0">
-          <section style="padding: 5px 17px;">
-            <p class="card-pf-aggregate-status-notifications">
-              <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
-                <span class="pficon pficon-add-circle-o" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
-                <span style="padding-top:17px;">No Dependencies Added</span>
-              </span>
-            </p>
-            <div style="padding-top:18px;text-align: center">
-              <p>
-                You can add dependencies either by searching or by going to 'choose dependencies' section by clicking 'View Dependency List'
-              </p>
-              <p>OR</p>
-              <p>
-                You can choose to add dependencies mentioned in the insights section.
-              </p>
-            </div>
-          </section>
-        </div> -->
-        <section style="padding: 5px 17px;">
-          <div class="card-pf-body" *ngIf="dependencies?.length" style="/*overflow-y: scroll;*/height: 289px;">
+        <section>
+          <div class="card-pf-body dep-area" *ngIf="dependencies?.length || dependencyAdded?.length">
             <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
               <button class="btn btn-default close" (click)="removeDependency(dependency)">
                 <span class="pficon pficon-close"></span>
@@ -80,16 +64,17 @@
   </div>
 </div>
 
-<modal #PackagePreview modalClass="modal-lg modal-fullscreen modal-width-class" title="Choose Dependency" role="dialog" style="margin-top: 45px;">
+<modal #PackagePreview id="PackagePreview" modalClass="modal-lg modal-fullscreen modal-width-class" title="Choose Dependency"
+  role="dialog">
   <modal-content class="contents">
     <div class="modal-body">
       <div class="search-dependencies">
-        <input class="search-box" type="text" placeholder="Search for Dependencies..">
-        <span class="fa fa-search search-icon" aria-hidden="true" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
+        <input id="search-dep" class="search-box search-dep" type="text" placeholder="Search for Dependencies..">
+        <span id="dep-search-icon" class="fa fa-search search-icon" aria-hidden="true"></span>
       </div>
       <div class="main">
-        <div class="toast-pf alert alert-success alert-dismissable" *ngIf="toast" style="top: -80px;right: -290px;position: absolute;z-index: 9999;">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="background: none;color: black;">
+        <div class="toast-pf alert alert-success alert-dismissable" *ngIf="toast">
+          <button type="button" class="close alert-close" data-dismiss="alert" aria-hidden="true">
             <span class="pficon pficon-close" (click)="toast=!toast"></span>
           </button>
           <span class="pficon pficon-ok"></span>
@@ -97,25 +82,11 @@
             <b>{{tagname.name}}</b>,
           </span>has been added.
         </div>
-        <!-- <div class="content"> -->
         <div class="categories">
-          <!-- <div class="card-pf card-pf-view catagories-card" [style.height.px]="categoriesHeight"> -->
-          <!-- <div class="card-pf-body">
-                <div class="card-pf-items"> -->
-          <!-- <table class="tag-table">
-                    <tr style="display: grid;">
-                      <td class="tag-table-td-left depn-select">All
-                        <label class="tag-table-td-label" style="float: right;">{{tagZero}}</label>
-                      </td>
-                      <td class="tag-table-td-left" *ngFor="let tags of categoryResult">{{tags.package[0].category}}
-                        <label class="tag-table-td-label" style="float: right;">{{tags.count}}</label>
-                      </td>
-                    </tr>
-                  </table> -->
-          <div class="list-group list-view-pf list-view-pf-view" style="margin-top:0px">
-            <div class="list-group-item" style="background-color: #f5f5f5;height: 64px">
+          <div class="list-group list-view-pf list-view-pf-view tag-list">
+            <div class="list-group-item tag-list-item">
               <div class="list-view-pf-actions">
-                <label class="mix-label" style="float: right;">{{tagZero}}</label>
+                <label class="mix-label">{{tagZero}}</label>
               </div>
               <div class="list-view-pf-main-info">
                 <div class="list-view-pf-body">
@@ -123,16 +94,13 @@
                     <div class="list-group-item-heading">
                       All
                     </div>
-                    <!-- <div class="list-group-item-text">
-                              {{tagZero}}
-                            </div> -->
                   </div>
                 </div>
               </div>
             </div>
-            <div class="list-group-item" *ngFor="let tags of categoryResult" style="background-color: #fafafa;">
+            <div class="list-group-item tag-list-item-n" *ngFor="let tags of categoryResult">
               <div class="list-view-pf-actions">
-                <label class="mix-label" style="float: right;">{{tags.count}}</label>
+                <label class="mix-label">{{tags.count}}</label>
               </div>
               <div class="list-view-pf-main-info">
                 <div class="list-view-pf-body">
@@ -140,59 +108,36 @@
                     <div class="list-group-item-heading">
                       {{tags.package[0].category}}
                     </div>
-                    <!-- <div class="list-group-item-text">
-                              {{tags.count}}
-                            </div> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- </div>
-              </div>
-            </div> -->
         </div>
-        <!-- </div> -->
         <div class="dependencies">
           <div class="depn">
             <div class="depn-select">Dependencies selected
-              <span style="float:right;">
+              <span id="select">
                 <button class="added" (click)="addDependency()" [ngStyle]="{'border': noOfTags > 0 ? '1px solid #00659c' : '1px solid #d1d1d1' , 'background-image': noOfTags > 0 ? 'linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%)' : 'none','color': noOfTags > 0 ? '#fff' : '#8b8d8f'}">
                   Add ({{noOfTags}})</button>
               </span>
             </div>
             <div class="display-dependencies">
-              <!-- *ngFor="let dep of categoryResult; let m = index;" -->
               <div class="list-group list-view-pf" *ngFor="let master of masterTags; let i = index;">
-                <!--let package of dep.package; -->
                 <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" [ngStyle]="{ 'background-color' : master.type ? '#def3ff' : '#fff'}">
                   <div class="check">
                     <div class="list-view-pf-checkbox" *ngIf="!master.grouped">
-                      <input type="checkbox" style="position: relative;top: -8px;left: -1px;width: 15px;" [checked]="master.type" (change)="changeTagname(master,master.type)">
+                      <input type="checkbox check-it" [checked]="master.type" (change)="changeTagname(master,master.type)">
                     </div>
                   </div>
-                  <!-- <div class="list-view-pf-actions">
-                      <button class="btn btn-default check" (click)="addDependency(master)" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
-                                border:1px solid #00659c;
-                                box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);
-                                border-radius:1px;
-                                width:54px;
-                                margin-top: 5px;">
-                        Add
-                      </button>
-                    </div> -->
                   <div class="list-view-pf-main-info">
                     <div class="list-view-pf-body">
                       <div class="list-view-pf-description">
                         <div class="list-group-item-heading">
                           <label class="control control--checkbox">{{master.name}}
-                            <!-- <input type="checkbox" [checked]="selectedPackages.has(dependency['name'])" (change)="isDependencySelected($event, dependency)"/>
-                                <div class="control__indicator"></div> -->
                           </label>
                         </div>
                         <div class="list-group-item-text">
-                          <!-- <p class="card-pf-info" style="font-family:OpenSans;font-size:12px;color:#949494;">{{dependency.description.substring(0, 1).toUpperCase() + dependency.description.substring(1)}}</p> -->
                         </div>
                         <div>
                           <div>
@@ -201,32 +146,26 @@
                         </div>
                       </div>
                       <div class="list-view-pf-additional-info">
-                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10" style="">
-                          <!-- <div class="list-pf-item">
-                              <label></label>
-                            </div> -->
-                          <!-- <span dropdown class="dropdown-position"> -->
-                          <div class="col-xs-8" style="/*border-radius: 2px;margin-left: -470px;*/cursor: pointer;/*position: relative;top: -20px;left: -90px*/;border-left: 1px solid #bbbbbb;width: 100px;padding-left: 0px;padding-right: 0px;">
-                            <label href dropdownToggle (click)="false" class="dropbtn" style="padding-left: 3px;">
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10">
+                          <div class="col-xs-8 master-version">
+                            <label (click)="false" class="dropbtn drop-toggle">
                               {{master.version}}
-                              <span class="fa fa-angle-down" style="margin-left: 6px;">
+                              <span id="version-icon" class="fa fa-angle-down" style="margin-left: 6px;">
                               </span>
                             </label>
                           </div>
-                          <!-- </span> -->
                           <div class="grouped col-xs-4" *ngIf="master.grouped">
                             Added
                           </div>
                         </div>
                         <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-2">
-                          <!-- <strong *ngIf="cveTemporaryData?.result[i]?.length"> -->
                           <strong *ngIf="master?.security?.length">
                             <span class="pficon-warning-triangle-o"></span>
                           </strong>
                           <strong *ngIf="!master?.security?.length">
                             <span class="pficon-ok"></span>
                           </strong>
-                          <span style="font-family:OpenSans;font-size:12px;color:#545b64;">Security</span>
+                          <span id="sec">Security</span>
                         </div>
                       </div>
                     </div>
@@ -234,16 +173,12 @@
                 </div>
               </div>
             </div>
-            <!-- </div> -->
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-info btn-lg foot-button-confirm" style="background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);width: 94px;"
-         (click)="closemodal()">Done</button> -->
-      <button type="button" class="btn btn-default foot-button-edit" data-dismiss="modal" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:50spx;"
-        (click)="closemodal()">Done</button>
+      <button type="button" class="btn btn-default foot-button-edit" data-dismiss="modal" (click)="closemodal()">Done</button>
     </div>
   </modal-content>
 </modal>

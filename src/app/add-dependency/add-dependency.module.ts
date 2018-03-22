@@ -26,4 +26,4 @@ import { ListElementModule } from '../list-element/list-element.module';
 ],
  providers: []
 })
-export class AddDependencyModule { }
+export class AddDependencyModule {}

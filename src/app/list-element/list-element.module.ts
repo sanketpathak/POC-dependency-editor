@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap';
@@ -18,8 +18,8 @@ import { ListElementComponent } from './list-element.component';
     ListElementComponent
 ],
  exports: [
-    ListElementComponent,
+    ListElementComponent
 ],
-    providers: [],
+    providers: []
 })
-export class ListElementModule { }
+export class ListElementModule {}

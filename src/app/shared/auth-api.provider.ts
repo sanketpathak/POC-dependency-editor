@@ -1,7 +1,7 @@
 import { ApiLocatorService } from './api-locator.service';
 import { AUTH_API_URL } from 'ngx-login-client';
 
-let authApiUrlFactory = (api: ApiLocatorService) => {
+export let authApiUrlFactory = function (api: ApiLocatorService) {
   return api.witApiUrl;
 };
 

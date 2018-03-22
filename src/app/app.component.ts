@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  githubUrl = 'https://github.com/sara-02/testquickstart1'; // 'https://github.com/openshiftio-vertx-boosters/vertx-crud-booster-redhat'
+  githubUrl = 'https://github.com/sara-02/testquickstart1';
   boosterInfo = {};
 }

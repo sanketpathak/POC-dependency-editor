@@ -1,28 +1,44 @@
 .alert-box {
     background: #fff;
-    // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .30);
     width: 346px;
     height: 239px;
     text-align: left;
     margin-left: 20px;
     position: absolute;
-    // top: -39px;
-    // left: 452px;
     left: 0px;
     z-index: 9;
     .alert-heading {
-        // width: 346px;
-        // height: 46px;
-        // position: relative;
-        // top: -42px;
-        // left: -40px;
         border-bottom: 1px solid #d1d1d1;
         .alert-title {
             font-family: OpenSans-Semibold;
             font-size: 16px;
-            // color: #fff;
-            .alert_symbol:before {
+            color:#000;
+            #symbol {
                 padding-right: 4px;
+            }
+            .issueSymbol:before {
+                padding-right: 4px;
+            }
+            .if-security {
+                background:#9c9c9c;
+                border-radius:1px;
+                width:36px;
+                height:17px;
+                padding:3px;
+                text-align:center;
+                #security-status {
+                    font-family:OpenSans-Bold;
+                    font-size:12px;
+                    text-align:center;
+                    color:#fff;
+                }
+            }
+            .if-license {
+                font-weight: bold;
+                padding-right:4px;
+            }
+            .licenseType {
+                font-size: 12px;
             }
         }
     }
@@ -37,12 +53,7 @@
         #chart {
             overflow: visible;
             margin: 0px auto;
-            // position: relative;
             max-height: 200px;
-            // left: 25px;
-            // top: -88px;
-            // position: absolute;
-            // top: 40px;
             .svg {
                 overflow: visible;
             }

@@ -18,7 +18,6 @@ import { AddDependencyModule } from '../add-dependency/add-dependency.module';
 import { SecurityModule } from '../security/security.module';
 import { LicenseModule } from '../license/license.module';
 import { CurrentprojectModule } from '../current-project/current-project.module';
-// import { PackagesModule } from '../packages/packages.component.module';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { MockAuthenticationService } from '../shared/mock-auth.service';
 
@@ -34,7 +33,6 @@ import { MockAuthenticationService } from '../shared/mock-auth.service';
     SecurityModule,
     LicenseModule,
     CurrentprojectModule
-    // PackagesModule
 ],
  declarations: [
     DependencyEditorComponent

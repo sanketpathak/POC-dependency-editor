@@ -54,8 +54,8 @@ export class SecurityComponent implements OnInit, OnChanges {
 
           if (item.cve !== null) {
             this.cveName.push([
-              item.cve.details, // cve:
-              item.package // package:
+              item.cve.details,
+              item.package
             ]);
           }
         }
@@ -75,5 +75,4 @@ export class SecurityComponent implements OnInit, OnChanges {
   public getShow(event) {
     this.toHave = event.toShow;
   }
-
 }

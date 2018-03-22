@@ -1,10 +1,9 @@
-<div class="list-group list-view-pf list-view-pf-view">
+<div id="list-start" class="list-group list-view-pf list-view-pf-view" [ngStyle]="{'border': isOpen === 'true' ? '1px solid #bbbbbb' : '15px'}">
   <div class="list-group-item list-group-item-action list-group-item-primary">
-    <!-- list-view-pf-stacked list-view-pf-top-align"> -->
-    <div class="list-group-item-header">
+    <div class="list-group-item-header" [ngStyle]="{'background': isOpen === 'true' ? '#def3ff' : '#fff'}">
       <div class="check">
         <div class="list-view-pf-checkbox" *ngIf="fromAddDependency !== 'true'">
-          <input #dependency.name type="checkbox" style="position: absolute;top: 30px;left: 15px;width: 15px;" [ngStyle]="{'top': fromAddDependency === 'true' ? '29px' : '30px'}"
+          <input #dependency.name type="checkbox" class="check-dep" [ngStyle]="{'top': fromAddDependency === 'true' ? '29px' : '30px'}"
             [checked]="saveTagname" (change)="changeTagname(saveTagname)">
         </div>
         <div class="list-view-pf-expand">
@@ -12,9 +11,6 @@
         </div>
       </div>
       <div class="list-view-pf-actions" [ngClass]="{'add-dependency-action': fromAddDependency === 'true'}">
-        <!-- <button class="btn btn-default check" (click)="addDependency(dependency)" *ngIf="fromAddDependency !== 'true'">
-          <span class="glyphicon glyphicon-ok"></span>
-        </button> -->
         <button class="btn btn-default close" (click)="removeCompanion(dependency)" *ngIf="fromAddDependency !== 'true'">
           <span class="pficon pficon-remove"></span>
         </button>
@@ -24,13 +20,10 @@
       </div>
       <div class="list-view-pf-main-info">
         <div class="list-view-pf-body">
-          <div class="list-view-pf-description" [ngStyle]="{'padding-top': fromAddDependency === 'true' ? 0 : '15px'}">
+          <div class="list-view-pf-description" [ngStyle]="{'padding-top': fromAddDependency === 'true' ? 0 : '0px'}">
             <div class="list-group-item-heading" [title]="dependency.name">
               {{dependency.name}}
             </div>
-            <!-- <div class="list-group-item-text" [tooltip]="dependency?.reason" *ngIf="fromAddDependency !== 'true'">
-              {{dependency.reason}}
-            </div> -->
           </div>
           <div class="list-view-pf-additional-info">
             <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
@@ -43,102 +36,44 @@
               <strong *ngIf="!dependency?.security?.length">
                 <span class="pficon-ok"></span>
               </strong>
-              <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Security</span>
+              <span id="security">Security</span>
             </div>
-            <!-- <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-              <strong>
-                <span class="license-symbol"></span>
-              </strong>
-              <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Lisence</span>
-            </div> -->
           </div>
         </div>
       </div>
-      <div class="list-view-pf-main-info reason" [tooltip]="dependency?.reason" *ngIf="fromAddDependency !== 'true'">
+      <div class="list-view-pf-main-info reason" *ngIf="fromAddDependency !== 'true'">
         {{dependency.reason}}
       </div>
     </div>
-    <div class="list-group-item-container container-fluid " *ngIf="isOpen"><!-- hidden -->
-      <!-- <div class="close">
-        <span class="pficon pficon-close"></span>
-      </div> -->
+    <div class="list-group-item-container container-fluid " *ngIf="isOpen">
       <div class="row-table">
         <table>
-            <thead>
-              <tr>
-                <th>Github Statistics:</th>
-                <td>Contributors</td>
-                <td>Dependent Repo.</td>
-                <td>Forks</td>
-                <td>Stars</td>
-                <td>Github Usage</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td> </td>
-                <td>{{dependency.github.contributors}}</td>
-                <td>{{dependency.github.dependent_repos}}</td>
-                <td>{{dependency.github.forks_count}}</td>
-                <td>{{dependency.github.stargazers_count}}</td>
-                <td>{{dependency.github.used_by.length}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            <span class="package-licence">Licenses:</span><span *ngFor="let license of dependency.licenses">{{license}}</span>
-          </p>
+          <thead>
+            <tr>
+              <th>Github Statistics:</th>
+              <td>Contributors</td>
+              <td>Dependent Repo.</td>
+              <td>Forks</td>
+              <td>Stars</td>
+              <td>Github Usage</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> </td>
+              <td>{{dependency.github.contributors}}</td>
+              <td>{{dependency.github.dependent_repos}}</td>
+              <td>{{dependency.github.forks_count}}</td>
+              <td>{{dependency.github.stargazers_count}}</td>
+              <td>{{dependency.github.used_by.length}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <span class="package-licence">Licenses:</span>
+          <span *ngFor="let license of dependency.licenses">{{license}}, </span>
+        </p>
       </div>
-    </div>
-  </div>
-  <div *ngIf="fromAddDependency === 'true' && showAlternateSection" class="alternate-dependency">
-    <div class="header">Alternate dependency</div>
-    <div class="list-group-item list-view-pf-stacked list-view-pf-top-align">
-      <div class="check">
-        <div class="list-view-pf-expand">
-          <span class="fa fa-angle-right"></span>
-        </div>
-      </div>
-      <div class="list-view-pf-main-info">
-        <div class="list-view-pf-body">
-          <div class="list-view-pf-description">
-            <div class="list-group-item-heading" [title]="dependency.name">
-              {{dependency.name}}
-            </div>
-            <div class="list-group-item-text" [tooltip]="dependency?.reason">
-              Why this dependency?
-            </div>
-          </div>
-          <div class="list-view-pf-additional-info">
-            <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-              {{dependency.version}}
-            </div>
-            <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-              <strong *ngIf="dependency?.security?.length">
-                <span class="pficon-warning-triangle-o"></span>
-              </strong>
-              <strong *ngIf="!dependency?.security?.length">
-                <span class="pficon-ok"></span>
-              </strong>
-              <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Security</span>
-            </div>
-            <!-- <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked">
-              <strong>
-                <span class="license-symbol"></span>
-              </strong>
-              <span style="font-family:OpenSans;font-size:8px;color:#545b64;">Lisence</span>
-            </div> -->
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="button-section">
-      <button class="btn btn-default check" (click)="useAlternate()">
-        <span class="glyphicon glyphicon-ok"></span>
-      </button>
-      <button class="btn btn-default close" (click)="ignoreAlternate()">
-        <span class="fa fa-remove"></span>
-      </button>
     </div>
   </div>
 </div>

@@ -33,8 +33,8 @@ import {
         InsightComponent
     ],
     exports: [
-        InsightComponent,
+        InsightComponent
     ],
-    providers: [],
+    providers: []
 })
 export class InsightModule {}
