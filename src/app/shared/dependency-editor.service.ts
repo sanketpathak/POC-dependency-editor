@@ -45,6 +45,9 @@ export class DependencyEditorService {
     private headersProdPost: Headers = new Headers({
         'Content-Type': 'application/x-www-form-urlencoded'
     });
+    private headersStagePost: Headers = new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded'
+    });
     private headersStage: Headers = new Headers({
         'Content-Type': 'application/json'
     });
@@ -65,8 +68,8 @@ export class DependencyEditorService {
         // const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
         const url = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses';
         const options = new RequestOptions({
-            // headers: this.headersProd
-            headers: this.headersStage
+            // headers: this.headersProdPost
+            headers: this.headersStagePost
         });
         const payload = 'github_url=' + githubUrl;
         return this.http.post(url, payload, options)
