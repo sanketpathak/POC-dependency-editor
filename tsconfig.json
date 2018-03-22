@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "es2015",
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "stripInternal": true,
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
@@ -20,7 +20,8 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
-      "@angular/common": ["node_modules/@angular/common"],
+      "@angular/*": ["node_modules/@angular/*"],
+      "ngx-modal": ["node_modules/ngx-modal/*"],
       "rxjs/*": ["node_modules/rxjs/*"]
     },
     "lib": [
