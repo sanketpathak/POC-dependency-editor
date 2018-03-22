@@ -58,10 +58,14 @@ export class DependencyEditorService {
     ) {
     // pass your prod token here to run in local
     const prodToken = '';
+    if (this.auth.getToken()) {
+        this.headersStage.set('Authorization', 'Bearer ' + this.auth.getToken());
+        this.headersStagePost.set('Authorization', 'Bearer ' + this.auth.getToken());
+    }
     this.headersProd.set('Authorization', 'Bearer ' + prodToken);
     this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
     // pass your stage token here to run in local
-    this.headersStage.set('Authorization', 'Bearer ');
+    // this.headersStage.set('Authorization', 'Bearer ');
     }
 
     postStackAnalyses(githubUrl: string) {

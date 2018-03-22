@@ -37,6 +37,7 @@ import {
 
 export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   @Input() dependencies: Array < ComponentInformationModel > ;
+  @Input() dependencyAdded: Array < DependencySnapshotItem > ;
   @Input() existDependencies: Array < DependencySnapshotItem > ;
   @ViewChild('PackagePreview') modalPackagePreview: any;
 
@@ -121,7 +122,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     payload['_resolved'] = category;
     payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;
     payload['request_id'] = DependencySnapshot.REQUEST_ID;
-    console.log('payload of add', payload);
     return payload;
   }
 

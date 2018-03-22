@@ -8,7 +8,7 @@
     <div class="row" style="margin-left:20px;">
       <div class="col-sm-7">
         <div class="row" style="margin-top:20px;">
-          <app-add-dependency [dependencies]="dependenciesAdded" [existDependencies]="dependencies"></app-add-dependency>
+          <app-add-dependency [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
           <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
       </div>

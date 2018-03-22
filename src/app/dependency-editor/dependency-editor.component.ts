@@ -55,6 +55,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public allLicenses: Array<any> = [];
   public cveData: CveResponseModel;
   public dependenciesAdded: Array < ComponentInformationModel > = [];
+  public dependencyAdded: Array < DependencySnapshotItem > = [];
   public packageLength = 0;
   public addPackageLength = 0;
   public listView = 'View Dependency List';
@@ -113,6 +114,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     this.reset();
     this.service.updateDependencyAddedSnapshot(eventData);
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
+    this.dependencyAdded = DependencySnapshot.DEP_SNAPSHOT_ADDED;
     const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
     this.getCveData(payload);
@@ -170,7 +172,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private setLicenseData(result: ResultInformationModel) {
-    this.licenseData = result.user_stack_info.license_analysis;console.log(result.user_stack_info);
+    this.licenseData = result.user_stack_info.license_analysis;
     this.allLicenses = result.user_stack_info.distinct_licenses;
   }
 
@@ -222,7 +224,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     this.service.getDependencyData(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
-        this.allLicenses = response.distinct_licenses;console.log(this.lisData,this.allLicenses);
+        this.allLicenses = response.distinct_licenses;
       });
   }
 
@@ -250,7 +252,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         this.setCompanions(response.result[0]);
         this.setAlternate(response.result[0]);
         if (this.isDepSelectedFromSearch) {
-          DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
+          // DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
           this.isDepSelectedFromSearch = false;
         }
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);

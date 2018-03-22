@@ -100,11 +100,11 @@ export class InsightComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.added.length; i++) {
       if ( this.added[i].type === true) {
         this.companionAdded.emit(this.objToEmit[i]);
-        this.noOfTags = 0;
-        this.added = [];
-        this.objToEmit = [];
       }
     }
+    this.noOfTags = 0;
+    this.added = [];
+    this.objToEmit = [];
   }
 
   public removeDependency(dependency: ComponentInformationModel) {

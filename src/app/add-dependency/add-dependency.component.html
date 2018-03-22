@@ -64,8 +64,13 @@
           </section>
         </div> -->
         <section style="padding: 5px 17px;">
-          <div class="card-pf-body" *ngIf="dependencies?.length" style="/*overflow-y: scroll;*/height: 289px;">
+          <div class="card-pf-body" *ngIf="dependencies?.length || dependencyAdded?.length" style="/*overflow-y: scroll;*/height: 289px;">
             <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
+              <button class="btn btn-default close" (click)="removeDependency(dependency)">
+                <span class="pficon pficon-close"></span>
+              </button>
+            </span>
+            <span *ngFor="let dependency of dependencyAdded" class="package-chip a">{{dependency.package}}
               <button class="btn btn-default close" (click)="removeDependency(dependency)">
                 <span class="pficon pficon-close"></span>
               </button>
