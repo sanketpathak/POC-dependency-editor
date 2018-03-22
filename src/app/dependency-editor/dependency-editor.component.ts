@@ -79,7 +79,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     // this.getCveUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-cve-analyses/';
     // this.getCveUrl = 'https://gist.githubusercontent.com/sanketpathak/c0a7ccb4f6420fb783754f9454c347a0/raw/3d661bf010d6fe8b7adc23c305097334c10f510e/dependency%2520cve%2520analysis';
     // this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
-    this.getLicenseUrl = 'http://license-analysis.api.prod-preview.openshift.io';
+    this.getLicenseUrl = 'https://license-analysis.api.prod-preview.openshift.io/api/v1/license-recommender';
   }
 
     ngOnInit() {
@@ -170,7 +170,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private setLicenseData(result: ResultInformationModel) {
-    this.licenseData = result.user_stack_info.license_analysis;
+    this.licenseData = result.user_stack_info.license_analysis;console.log(result.user_stack_info);
     this.allLicenses = result.user_stack_info.distinct_licenses;
   }
 
@@ -222,7 +222,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     this.service.getDependencyData(this.getLicenseUrl, payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
-        this.allLicenses = response.packages;
+        this.allLicenses = response.distinct_licenses;console.log(this.lisData,this.allLicenses);
       });
   }
 

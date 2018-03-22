@@ -20,13 +20,6 @@ export class ApplicationServices {
 
   constructor(private http: Http) {}
 
-  private extractData(res: Response) {
-    const body = res.json() || {};
-    body['statusCode'] = res.status;
-    body['statusText'] = res.statusText;
-    return body;
-  }
-
   public intialConfig(ecosystem: string) {
     const url = 'https://forge.api.openshift.io/api/launchpad/commands/fabric8-new-project/validate';
     const body: any = {};
@@ -34,6 +27,13 @@ export class ApplicationServices {
       .get(url, body)
       .map(this.extractData)
       .catch(this.handleError);
+  }
+
+  private extractData(res: Response) {
+    const body = res.json() || {};
+    body['statusCode'] = res.status;
+    body['statusText'] = res.statusText;
+    return body;
   }
 
   private handleError(error: Response | any) {
@@ -52,5 +52,4 @@ export class ApplicationServices {
     }
     return Observable.throw(body);
   }
-// tslint:disable-next-line:eofline
 }

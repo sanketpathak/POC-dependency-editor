@@ -101,6 +101,26 @@ export class SentimentModel {
     _representative_licenses: String;
 }
 
+export class LicenseResponseModel {
+    _message: String;
+    conflict_licenses: Array<ConflictPackageModel> = [];
+    outlier_licenses: Array<ReallyUnknownLicenseModel> = [];
+    status: String;
+    synonyms: Array<any>; // SynonymLicenseModel;
+    unknown_licenses: UnknownLicensesModel;
+}
+
+export class CategoryDataModel {
+    count: number;
+    package_name: Array<CategoryResponseResultModel>;
+}
+
+export class CategoryResponseResultModel {
+    name: string;
+    version: string;
+    category: string;
+}
+
 export class LicenseModel {
     license_analysis: LicenseResponseModel;
     licenses: Array<String>;
@@ -108,15 +128,26 @@ export class LicenseModel {
     version: String;
 }
 
+export class LicensePackageModel {
+    compatible_packages: Array<String>;
+    conflict_packages: Array<String>;
+    unknown_license_packages: Array<String>;
+}
+
+export class LicenseFilterModel {
+    alternate_packages: LicensePackageModel;
+    companion_packages: LicensePackageModel;
+}
+
 export class LicenseStackAnalysisModel {
     conflict_packages: Array<ConflictPackageModel> = [];
-    message: String;
+    distinct_licenses: Array<string>;
+    license_filter: LicenseFilterModel;
     outlier_packages: Array<ReallyUnknownLicenseModel> = [];
     packages: Array<LicenseModel>;
     stack_license: string;
     status: string;
-    statusCode: number;
-    statusText: String;
+    unknown_licenses: UnknownLicensesModel;
 }
 
 export class StackLicenseAnalysisModel {
@@ -131,6 +162,7 @@ export class StackLicenseAnalysisModel {
     unknown_dependencies: Array<any>;
     unknown_dependencies_count: number;
 }
+
 export class UserStackInfoModel {
     dependencies: Array<any>;
     analyzed_dependencies_count: number;
@@ -221,27 +253,6 @@ export class UnknownLicensesModel {
 export class SynonymLicenseModel {
     license1: string;
     license2: string;
-}
-
-export class LicenseResponseModel {
-    conflict_licenses: Array<ConflictPackageModel> = [];
-    outlier_licenses: Array<ReallyUnknownLicenseModel> = [];
-    status: String;
-    synonyms: Array<any>; // SynonymLicenseModel;
-    unknown_licenses: UnknownLicensesModel;
-    _message: String;
-    package_name: CategoryDataModel;
-}
-
-export class CategoryDataModel {
-    count: number;
-    package_name: Array<CategoryResponseResultModel>;
-}
-
-export class CategoryResponseResultModel {
-    name: string;
-    version: string;
-    category: string;
 }
 
 export class EventDataModel {
