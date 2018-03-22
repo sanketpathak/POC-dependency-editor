@@ -82,12 +82,10 @@
     "ngx-bootstrap": "^1.8.0",
     "ngx-fabric8-wit": "^6.20.0",
     "ngx-login-client": "^1.2.0",
-    "ngx-modal": "0.0.29",
+    "ngx-modal": "^0.0.29",
     "rxjs": "^5.0.1"
   },
-  "peerDependencies": {
-    "ngx-modal": "0.0.29"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@angular/compiler": "4.4.6",
     "@angular/compiler-cli": "4.4.6",

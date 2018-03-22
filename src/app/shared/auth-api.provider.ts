@@ -5,7 +5,7 @@ let authApiUrlFactory = (api: ApiLocatorService) => {
   return api.witApiUrl;
 };
 
-export let authApiUrlProvider: any = {
+export let authApiUrlProvider = {
   provide: AUTH_API_URL,
   useFactory: authApiUrlFactory,
   deps: [ApiLocatorService]

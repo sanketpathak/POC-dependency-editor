@@ -5,7 +5,7 @@ let realmFactory = (api: ApiLocatorService) => {
   return api.realm;
 };
 
-export let realmProvider: any = {
+export let realmProvider = {
   provide: REALM,
   useFactory: realmFactory,
   deps: [ApiLocatorService]
