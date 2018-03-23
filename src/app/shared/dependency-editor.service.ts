@@ -148,7 +148,7 @@ export class DependencyEditorService {
         const options = new RequestOptions({
             headers: this.headersStage
         });
-        return this.http.get(url , options)
+        return this.http.get(url)// , options)
             .map(this.extractData)
             .map((data) => {
                 return data;

@@ -76,7 +76,7 @@ export class InsightComponent implements OnInit, OnChanges {
     for (let i = 0; i < this.added.length; i++) {
       if (this.added[i].type === true) {
         this.objToEmit[i] = {
-          depFull: eventData,
+          depFull: this.added[i].name,
           depSnapshot: null,
           action: 'add'
         };

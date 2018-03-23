@@ -113,8 +113,12 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public callDepServices(eventData: EventDataModel) {
     this.reset();
     this.service.updateDependencyAddedSnapshot(eventData);
+    if (this.isDepSelectedFromSearch) {
+      DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
+      this.isDepSelectedFromSearch = false;
+    }
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
-    this.dependencyAdded = DependencySnapshot.DEP_SNAPSHOT_ADDED;
+    // this.dependencyAdded = DependencySnapshot.DEP_SNAPSHOT_ADDED;
     const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
     this.getCveData(payload);
@@ -185,15 +189,14 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private postStackAnalyses(githubUrl: string) {
     this.service.postStackAnalyses(githubUrl)
     .subscribe((data: any) => {
-        });
+        // });
       let subs = null;
       let rec = null;
       const interval = 5000;
       let alive: boolean = true;
       let counter: number = 0;
-      let id = '30051b1328fd4377b707e3271a19ae1f';
       let observable: any = this.service
-      .getStackAnalyses(this.stackUrl + id  );
+      .getStackAnalyses(this.stackUrl + data['id']);
       TimerObservable.create(0, interval)
       .takeWhile(() => alive)
       .subscribe(() => {
@@ -217,7 +220,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         alive = false;
     }
     });
-    // });
+    });
   }
 
   private getLicenseData(payload: any) {
@@ -251,10 +254,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         rec = response;
         this.setCompanions(response.result[0]);
         this.setAlternate(response.result[0]);
-        if (this.isDepSelectedFromSearch) {
-          // DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
-          this.isDepSelectedFromSearch = false;
-        }
+        // if (this.isDepSelectedFromSearch) {
+        //   // DependencySnapshot.DEP_FULL_ADDED.push( < ComponentInformationModel > this.depToAdd);
+        //   this.isDepSelectedFromSearch = false;
+        // }
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
         this.checkIfSecurityPresent(response.result[0].user_stack_info.analyzed_dependencies);
       });
