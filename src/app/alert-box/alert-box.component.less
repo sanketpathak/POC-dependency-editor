@@ -20,9 +20,34 @@
         .alert-title {
             font-family: OpenSans-Semibold;
             font-size: 16px;
+            color:#000;
             // color: #fff;
-            .alert_symbol:before {
+            #symbol {
                 padding-right: 4px;
+            }
+            .issueSymbol:before {
+                padding-right: 4px;
+            }
+            .if-security {
+                background:#9c9c9c;
+                border-radius:1px;
+                width:36px;
+                height:17px;
+                padding:3px;
+                text-align:center;
+                #security-status {
+                    font-family:OpenSans-Bold;
+                    font-size:12px;
+                    text-align:center;
+                    color:#fff;
+                }
+            }
+            .if-license {
+                font-weight: bold;
+                padding-right:4px;
+            }
+            .licenseType {
+                font-size: 12px;
             }
         }
     }

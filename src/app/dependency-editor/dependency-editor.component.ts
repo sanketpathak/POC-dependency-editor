@@ -105,7 +105,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['githubUrl']['currentValue']) {
+    if (changes['githubUrl'] && changes['githubUrl']['currentValue']) {
       this.postStackAnalyses(this.githubUrl);
     }
   }

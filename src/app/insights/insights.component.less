@@ -1,37 +1,79 @@
-.panel-group .panel-default {
-    height: 335px;
-    .panel-body .card-block .card-body {
-        height: 314px;
+.cards-pf {
+    box-shadow:0 1px 2px 0 rgba(0, 0, 0, .30);
+    background:#fff;
+    height: 530px;
+
+    .insights {
+        font-size: 16px;
+        padding: 15px;
+        position: relative;
+        margin: 0;
+        background:#fff; // #f5f5f5;
+        // border-bottom: 1px solid #e6e6e6;
+        .title {
+            margin-left: 5px;
+        }
+        .count {
+            margin-left:4px;
+            background:#9c9c9c;
+            border-radius:1px;
+            width:36px;
+            height:17px;
+            padding:3px;
+            text-align:center;
+            .count-number {
+                font-size:12px;
+                color:#fff;
+            }
+        }
+        .add {
+            float:right;
+            .added {
+                background:#fafafa;
+                border:1px solid #d1d1d1;
+                border-radius:1px;
+                width:62px;
+                height:24px;
+                font-size:12px;
+                color:#8b8d8f;
+                text-align:left;
+            }
+        }
     }
-}
 
-.added {
-    background:#fafafa;
-    border:1px solid #d1d1d1;
-    border-radius:1px;
-    width:62px;
-    height:24px;
-    font-size:12px;
-    color:#8b8d8f;
-    text-align:left;
-}
+    .card-pf-body {
+        margin-top: 0px;
+    }
 
-.h {
-    margin: 4px;
-    background: #9c9c9c;
-    width: 95px;
-    height: 28px;
-}
+    .h {
+        margin: 4px;
+        background: #9c9c9c;
+        width: 95px;
+        height: 28px;
+    }
 
-.pficon-warning-triangle-o:before {
-    color: #fff;
-}
+    .pficon-warning-triangle-o:before {
+        color: #fff;
+    }
 
-.pficon-ok:before {
-    color: #fff;
-}
+    .pficon-ok:before {
+        color: #fff;
+    }
 
-.card-pf-aggregate-status-notifications {
-    text-align: center;
-    margin-top: 80px;
+    .card-pf-aggregate-status-notifications {
+        text-align: center;
+        margin-top: 80px;
+        .card-pf-aggregate-status-notification {
+            display:inline-grid;
+            .pficon-info {
+                font-family:PatternFlyIcons-webfont;
+                font-size:58px;
+                color:#9c9c9c;
+                text-align:center;
+            }
+            .insight-info {
+                padding-top:17px;
+            }
+        }
+    }
 }

@@ -1,13 +1,13 @@
-<div class="container-default" style="background:#ededed;padding: 0 20px;max-width: 1000px">
-  <div class="row" style="width: 100%;">
-    <div style="margin-left:40px;">
-      <span style="font-size:24px;">Dependency Editor </span>
-      <button class="btn btn-default" style="background-image:linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);border:1px solid #00659c;box-shadow:0 2px 3px 0 rgba(3,3,3,0.10);border-radius:1px;width:78px;color:#fff;">Skip</button>
+<div class="container-default" >
+  <div class="row row-main" >
+    <div class="row-element" >
+      <span class="title" >Dependency Editor </span>
+      <button class="btn btn-default skip" >Skip</button>
       <p>Some description of dependency editor</p>
     </div>
-    <div class="row" style="margin-left:20px;">
+    <div class="row row-defination" >
       <div class="col-sm-7">
-        <div class="row" style="margin-top:20px;">
+        <div class="row row-inside" >
           <app-add-dependency [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
           <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
@@ -16,7 +16,7 @@
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData" [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
       </div>
     </div>
-    <div style="height:73px;">
+    <div class="bottom" >
       <button class="btn btn-info btn-lg continue">Continue</button>
       <button class="btn btn-info btn-lg cancel">Cancel</button>
     </div>

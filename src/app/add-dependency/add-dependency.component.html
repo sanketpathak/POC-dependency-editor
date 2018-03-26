@@ -1,21 +1,21 @@
-<div class="cards-pf" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);background:#fff;height: 400px;">
+<div class="cards-pf" >
   <div class="row">
     <div class="col-sm-12">
-      <p style="font-size: 16px;padding: 15px; background: #f5f5f5; margin: 0">
+      <p id="heading" >
         <span>Dependencies</span>
-        <span style="margin-left:4px;background:#9c9c9c;border-radius:1px;width:36px;height:17px;padding:3px;text-align:center;" *ngIf="dependencies">
-            <span style="font-size:12px;color:#ffffff;">{{ existDependencies?.length+dependencies?.length }}</span>
+        <span class="number"  *ngIf="dependencies">
+            <span class="dep-count" >{{ existDependencies?.length+dependencies?.length }}</span>
         </span>
       </p>
     </div>
     <div class="col-sm-12">
-      <div class="card-pf" style="width: 100%;margin-left: 0px;border-top: none;padding: 0;margin-bottom: 0;box-shadow: none">
+      <div class="card-pf dep-card" >
         <h2 class="card-pf-title search-box">
-          <span style="font-size:12px;">You can add dependencies either by searching or by browsing the list of dependencies</span>
-          <div class="row" style="padding-top:3px;margin-left: auto;display: flex;">
+          <span id="search-text" >You can add dependencies either by searching or by browsing the list of dependencies</span>
+          <div class="row" >
             <div id="date-2" class="input-group date col-sm-8">
-              <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()">
-              <span class="input-group-addon" (click)="getDependencies()" style="cursor: pointer">
+              <input type="text" class="form-control bootstrap-datepicker" [(ngModel)]="dependencySearchString" (change)="listenInputSearch()" placeholder="Web, Devtools, SQL...">
+              <span class="input-group-addon" (click)="getDependencies()" >
                 <span class="pficon-search"></span>
               </span>
             </div>
@@ -25,7 +25,7 @@
             </div>
             <ul class="dropdown-menu" *ngIf="dependencySearchResult?.length">
               <li *ngFor="let dep of dependencySearchResult">
-                <a (click)="addDependency(dep)">
+                <a (click)="addSearchDependency(dep)">
                   <div>
                     <b>{{ dep.name }}</b>
                   </div>
@@ -33,10 +33,10 @@
                 </a>
               </li>
             </ul>
-            <div class="col-sm-4" (click)="showPackageModal($event)" style="font-size:12px;color:#049cd4;cursor:pointer;">Browse All Dependencies</div>
+            <div class="col-sm-5 browse" (click)="showPackageModal($event)" >Browse All Dependencies</div>
           </div>
         </h2>
-        <section style="padding: 5px 17px;">
+        <section>
           <div *ngIf="existDependencies?.length">
             <span *ngFor="let dependency of existDependencies" class="package-chip">{{dependency.package}}</span>
           </div>
@@ -63,8 +63,8 @@
             </div>
           </section>
         </div> -->
-        <section style="padding: 5px 17px;">
-          <div class="card-pf-body" *ngIf="dependencies?.length || dependencyAdded?.length" style="/*overflow-y: scroll;*/height: 289px;">
+        <section >
+          <div class="card-pf-body dep-area" *ngIf="dependencies?.length || dependencyAdded?.length" >
             <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
               <button class="btn btn-default close" (click)="removeDependency(dependency)">
                 <span class="pficon pficon-close"></span>
@@ -87,16 +87,16 @@
   </div>
 </div>
 
-<modal #PackagePreview modalClass="modal-lg modal-fullscreen modal-width-class" title="Choose Dependency" role="dialog" style="margin-top: 45px;">
+<modal #PackagePreview modalClass="modal-lg modal-fullscreen modal-width-class" title="Choose Dependency" role="dialog" style="">
   <modal-content class="contents">
     <div class="modal-body">
       <div class="search-dependencies">
-        <input class="search-box" type="text" placeholder="Search for Dependencies..">
-        <span class="fa fa-search search-icon" aria-hidden="true" style="background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbbbbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
+        <input id="search-dep" class="search-box search-dep" type="text" placeholder="Search for Dependencies.." style="width: 94%;height: 30px;">
+        <span id="dep-search-icon" class="fa fa-search search-icon" aria-hidden="true" style="position: relative;color: gray;font-size: 18px;z-index: 2;margin-left: -4px;background-image:linear-gradient(-180deg, #fafafa 0%, #ededed 100%);border:1px solid #bbb;width:36px;height:30px;left: 0px;top: 0px;padding-left: 8px;padding-top: 4px;"></span>
       </div>
       <div class="main">
-        <div class="toast-pf alert alert-success alert-dismissable" *ngIf="toast" style="top: -80px;right: -290px;position: absolute;z-index: 9999;">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="background: none;color: black;">
+        <div class="toast-pf alert alert-success alert-dismissable" *ngIf="toast" style="">
+          <button type="button" class="close alert-close" data-dismiss="alert" aria-hidden="true" style="">
             <span class="pficon pficon-close" (click)="toast=!toast"></span>
           </button>
           <span class="pficon pficon-ok"></span>
@@ -119,8 +119,8 @@
                       </td>
                     </tr>
                   </table> -->
-          <div class="list-group list-view-pf list-view-pf-view" style="margin-top:0px">
-            <div class="list-group-item" style="background-color: #f5f5f5;height: 64px">
+          <div class="list-group list-view-pf list-view-pf-view tag-list" style="margin-top:0px">
+            <div class="list-group-item tag-list-item" style="">
               <div class="list-view-pf-actions">
                 <label class="mix-label" style="float: right;">{{tagZero}}</label>
               </div>
@@ -137,7 +137,7 @@
                 </div>
               </div>
             </div>
-            <div class="list-group-item" *ngFor="let tags of categoryResult" style="background-color: #fafafa;">
+            <div class="list-group-item tag-list-item-n" *ngFor="let tags of categoryResult" style="background-color: #fafafa;">
               <div class="list-view-pf-actions">
                 <label class="mix-label" style="float: right;">{{tags.count}}</label>
               </div>
@@ -208,7 +208,7 @@
                         </div>
                       </div>
                       <div class="list-view-pf-additional-info">
-                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10" style="">
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10" >
                           <!-- <div class="list-pf-item">
                               <label></label>
                             </div> -->

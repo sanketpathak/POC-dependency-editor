@@ -141,7 +141,7 @@ export class LicenseComponent implements OnInit, OnChanges {
     };
     this.charts['options'] = {
       donut: {
-        title: ' Licenses',
+        title:  liData.length + ' Licenses',
         width: 10,
         label: {
            show: false

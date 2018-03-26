@@ -209,6 +209,13 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  addSearchDependency(depItem: DependencySearchItem) {
+    this.dependencySearchResult = [];
+    // this.categorySearchResult = [];
+    this.dependencySearchString = '';
+    this.service.dependencySelected.emit(depItem);
+  }
+
   ngOnDestroy() {
     this.dependencies = [];
     this.dependencySearchResult = [];

@@ -1,13 +1,13 @@
-<div class="cards-pf" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.30);background:#fff;height: 530px;">
+<div class="cards-pf" >
   <div class="row">
     <div class="col-sm-12">
-      <p style="font-size: 16px;padding: 15px;position: relative;/*background: #f5f5f5;*/margin: 0;border-bottom: 1px solid #e6e6e6;">
+      <p class="insights" >
         <span class="pficon-zone"></span>
-        <span style="margin-left: 5px;">Insights</span>
-        <span style="margin-left:4px;background:#9c9c9c;border-radius:1px;width:36px;height:17px;padding:3px;text-align:center;" *ngIf="companions">
-            <span style="font-size:12px;color:#ffffff;">{{companions?.length + alternate?.length}}</span>
+        <span class="title" >Insights</span>
+        <span class="count"  *ngIf="companions">
+            <span class="count-number" >{{companions?.length + alternate?.length}}</span>
         </span>
-        <span style="float:right;">
+        <span class="add" >
           <button class="added" (click)="addCompanion()" [ngStyle]="{'border': noOfTags > 0 ? '1px solid #00659c' : '1px solid #d1d1d1' , 'background-image': noOfTags > 0 ? 'linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%)' : 'none','color': noOfTags > 0 ? '#fff' : '#8b8d8f'}">
             Add ({{noOfTags}})</button>
         </span>
@@ -33,9 +33,9 @@
           <div class="pre-loader-spinner spinner spinner-lg"></div>
         </div>
         <p class="card-pf-aggregate-status-notifications" *ngIf="companions?.length === 0 && alternate?.length === 0">
-          <span class="card-pf-aggregate-status-notification" style="display:inline-grid;">
-            <span class="pficon pficon-info" style="font-family:PatternFlyIcons-webfont;font-size:58px;color:#9c9c9c;text-align:center;"></span>
-            <span style="padding-top:17px;">No Insights Found</span>
+          <span class="card-pf-aggregate-status-notification" >
+            <span class="pficon pficon-info" ></span>
+            <span class="insight-info" >No Insights Found</span>
           </span>
         </p>
       </div>
