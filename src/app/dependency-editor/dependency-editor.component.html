@@ -1,18 +1,18 @@
 <div class="container-default">
   <div class="row row-main">
-    <div class="row-element">
-      <span class="title">Dependency Editor </span>
+    <div class="row-element col-xs-12">
+      <h1 class="title">Select Dependencies</h1>
       <button class="btn btn-default skip">Skip</button>
       <p>Some description of dependency editor</p>
     </div>
-    <div class="row row-defination">
-      <div class="col-sm-7">
+    <div class="row-defination col-xs-12">
+      <div class="col-xs-7 dependencies-container">
         <div class="row row-inside">
           <app-add-dependency [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
           <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
       </div>
-      <div class="col-sm-5">
+      <div class="col-xs-5 padding-right-10 app-summary-container">
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData"
           [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
       </div>

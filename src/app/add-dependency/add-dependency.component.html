@@ -1,14 +1,14 @@
 <div class="cards-pf">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 fit">
       <p id="heading">
-        <span>Dependencies</span>
+        <span id="head-title">Dependencies</span>
         <span class="number" *ngIf="dependencies">
           <span class="dep-count">{{ existDependencies?.length+dependencies?.length }}</span>
         </span>
       </p>
     </div>
-    <div class="col-sm-12 added-dep">
+    <div class="col-sm-12 added-dep fit">
       <div class="card-pf dep-card">
         <h2 class="card-pf-title search-box">
           <span id="search-text">You can add dependencies either by searching or by browsing the list of dependencies</span>

@@ -1,11 +1,10 @@
 .container-default {
     background: #ededed;
-    padding: 0 20px;
-    max-width: 1000px;
+    .padding-right-10 {
+        padding-right: 10px;
+    }
     .row-main {
-        width: 100%;
         .row-element {
-            margin-left: 40px;
             .title {
                 font-size: 24px;
             }
@@ -19,13 +18,26 @@
             }
         }
         .row-defination {
-            margin-left: 20px;
+            display: flex;
+            flex-direction: row;
+            .dependencies-container {
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .3);
+                background: #fff;
+                margin-bottom: 18px;
+                flex: 2;
+            }
+            .app-summary-container {
+                flex: 1;
+            }
+            .app-summary-container, .dependencies-container {
+                align-items: stretch;
+            }
             .row-inside {
                 margin-top: 20px;
             }
         }
         .bottom {
-            height: 73px;
+            margin-bottom: 30px;
             .continue {
                 background-image: linear-gradient(-180deg, #39a5dc 0%, #0088ce 100%);
                 color: #fff;

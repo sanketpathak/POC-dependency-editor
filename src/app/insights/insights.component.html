@@ -1,6 +1,6 @@
-<div class="cards-pf">
+<div class="cards-pf start">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 fit">
       <p class="insights">
         <span class="pficon-zone"></span>
         <span class="title">Insights</span>
@@ -13,7 +13,7 @@
         </span>
       </p>
     </div>
-    <div class="col-sm-12">
+    <div class="col-sm-12 fit">
       <div class="card-pf-body" *ngIf="companions?.length">
         <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion"
           (companionRemoved)="removeCompanion($event)" (tagAdded)="addTag($event)" (companionReleased)="releaseCompanion($event)"></app-list-element>

@@ -1,6 +1,6 @@
-<div id="list-start" class="list-group list-view-pf list-view-pf-view" [ngStyle]="{'border': isOpen === 'true' ? '1px solid #bbbbbb' : '15px'}">
+<div id="list-start" class="list-group list-view-pf list-view-pf-view" [ngStyle]="{'border': isOpen === true ? '1px solid #bbbbbb' : '15px'}">
   <div class="list-group-item list-group-item-action list-group-item-primary">
-    <div class="list-group-item-header" [ngStyle]="{'background': isOpen === 'true' ? '#def3ff' : '#fff'}">
+    <div class="list-group-item-header" [ngStyle]="{'background': isOpen === true ? '#def3ff' : '#fff'}">
       <div class="check">
         <div class="list-view-pf-checkbox" *ngIf="fromAddDependency !== 'true'">
           <input #dependency.name type="checkbox" class="check-dep" [ngStyle]="{'top': fromAddDependency === 'true' ? '29px' : '30px'}"
@@ -45,8 +45,8 @@
         {{dependency.reason}}
       </div>
     </div>
-    <div class="list-group-item-container container-fluid " *ngIf="isOpen">
-      <div class="row-table">
+    <div class="list-group-item-container container-fluid container-expand" *ngIf="isOpen">
+      <div class="row-table col-sm-11 col-sm-offset-1">
         <table>
           <thead>
             <tr>
