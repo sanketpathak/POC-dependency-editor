@@ -69,7 +69,7 @@
   <modal-content class="contents">
     <div class="modal-body">
       <div class="search-dependencies">
-        <input id="search-dep" class="search-box search-dep" type="text" placeholder="Search for Dependencies..">
+        <input  id="search-dep" class="search-box" type="text" [(ngModel)]="queryString" placeholder="Search for Dependencies..">
         <span id="dep-search-icon" class="fa fa-search search-icon" aria-hidden="true"></span>
       </div>
       <div class="main">
@@ -123,16 +123,16 @@
               </span>
             </div>
             <div class="display-dependencies">
-              <div class="list-group list-view-pf" *ngFor="let master of masterTags; let i = index;">
-                <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" [ngStyle]="{ 'background-color' : master.type ? '#def3ff' : '#fff'}">
+              <div class="list-group list-view-pf" *ngFor="let master of masterTags | FilterPipe: queryString ; let i = index;">
+                <div class="list-group-item list-view-pf-stacked list-view-pf-top-align" [ngStyle]="{ 'background-color' : master.type ? '#def3ff' : '#fff','background-color' : master.grouped ? '#ededed' : '#fff' }">
                   <div class="check">
-                    <div class="list-view-pf-checkbox" *ngIf="!master.grouped">
-                      <input type="checkbox check-it" [checked]="master.type" (change)="changeTagname(master,master.type)">
+                    <div class="list-view-pf-checkbox">
+                      <input id="check-it" type="checkbox" [disabled]="master.grouped" [checked]="master.type" (change)="changeTagname(master,master.type)">
                     </div>
                   </div>
                   <div class="list-view-pf-main-info">
                     <div class="list-view-pf-body">
-                      <div class="list-view-pf-description">
+                      <div class="col-sm-5 list-view-pf-description">
                         <div class="list-group-item-heading">
                           <label class="control control--checkbox">{{master.name}}
                           </label>
@@ -145,20 +145,20 @@
                           </div>
                         </div>
                       </div>
-                      <div class="list-view-pf-additional-info">
-                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-10">
-                          <div class="col-xs-8 master-version">
+                      <div class="col-sm-7 list-view-pf-additional-info">
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-sm-8">
+                          <div class="col-sm-6 master-version">
                             <label (click)="false" class="dropbtn drop-toggle">
                               {{master.version}}
                               <span id="version-icon" class="fa fa-angle-down" style="margin-left: 6px;">
                               </span>
                             </label>
                           </div>
-                          <div class="grouped col-xs-4" *ngIf="master.grouped">
+                          <div class="grouped col-sm-4" *ngIf="master.grouped">
                             Added
                           </div>
                         </div>
-                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-2">
+                        <div class="list-view-pf-additional-info-item list-view-pf-additional-info-item-stacked col-xs-4 block">
                           <strong *ngIf="master?.security?.length">
                             <span class="pficon-warning-triangle-o"></span>
                           </strong>

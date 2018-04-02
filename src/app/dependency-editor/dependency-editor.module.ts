@@ -4,7 +4,7 @@ import { AccordionModule } from 'ngx-bootstrap';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { Broadcaster } from 'ngx-base';
-import { AuthenticationService } from 'ngx-login-client';
+import { TokenProvider } from '../shared/token-provider';
 import { ModalModule } from 'ngx-modal';
 import { witApiUrlProvider } from '../shared/wit-api.provider';
 import { ApiLocatorService } from '../shared/api-locator.service';
@@ -41,15 +41,7 @@ import { MockAuthenticationService } from '../shared/mock-auth.service';
     DependencyEditorComponent
 ],
  providers: [
-    Broadcaster,
-    ApiLocatorService,
-    witApiUrlProvider,
-    authApiUrlProvider,
-    ssoApiUrlProvider,
-    realmProvider,
-    {
-      provide: AuthenticationService, useClass: MockAuthenticationService
-    },
+    { provide: TokenProvider, useClass: MockAuthenticationService },
     DependencyEditorService
  ]
 })

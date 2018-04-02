@@ -71,7 +71,7 @@
         </table>
         <p>
           <span class="package-licence">Licenses:</span>
-          <span *ngFor="let license of dependency.licenses">{{license}}, </span>
+          <span *ngFor="let license of dependency.licenses;let i= index;"><span *ngIf="(i+1) !== dependency.licenses.length" >{{license}}, </span><span *ngIf="(i+1) === dependency.licenses.length" >{{license}}.</span></span>
         </p>
       </div>
     </div>
