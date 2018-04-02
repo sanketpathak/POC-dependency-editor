@@ -28,6 +28,7 @@ import {
 import {
   DependencySnapshot
 } from '../utils/dependency-snapshot';
+import { FilterPipe } from './add-dependency.pipe';
 
 @Component({
   selector: 'app-add-dependency',

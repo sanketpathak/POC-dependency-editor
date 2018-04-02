@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-modal';
 
+import { FilterPipe } from './add-dependency.pipe';
 import { AddDependencyComponent } from './add-dependency.component';
 import { ListElementModule } from '../list-element/list-element.module';
 
@@ -19,7 +20,7 @@ import { ListElementModule } from '../list-element/list-element.module';
     ListElementModule
 ],
  declarations: [
-    AddDependencyComponent
+    AddDependencyComponent, FilterPipe
 ],
  exports: [
     AddDependencyComponent
