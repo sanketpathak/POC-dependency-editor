@@ -11,8 +11,8 @@ import {
     RequestOptions
 } from '@angular/http';
 import {
-    AuthenticationService
-} from 'ngx-login-client';
+    TokenProvider
+} from '../shared/token-provider';
 import {
     Observable
 } from 'rxjs/Observable';
@@ -34,126 +34,71 @@ import {
 
 @Injectable()
 export class DependencyEditorService {
-    @Output() dependencySelected = new EventEmitter < DependencySearchItem > ();
-    @Output() dependencyRemoved = new EventEmitter < EventDataModel > ();
-
-    public STACK_API_TOKEN;
-    public STACK_API_TOKEN_PROD;
-    private headersProd: Headers = new Headers({
-        'Content-Type': 'application/json'
-    });
-    private headersProdPost: Headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    private headersStagePost: Headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    private headersStage: Headers = new Headers({
-        'Content-Type': 'application/json'
-    });
+    dependencyRemoved = new EventEmitter < EventDataModel > ();
 
     constructor(
         private http: Http,
-        private auth: AuthenticationService
-    ) {
-    // pass your prod token here to run in local
-    const prodToken = '';
-    if (this.auth.getToken()) {
-        this.headersStage.set('Authorization', 'Bearer ' + this.auth.getToken());
-        this.headersStagePost.set('Authorization', 'Bearer ' + this.auth.getToken());
-    }
-    this.headersProd.set('Authorization', 'Bearer ' + prodToken);
-    this.headersProdPost.set('Authorization', 'Bearer ' + prodToken);
-    // pass your stage token here to run in local
-    // this.headersStage.set('Authorization', 'Bearer ');
-    }
+        private tokenProvider: TokenProvider
+    ) {}
 
-    postStackAnalyses(githubUrl: string) {
+    postStackAnalyses(githubUrl: string): Observable<any> {
         // const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
         const url = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses';
-        const options = new RequestOptions({
-            // headers: this.headersProdPost
-            headers: this.headersStagePost
+        return this.options.flatMap((option) => {
+            const payload = 'github_url=' + githubUrl;
+            return this.http.post(url, payload, option)
+                .map(this.extractData)
+                .map((data) => {
+                    return data;
+                })
+                .catch(this.handleError);
         });
-        const payload = 'github_url=' + githubUrl;
-        return this.http.post(url, payload, options)
-            .map(this.extractData)
-            .map((data) => {
-                return data;
-            })
-            .catch(this.handleError);
     }
 
     getStackAnalyses(url: string): Observable < any > {
-        const options = new RequestOptions({
-            // headers: this.headersProd
-            headers: this.headersStage
+        return this.options.flatMap((option) => {
+            let stackReport: StackReportModel = null;
+            return this.http.get(url, option)
+                .map(this.extractData)
+                .map((data) => {
+                    stackReport = data;
+                    return data;
+                })
+                .catch(this.handleError);
         });
-        let stackReport: StackReportModel = null;
-        return this.http.get(url, options)
-            .map(this.extractData)
-            .map((data) => {
-                stackReport = data;
-                return data;
-            })
-            .catch(this.handleError);
     }
 
     getDependencies(url: string): Observable < any > {
-        const options = new RequestOptions({
-            headers: this.headersStage
+        return this.options.flatMap((option) => {
+            return this.http.get(url, option)
+                .map(this.extractData)
+                .map((data) => {
+                    return data;
+                })
+                .catch(this.handleError);
         });
-        return this.http.get(url, options)
-            .map(this.extractData)
-            .map((data) => {
-                return data;
-            })
-            .catch(this.handleError);
     }
 
     getDependencyData(url, payload): Observable < any > {
-        const options = new RequestOptions({
-            headers: this.headersStage
+        return this.options.flatMap((option) => {
+            return this.http.post(url, payload, option)
+                .map(this.extractData)
+                .map((data: StackReportModel | CveResponseModel | any) => {
+                    return data;
+                })
+                .catch(this.handleError);
         });
-        return this.http.post(url, payload, options)
-            .map(this.extractData)
-            .map((data: StackReportModel | CveResponseModel | any) => {
-                return data;
-            })
-            .catch(this.handleError);
-    }
-
-    getDependencyData2(url, payload): Observable < any > {
-    return this.http.get(url)
-        .map(this.extractData)
-        .map((data: StackReportModel | CveResponseModel | any) => {
-            return data;
-        })
-        .catch(this.handleError);
-    }
-
-    getDependencyData1(url, payload): Observable < any > {
-        const options = new RequestOptions({
-            headers: this.headersProd
-        });
-        return this.http.post(url, payload, options)
-            .map(this.extractData)
-            .map((data: StackReportModel | CveResponseModel | any) => {
-                return data;
-            })
-            .catch(this.handleError);
     }
 
     getCategories(url: string): Observable < any > {
-        const options = new RequestOptions({
-            headers: this.headersStage
+        return this.options.flatMap((option) => {
+            return this.http.get(url, option)
+                .map(this.extractData)
+                .map((data) => {
+                    return data;
+                })
+                .catch(this.handleError);
         });
-        return this.http.get(url)// , options)
-            .map(this.extractData)
-            .map((data) => {
-                return data;
-            })
-            .catch(this.handleError);
     }
 
     updateDependencyAddedSnapshot(depObj: EventDataModel) {
@@ -197,6 +142,16 @@ export class DependencyEditorService {
             action: 'remove'
         };
         this.dependencyRemoved.emit(objToEmit);
+    }
+
+    private get options(): Observable<RequestOptions> {
+        let headers = new Headers();
+        return Observable.fromPromise(this.tokenProvider.token.then((token) => {
+            headers.append('Authorization', 'Bearer ' + token);
+            return new RequestOptions({
+                headers: headers
+            });
+        }));
     }
 
     private extractData(res: Response) {
