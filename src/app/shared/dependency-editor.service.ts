@@ -34,7 +34,8 @@ import {
 
 @Injectable()
 export class DependencyEditorService {
-    dependencyRemoved = new EventEmitter < EventDataModel > ();
+    @Output() dependencySelected = new EventEmitter < DependencySearchItem > ();
+    @Output() dependencyRemoved = new EventEmitter < EventDataModel > ();
 
     constructor(
         private http: Http,
