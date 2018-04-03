@@ -44,8 +44,8 @@ export class LicenseComponent implements OnInit, OnChanges {
   public licenseAll: Array < string > = [];
   public licenseIssue = true;
   public licenseDt: Array < any > = [];
-  public licenseCount = {};
-  public liData = [];
+  public licenseCount: any = {};
+  public liData: Array<any> = [];
   public charts: any = {};
 
 
@@ -97,7 +97,7 @@ export class LicenseComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  public getShow(event) {
+  public getShow(event: any) {
     this.toHave = event.toShow;
   }
 
@@ -111,11 +111,11 @@ export class LicenseComponent implements OnInit, OnChanges {
                 d
               );
             });
-          this.licenseDt.forEach(item => {
+          this.licenseDt.forEach((item: string) => {
             this.licenseCount[item] = (this.licenseCount[item] || 0) + 1;
           });
           this.liData = [];
-          Object.keys(this.licenseCount).forEach(k => {
+          Object.keys(this.licenseCount).forEach((k: any) => {
             this.liData.push([
               k,
               Math.round(this.licenseCount[k] * 100 / this.licenseDt.length)
@@ -125,7 +125,7 @@ export class LicenseComponent implements OnInit, OnChanges {
     }   this.displayLicenses(this.liData);
   }
 
-  public displayLicenses(liData): void {
+  public displayLicenses(liData: any): void {
     if (this.stackStatus === 'Successful') {
       this.charts['data'] = {
       columns: liData,
