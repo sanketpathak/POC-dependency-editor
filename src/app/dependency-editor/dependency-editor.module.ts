@@ -12,6 +12,7 @@ import { authApiUrlProvider } from '../shared/auth-api.provider';
 import { ssoApiUrlProvider } from '../shared/sso-api.provider';
 import { realmProvider } from '../shared/realm-token.provider';
 import { AnalyticsUrlService } from '../shared/analytics-url.service';
+import { URLProvider } from '../shared/url-provider';
 
 import { DependencyEditorComponent } from './dependency-editor.component';
 import { InsightModule } from '../insights/insights.module';
@@ -42,7 +43,7 @@ import { MockAuthenticationService } from '../shared/mock-auth.service';
     DependencyEditorComponent
 ],
  providers: [
-    AnalyticsUrlService,
+    { provide: URLProvider, useClass: AnalyticsUrlService },
     { provide: TokenProvider, useClass: MockAuthenticationService },
     DependencyEditorService
  ]

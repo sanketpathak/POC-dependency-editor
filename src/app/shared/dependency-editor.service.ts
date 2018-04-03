@@ -13,7 +13,7 @@ import {
 import {
     TokenProvider
 } from './token-provider';
-import { AnalyticsUrlService } from './analytics-url.service';
+import { URLProvider } from './url-provider';
 import {
     Observable
 } from 'rxjs/Observable';
@@ -47,10 +47,10 @@ export class DependencyEditorService {
     constructor(
         private http: Http,
         private tokenProvider: TokenProvider,
-        private analyticsUrlService: AnalyticsUrlService
+        private urlProvider: URLProvider
     ) {
-        this.LICENSE_API_BASE = this.checkForTrailingSlashes(this.analyticsUrlService.getLicenseAPIUrl());
-        this.RECOMMENDER_API_BASE = this.checkForTrailingSlashes(this.analyticsUrlService.getRecommenderAPIUrl());
+        this.LICENSE_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getLicenseAPIUrl());
+        this.RECOMMENDER_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getRecommenderAPIUrl());
         this.URLS_HASH = {
             'CVE': this.RECOMMENDER_API_BASE + 'api/v1/depeditor-cve-analyses/',
             'LICENSE': this.LICENSE_API_BASE + 'api/v1/license-recommender',
