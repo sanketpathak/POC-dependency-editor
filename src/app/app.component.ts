@@ -7,5 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   githubUrl = 'https://github.com/sara-02/testquickstart1';
-  boosterInfo = {};
+  boosterInfo = { 'mission': {
+                      'id': 'rest-http'
+                    },
+                    'runtime': {
+                      'id': 'vert.x',
+                      'name': 'Eclipse Vert.x',
+                      'version': 'redhat'
+                    }
+                  };
 }

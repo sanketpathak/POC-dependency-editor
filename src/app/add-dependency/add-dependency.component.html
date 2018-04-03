@@ -1,4 +1,4 @@
-<div class="cards-pf">
+<div class="cards-pf addDependecyComponent">
   <div class="row">
     <div class="col-sm-12 fit">
       <p id="heading">
@@ -37,7 +37,7 @@
             <div class="col-sm-5 browse" (click)="showPackageModal($event)">Browse All Dependencies</div>
           </div>
         </h2>
-        <section>
+        <section class="fit dependency-strech">
           <div *ngIf="existDependencies?.length">
             <span *ngFor="let dependency of existDependencies" class="package-chip">{{dependency.package}}</span>
           </div>
@@ -45,7 +45,7 @@
             <div class="pre-loader-spinner spinner spinner-lg"></div>
           </div>
         </section>
-        <section>
+        <section class="fit dependency-strech">
           <div class="card-pf-body dep-area" *ngIf="dependencies?.length || dependencyAdded?.length">
             <span *ngFor="let dependency of dependencies" class="package-chip a">{{dependency.name}}
               <button class="btn btn-default close" (click)="removeDependency(dependency)">

@@ -4,15 +4,14 @@ import { AccordionModule } from 'ngx-bootstrap';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { Broadcaster } from 'ngx-base';
-import { TokenProvider } from '../shared/token-provider';
+import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
 import { ModalModule } from 'ngx-modal';
+import { AuthenticationService } from 'ngx-login-client';
 import { witApiUrlProvider } from '../shared/wit-api.provider';
 import { ApiLocatorService } from '../shared/api-locator.service';
 import { authApiUrlProvider } from '../shared/auth-api.provider';
 import { ssoApiUrlProvider } from '../shared/sso-api.provider';
 import { realmProvider } from '../shared/realm-token.provider';
-import { AnalyticsUrlService } from '../shared/analytics-url.service';
-import { URLProvider } from '../shared/url-provider';
 
 import { DependencyEditorComponent } from './dependency-editor.component';
 import { InsightModule } from '../insights/insights.module';
@@ -21,7 +20,7 @@ import { SecurityModule } from '../security/security.module';
 import { LicenseModule } from '../license/license.module';
 import { CurrentprojectModule } from '../current-project/current-project.module';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
-import { MockAuthenticationService } from '../shared/mock-auth.service';
+import { URLProvider } from '../shared/url-provider';
 
 @NgModule({
  imports: [
@@ -43,8 +42,8 @@ import { MockAuthenticationService } from '../shared/mock-auth.service';
     DependencyEditorComponent
 ],
  providers: [
-    { provide: URLProvider, useClass: AnalyticsUrlService },
-    { provide: TokenProvider, useClass: MockAuthenticationService },
+    URLProvider,
+    DependencyEditorTokenProvider,
     DependencyEditorService
  ]
 })

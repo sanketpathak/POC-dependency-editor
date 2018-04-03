@@ -1,25 +1,21 @@
-<div class="container-default">
+<div class="container-default dependencyEditorComponent">
   <div class="row row-main">
     <div class="row-element col-xs-12">
       <h1 class="title">Select Dependencies</h1>
-      <button class="btn btn-default skip">Skip</button>
-      <p>Some description of dependency editor</p>
+      <p id="description">Choose a mission and runtime to create a booster, or sample application, You set up a booster to generate source code
+        and specifications for your new applications.</p>
     </div>
     <div class="row-defination col-xs-12">
       <div class="col-xs-7 dependencies-container">
         <div class="row row-inside">
-          <app-add-dependency [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
+          <app-add-dependency [boosterInfo]="boosterInfo" [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
           <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
       </div>
       <div class="col-xs-5 padding-right-10 app-summary-container">
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData"
-          [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
+          [allLicenses]="allLicenses" [cveData]="cveData" (getMetadata)="getMetadata($event)"></app-current-project>
       </div>
-    </div>
-    <div class="bottom">
-      <button class="btn btn-info btn-lg continue">Continue</button>
-      <button class="btn btn-info btn-lg cancel">Cancel</button>
     </div>
   </div>
 </div>

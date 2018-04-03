@@ -45,6 +45,9 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
 export class DependencyEditorComponent implements OnInit, OnChanges {
   @Input() githubUrl = '';
   @Input() boosterInfo: BoosterInfo;
+
+  @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
+  @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();
   @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
   public dependencies: Array < DependencySnapshotItem > ;
@@ -59,6 +62,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public packageLength = 0;
   public addPackageLength = 0;
   public listView = 'View Dependency List';
+  public metadata = {};
 
   private stackUrl: string;
   private stackUrlDev: string;
@@ -110,6 +114,9 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     }
   }
 
+  public doContinue() {
+  }
+
   public callDepServices(eventData: EventDataModel) {
     this.reset();
     this.service.updateDependencyAddedSnapshot(eventData);
@@ -118,6 +125,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       this.isDepSelectedFromSearch = false;
     }
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
+    this.depSnapshot.emit(DependencySnapshot.DEP_SNAPSHOT_ADDED);
     const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
     this.getCveData(payload);
@@ -143,6 +151,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  public getMetadata(event: any): void {
+   this.metadata = event;
+   this.emitMetadata.emit(this.metadata);
+}
 
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();

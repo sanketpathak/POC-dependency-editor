@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class TokenProvider {
+export class DependencyEditorTokenProvider {
   getToken(): string | Promise<string> {
-    return '';
-  }
-
-  getGitHubToken(): string | Promise<string> {
     return '';
   }
 
@@ -16,15 +12,6 @@ export class TokenProvider {
 
   get token(): Promise<string> {
     const token = this.getToken();
-    if (this.isPromise(token)) {
-      return token;
-    } else {
-      return Promise.resolve(token);
-    }
-  }
-
-  get gitHubToken(): Promise<string> {
-    const token = this.getGitHubToken();
     if (this.isPromise(token)) {
       return token;
     } else {

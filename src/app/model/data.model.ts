@@ -111,14 +111,14 @@ export class LicenseResponseModel {
 }
 
 export class CategoryDataModel {
-    count: number;
-    package_name: Array<CategoryResponseResultModel>;
+    packages: Array<CategoryResponseResultModel>;
+    pkg_count: number;
 }
 
 export class CategoryResponseResultModel {
+    category: string;
     name: string;
     version: string;
-    category: string;
 }
 
 export class LicenseModel {
@@ -152,6 +152,7 @@ export class LicenseStackAnalysisModel {
 
 export class StackLicenseAnalysisModel {
     f8a_stack_licenses: Array<string> = [];
+    current_stack_license: string;
     status: string;
     conflict_packages: Array<ConflictPackageModel> = [];
     unknown_licenses: UnknownLicensesModel;
@@ -215,7 +216,7 @@ export class DependencySearchItem {
 }
 
 export class CategorySearchItem {
-    // core: CategoryDataModel;    overall_score: number;
+    string: Array<CategoryDataModel>;
 }
 
 export class OutlierInformationModel {
