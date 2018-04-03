@@ -11,10 +11,13 @@ const API_URL = process.env.API_URL || (ENV === 'inmemory' ? 'app/' : 'http://lo
 const FORGE_URL = process.env.FORGE_URL || 'http://localhost:8080/forge';
 const FABRIC8_WIT_API_URL = process.env.FABRIC8_WIT_API_URL || 'http://localhost:8080/api/';
 const FABRIC8_RECOMMENDER_API_URL = process.env.FABRIC8_RECOMMENDER_API_URL;
+const OSIO_AUTH_TOKEN = process.env.OSIO_AUTH_TOKEN;
 const FABRIC8_FORGE_URL = process.env.FABRIC8_FORGE_URL;
 const FABRIC8_REALM = process.env.FABRIC8_REALM || 'fabric8';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/';
 const STACK_API_TOKEN = process.env.STACK_API_TOKEN;
+const ANALYTICS_RECOMMENDER_URL = process.env.ANALYTICS_RECOMMENDER_URL;
+const ANALYTICS_LICENSE_URL = process.env.ANALYTICS_LICENSE_URL;
 const extractCSS = new ExtractTextPlugin('stylesheets/[name].css');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
@@ -24,6 +27,9 @@ const METADATA = webpackMerge(commonConfig.metadata, {
   FABRIC8_REALM: FABRIC8_REALM,
   FORGE_URL: FORGE_URL,
   FABRIC8_WIT_API_URL: FABRIC8_WIT_API_URL,
+  OSIO_AUTH_TOKEN: OSIO_AUTH_TOKEN,
+  ANALYTICS_LICENSE_URL: ANALYTICS_LICENSE_URL,
+  ANALYTICS_RECOMMENDER_URL: ANALYTICS_RECOMMENDER_URL,
   FABRIC8_RECOMMENDER_API_URL: FABRIC8_RECOMMENDER_API_URL,
   FABRIC8_FORGE_URL: FABRIC8_FORGE_URL,
   STACK_API_TOKEN: STACK_API_TOKEN,
@@ -84,7 +90,10 @@ module.exports = function (options) {
           'FORGE_URL': JSON.stringify(METADATA.FORGE_URL),
           'PUBLIC_PATH': JSON.stringify(METADATA.PUBLIC_PATH),
           'FABRIC8_REALM': JSON.stringify(METADATA.FABRIC8_REALM),
+          'ANALYTICS_RECOMMENDER_URL': JSON.stringify(METADATA.ANALYTICS_RECOMMENDER_URL),
+          'ANALYTICS_LICENSE_URL': JSON.stringify(METADATA.ANALYTICS_LICENSE_URL),
           'STACK_API_TOKEN': JSON.stringify(METADATA.STACK_API_TOKEN),
+          'OSIO_AUTH_TOKEN': JSON.stringify(METADATA.OSIO_AUTH_TOKEN),
           'FABRIC8_RECOMMENDER_API': JSON.stringify(METADATA.FABRIC8_RECOMMENDER_API_URL)
         }
       })

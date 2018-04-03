@@ -195,7 +195,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       let alive: boolean = true;
       let counter: number = 0;
       let observable: any = this.service
-      .getStackAnalyses(this.stackUrl + data['id']);
+      .getStackAnalyses(data['id']);
       TimerObservable.create(0, interval)
       .takeWhile(() => alive)
       .subscribe(() => {
@@ -223,7 +223,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private getLicenseData(payload: any) {
-    this.service.getDependencyData(this.getLicenseUrl, payload)
+    this.service.getDependencyData('LICENSE', payload)
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
         this.allLicenses = response.distinct_licenses;
@@ -236,10 +236,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     const interval = 5000;
     let alive: boolean = true;
     let counter: number = 0;
-    const persist = false;
-    const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
+    // const persist = false;
+    // const urlToHit = this.getDepInsightsUrl + '?persist=' + persist;
     let observable: any = this.service
-    .getDependencyData(urlToHit, payload);
+    .getDependencyData('DEPEDITORANALYSIS', payload);
     TimerObservable.create(0, interval)
     .takeWhile(() => alive)
     .subscribe(() => {
@@ -261,7 +261,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private getCveData(payload: any) {
-    this.service.getDependencyData(this.getCveUrl, payload)
+    this.service.getDependencyData('CVE', payload)
       .subscribe((response: CveResponseModel) => {
         this.cveData = response;
       });
