@@ -14,11 +14,11 @@
       </div>
       <div class="col-xs-5 padding-right-10 app-summary-container">
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData"
-          [allLicenses]="allLicenses" [cveData]="cveData"></app-current-project>
+          [allLicenses]="allLicenses" [cveData]="cveData" (getMetadata)="getMetadata($event)"></app-current-project>
       </div>
     </div>
     <div class="bottom">
-      <button class="btn btn-info btn-lg continue">Continue</button>
+      <button class="btn btn-info btn-lg continue" (click)="doContinue()">Continue</button>
       <button class="btn btn-info btn-lg cancel">Cancel</button>
     </div>
   </div>

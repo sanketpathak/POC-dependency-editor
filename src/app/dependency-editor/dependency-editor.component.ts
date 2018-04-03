@@ -59,6 +59,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public packageLength = 0;
   public addPackageLength = 0;
   public listView = 'View Dependency List';
+  public metadata = {};
 
   private stackUrl: string;
   private stackUrlDev: string;
@@ -110,6 +111,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     }
   }
 
+  public doContinue() {
+    console.log(DependencySnapshot.DEP_FULL_ADDED, DependencySnapshot.DEP_SNAPSHOT_ADDED);
+    console.log('metadata', this.metadata);
+  }
+
   public callDepServices(eventData: EventDataModel) {
     this.reset();
     this.service.updateDependencyAddedSnapshot(eventData);
@@ -143,6 +149,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  public getMetadata(event: any): void {
+   this.metadata = event;
+}
 
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();
