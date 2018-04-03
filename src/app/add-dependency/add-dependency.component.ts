@@ -81,7 +81,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   getDependencies() {
     this.isLoading = true;
-    this.service.getDependencies(this.searchDepsUrl + this.dependencySearchString)
+    this.service.getDependencies(this.dependencySearchString)
       .subscribe((response: any) => {
         this.dependencySearchResult = response['result'];
         this.isLoading = false;
@@ -90,7 +90,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   getCategories() {
     this.isLoading = true;
-    this.service.getCategories(this.categoryUrl + '/vertx')
+    this.service.getCategories('vertx')
       .subscribe((response: any) => {
         this.categorySearchResult = response['categories'];
         this.isLoading = false;
@@ -123,7 +123,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getCategoriesSecurity(payload: any) {
-    this.service.getDependencyData(this.getCveUrl, payload)
+    this.service.getDependencyData('CVE', payload)
       .subscribe((response: CveResponseModel) => {
         this.cveTemporaryData = response;
         if (this.cveTemporaryData) {

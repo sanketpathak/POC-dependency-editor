@@ -12,7 +12,8 @@ import {
 } from '@angular/http';
 import {
     TokenProvider
-} from '../shared/token-provider';
+} from './token-provider';
+import { URLProvider } from './url-provider';
 import {
     Observable
 } from 'rxjs/Observable';
@@ -26,7 +27,8 @@ import {
     ComponentInformationModel,
     CveResponseModel,
     DependencySearchItem,
-    EventDataModel
+    EventDataModel,
+    LicenseStackAnalysisModel
 } from '../model/data.model';
 import {
     DependencySnapshot
@@ -37,16 +39,30 @@ export class DependencyEditorService {
     @Output() dependencySelected = new EventEmitter < DependencySearchItem > ();
     @Output() dependencyRemoved = new EventEmitter < EventDataModel > ();
 
+    private RECOMMENDER_API_BASE: string = '';
+    private LICENSE_API_BASE: string = '';
+
+    private URLS_HASH: any = {};
+
     constructor(
         private http: Http,
-        private tokenProvider: TokenProvider
-    ) {}
+        private tokenProvider: TokenProvider,
+        private urlProvider: URLProvider
+    ) {
+        this.LICENSE_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getLicenseAPIUrl());
+        this.RECOMMENDER_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getRecommenderAPIUrl());
+        this.URLS_HASH = {
+            'CVE': this.RECOMMENDER_API_BASE + 'api/v1/depeditor-cve-analyses/',
+            'LICENSE': this.LICENSE_API_BASE + 'api/v1/license-recommender',
+            'DEPEDITORANALYSIS': this.RECOMMENDER_API_BASE + 'api/v1/depeditor-analyses/?persist=false'
+        };
+    }
 
     postStackAnalyses(githubUrl: string): Observable<any> {
-        // const url = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses';
-        const url = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses';
+        const url = this.RECOMMENDER_API_BASE + 'api/v1/stack-analyses';
         return this.options.flatMap((option) => {
             const payload = 'github_url=' + githubUrl;
+            option.headers.append('Content-Type', 'application/x-www-form-urlencoded');
             return this.http.post(url, payload, option)
                 .map(this.extractData)
                 .map((data) => {
@@ -56,7 +72,10 @@ export class DependencyEditorService {
         });
     }
 
-    getStackAnalyses(url: string): Observable < any > {
+    getStackAnalyses(stackId: string): Observable < any > {
+        if (!stackId) return;
+
+        let url: string = this.RECOMMENDER_API_BASE + `api/v1/stack-analyses/${stackId}`;
         return this.options.flatMap((option) => {
             let stackReport: StackReportModel = null;
             return this.http.get(url, option)
@@ -69,7 +88,10 @@ export class DependencyEditorService {
         });
     }
 
-    getDependencies(url: string): Observable < any > {
+    getDependencies(component: string): Observable < any > {
+        if (!component) return;
+
+        let url: string = this.RECOMMENDER_API_BASE + `api/v1/component-search/${component}`;
         return this.options.flatMap((option) => {
             return this.http.get(url, option)
                 .map(this.extractData)
@@ -80,18 +102,24 @@ export class DependencyEditorService {
         });
     }
 
-    getDependencyData(url, payload): Observable < any > {
+    getDependencyData(type: string, payload: string): Observable < any > {
+        let url: string = this.URLS_HASH[type];
+        if (!url) return;
+
         return this.options.flatMap((option) => {
             return this.http.post(url, payload, option)
                 .map(this.extractData)
-                .map((data: StackReportModel | CveResponseModel | any) => {
+                .map((data: StackReportModel | CveResponseModel | LicenseStackAnalysisModel | any) => {
                     return data;
                 })
                 .catch(this.handleError);
         });
     }
 
-    getCategories(url: string): Observable < any > {
+    getCategories(runtime: string): Observable < any > {
+        if (!runtime) return;
+
+        let url: string = this.RECOMMENDER_API_BASE = `api/v1/categories/${runtime}`;
         return this.options.flatMap((option) => {
             return this.http.get(url, option)
                 .map(this.extractData)
@@ -160,6 +188,11 @@ export class DependencyEditorService {
         body['statusCode'] = res.status;
         body['statusText'] = res.statusText;
         return body as StackReportModel;
+    }
+
+    private checkForTrailingSlashes(url: string): string {
+        if (!url || url.length < 1) return;
+        return url[url.length - 1] === '/' ? url : url + '/';
     }
 
     private handleError(error: Response | any) {
