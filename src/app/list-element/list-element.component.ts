@@ -33,8 +33,8 @@ export class ListElementComponent implements OnInit {
   @Output() companionReleased = new EventEmitter<ComponentInformationModel> ();
   @Output() companionRemoved = new EventEmitter<ComponentInformationModel> ();
 
-  public dep = [];
-  public showAlternateSection = false;
+  public dep: Array<any> = [];
+  public showAlternateSection: boolean = false;
   public saveTagname: boolean = false;
   public isOpen: boolean = false;
 
@@ -77,9 +77,9 @@ export class ListElementComponent implements OnInit {
   }
 
   useAlternate() {
-    const alternate = this.dependency.alternate;
-    const indexFull = _.findIndex(DependencySnapshot.DEP_FULL_ADDED, { name: alternate.name });
-    const indexSnapshot = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { package: alternate.name });
+    const alternate: any = this.dependency.alternate;
+    const indexFull: any = _.findIndex(DependencySnapshot.DEP_FULL_ADDED, { name: alternate.name });
+    const indexSnapshot: any = _.findIndex(DependencySnapshot.DEP_SNAPSHOT_ADDED, { package: alternate.name });
     DependencySnapshot.DEP_FULL_ADDED.splice(indexFull, 1, alternate.alternate);
     DependencySnapshot.DEP_SNAPSHOT_ADDED.splice(indexSnapshot, 1, {
       package: alternate.alternate.name,

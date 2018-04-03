@@ -30,10 +30,10 @@ export class InsightComponent implements OnInit, OnChanges {
   @Input() alternate: Array < ComponentInformationModel > ;
   @Output() companionAdded = new EventEmitter < any > ();
 
-  public hasIssue = false;
+  public hasIssue: boolean = false;
   public objToEmit: EventDataModel[] = [];
-  public added = [];
-  public noOfTags = 0;
+  public added: Array<any> = [];
+  public noOfTags: number = 0;
 
   constructor() {}
 
@@ -41,7 +41,7 @@ export class InsightComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  public addTag(eventData) {
+  public addTag(eventData: Array<any>) {
         for (let i = 0; i < this.companions.length + this.alternate.length; i++) {
           if (this.added.length > 0 && this.added[i] && this.added[i].name === eventData[0].name) {
              if (this.added[i].type === true && eventData[0].type === true) {

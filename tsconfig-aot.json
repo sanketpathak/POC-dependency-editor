@@ -3,38 +3,38 @@
     "target": "es5",
     "module": "es2015",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "noEmitHelpers": true,
-    "strictNullChecks": false,
+    "declaration": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "baseUrl": "",
-    "mapRoot": "",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "pretty": true,
+    "stripInternal": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
     "rootDir": ".",
-    "outDir": "lib",
     "lib": [
-      "dom",
-      "es2015"
+      "ES5",
+      "ES2015",
+      "DOM",
+      "ScriptHost"
     ],
     "types": [
-      "hammerjs",
-      "jasmine",
-      "node",
-      "protractor",
-      "selenium-webdriver",
-      "source-map",
-      "uglify-js",
-      "webpack"
+      "c3",
+      "node"
     ]
   },
+  "files": [
+    "./index.ts"
+  ],
   "angularCompilerOptions": {
-    "genDir": "src/app/generated",
-    "entryModule": "src/app/app.module#AppModule",
-    "skipMetadataEmit" : true
+    "genDir": "dist",
+    "debug": false,
+    "skipTemplateCodegen": true,
+    "skipMetadataEmit": false,
+    "strictMetadataEmit": true
   }
 }
