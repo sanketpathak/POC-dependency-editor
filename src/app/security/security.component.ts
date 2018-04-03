@@ -72,7 +72,7 @@ export class SecurityComponent implements OnInit, OnChanges {
 
   }
 
-  public getShow(event) {
+  public getShow(event: any) {
     this.toHave = event.toShow;
   }
 }

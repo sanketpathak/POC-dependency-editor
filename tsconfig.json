@@ -37,7 +37,8 @@
   },
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
-    "skipTemplateCodegen": true
+    "skipTemplateCodegen": true,
+    "genDir": "./ngfactory"
   },
   "compileOnSave": false,
   "buildOnSave": false,

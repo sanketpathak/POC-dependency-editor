@@ -42,11 +42,12 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   @Input() existDependencies: Array < DependencySnapshotItem > ;
   @ViewChild('PackagePreview') modalPackagePreview: any;
 
+  public queryString: any;
   public dependencySearchString: string;
   public dependencySearchResult: Array < DependencySearchItem > = [];
   public isLoading = false;
   public categorySearchResult: Array < CategorySearchItem > = [];
-  public categoryResult = [];
+  public categoryResult: Array<any> = [];
   public tagZero = 0;
 
   public searchKey = '';
@@ -55,11 +56,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public dependenciesData: Array < any > = [];
   public masterTags: Array < any > = [];
   public selectedTags = new Set();
-  public categories = [];
+  public categories: Array<any> = [];
   public cveTemporaryData: CveResponseModel;
   public cveName: any = [];
   public noOfTags = 0;
-  public saveTagname = [];
+  public saveTagname: Array<any> = [];
   public type = false;
   public tags: Array < DependencySearchItem > = [];
   public toast: boolean = false;
@@ -107,11 +108,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getCategoryPayload() {
-    const payload = {};
+    const payload: any = {};
     let j = 0;
-    const category: Array < DependencySnapshotItem > = [];
+    let category: any = {};
     this.categoryResult.forEach(i => {
-      i.package.map((k) => {
+      i.package.map((k: any) => {
         category['package'] = k.name;
         category['version'] = k.version;
       });
@@ -128,7 +129,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
         this.cveTemporaryData = response;
         if (this.cveTemporaryData) {
           let count = -1;
-          this.cveTemporaryData.result.forEach(item => {
+          this.cveTemporaryData.result.forEach((item: any) => {
             count++;
             if (item.cve) {
               if (item.cve !== null) {
@@ -141,7 +142,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
           });
         }
       });
-      this.masterTags.forEach( i => {
+      this.masterTags.forEach( (i: any) => {
         for (let j = 0; j < this.cveName.length; j++)
         if (i.name === this.cveName['j'].package) {
           i.security = this.cveName['j'].detail;
@@ -149,7 +150,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       });
   }
 
-  changeTagname(master, t) {
+  changeTagname(master: any, t: boolean) {
     this.type = !t;
     for (let i = 0; i < this.masterTags.length; i++) {
       if (this.masterTags[i].name === master.name && this.masterTags[i].version === master.version && this.masterTags[i].category === master.category) {
@@ -221,7 +222,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.isLoading = false;
   }
 
-  removeDependency(dependency) {
+  removeDependency(dependency: any) {
     this.service.removeDependency(dependency);
   }
 
@@ -243,10 +244,10 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public addedTags() {
     let count = 0;
     this.tagZero = 0;
-    this.categoryResult.forEach(i => {
+    this.categoryResult.forEach((i: any) => {
       count++;
       this.tagZero = count;
-      i.package.forEach(x => {
+      i.package.forEach((x: any) => {
         this.masterTags.push({
           'ecosystem' : DependencySnapshot.ECOSYSTEM,
           'version' : x.version,
@@ -258,8 +259,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
         });
       });
     });
-    this.categoryResult.forEach(i => {
-      i.package.forEach(x => {
+    this.categoryResult.forEach((i: any) => {
+      i.package.forEach((x: any) => {
           this.saveTagname.push({'name' : x, 'type' : false});
       });
   });

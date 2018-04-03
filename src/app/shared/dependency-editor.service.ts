@@ -131,7 +131,7 @@ export class DependencyEditorService {
     }
 
     updateDependencyAddedSnapshot(depObj: EventDataModel) {
-        let depToAdd;
+        let depToAdd: any = {};
         if (depObj.depFull) {
             depToAdd = {
                 package: depObj.depFull.name,
@@ -156,7 +156,7 @@ export class DependencyEditorService {
     }
 
     getPayload() {
-        const payload = {};
+        const payload: any = {};
         const deps = DependencySnapshot.DEP_SNAPSHOT.concat(DependencySnapshot.DEP_SNAPSHOT_ADDED);
         payload['_resolved'] = deps;
         payload['ecosystem'] = DependencySnapshot.ECOSYSTEM;

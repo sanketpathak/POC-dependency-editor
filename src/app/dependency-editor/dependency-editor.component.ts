@@ -88,7 +88,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       .subscribe((depSelected: DependencySearchItem) => {
         this.isDepSelectedFromSearch = true;
         this.depToAdd = depSelected;
-        const obj = {
+        const obj: any = {
           depFull: null,
           depSnapshot: {
             package: depSelected.name,
@@ -189,9 +189,9 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     this.service.postStackAnalyses(githubUrl)
     .subscribe((data: any) => {
         // });
-      let subs = null;
-      let rec = null;
-      const interval = 5000;
+      let subs: any = null;
+      let rec: any = null;
+      const interval: number = 5000;
       let alive: boolean = true;
       let counter: number = 0;
       let observable: any = this.service
@@ -203,8 +203,8 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         subs.unsubscribe();
         alive = false;
       }
-      subs = observable.subscribe((response) => {
-        const result = response.result[0];
+      subs = observable.subscribe((response: any) => {
+        const result: any = response.result[0];
         rec = result.recommendation;
         DependencySnapshot.ECOSYSTEM = result.user_stack_info.ecosystem;
         DependencySnapshot.DEP_SNAPSHOT = result.user_stack_info.dependencies;
@@ -231,9 +231,9 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   private getDependencyInsights(payload: any) {
-    let subs = null;
-    let rec = null;
-    const interval = 5000;
+    let subs: any = null;
+    let rec: any = null;
+    const interval: number = 5000;
     let alive: boolean = true;
     let counter: number = 0;
     // const persist = false;

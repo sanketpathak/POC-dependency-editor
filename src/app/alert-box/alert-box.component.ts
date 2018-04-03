@@ -31,17 +31,17 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   @Input() issueSymbol: string;
   @Input() issueType: string;
   @Input() licolor: string;
-  @Input() secureIssue: boolean;
+  @Input() secureIssue: boolean = false;
   @Input() licenseIssue: boolean;
   @Input() itSecurity: boolean;
   @Input() licenseAll: Array < string > = [];
   @Input() hasIssue: boolean;
-  @Input() cveName = [];
-  @Input() liData = [];
+  @Input() cveName: Array<any> = [];
+  @Input() liData: Array<any> = [];
   @Input() charts: any = {};
   public isLoading = true;
-  public cveId = [];
-  public cvePackage = [];
+  public cveId: Array<any> = [];
+  public cvePackage: Array<any> = [];
 
   constructor() {}
 
@@ -67,7 +67,7 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   public getCves() {
     this.cveId = [];
     for (let i = 0; i < this.cveName.length; i++) {
-      this.cveName[i][0].forEach(e => {
+      this.cveName[i][0].forEach((e: any) => {
         this.cveId.push({
           'id': e.cve_id,
           'package': this.cveName[i][1]

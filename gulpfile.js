@@ -87,7 +87,7 @@ gulp.task('post-transpile', ['transpile'], function () {
     .pipe(replace(/\.html',/g, ".html'),"))
     .pipe(replace(/\.html'/g, ".html')"))
     .pipe(replace(/styleUrls: \[/g, "styles: [require("))
-    .pipe(replace(/\.less']/g, ".css').toString()]"))
+    .pipe(replace(/\.less']/g, ".less').toString()]"))
     .pipe(gulp.dest(function (file) {
       return file.base; // because of Angular 2's encapsulation, it's natural to save the css where the less-file was
     }));
@@ -105,20 +105,27 @@ gulp.task('build-library',
     'transpile-less',
     'transpile',
     'post-transpile',
-    'copy-css',
+    'copy-less',
     'copy-html',
     'copy-static-assets'
   ]);
 
 // require transpile-less to finish before starting the transpile process
-gulp.task('transpile', ['transpile-less'], function () {
-  return ngc('tsconfig.json')
+gulp.task('transpile', function () {
+  return ngc('tsconfig-aot.json')
 });
 
 // require transpile to finish before copying the css
 gulp.task('copy-css', ['transpile'], function () {
   return copyToDist([
     'src/**/*.css'
+  ]);
+});
+
+// require in case it is put inside ngx-launcher
+gulp.task('copy-less', function () {
+  return copyToDist([
+    'src/**/*.less'
   ]);
 });
 
@@ -159,9 +166,9 @@ gulp.task('watch', ['build-library', 'copy-watch-all'], function () {
   gulp.watch([appSrc + '/app/**/*.ts', '!' + appSrc + '/app/**/*.spec.ts'], ['transpile', 'post-transpile', 'copy-watch']).on('change', function (e) {
     console.log('TypeScript file ' + e.path + ' has been changed. Compiling.');
   });
-  gulp.watch([appSrc + '/app/**/*.less'], ['transpile-less']).on('change', function (e) {
+  gulp.watch([appSrc + '/app/**/*.less'], ['copy-less']).on('change', function (e) {
     console.log(e.path + ' has been changed. Updating.');
-    transpileLESS(e.path);
+    // transpileLESS(e.path);
     updateWatchDist();
   });
   gulp.watch([appSrc + '/app/**/*.html']).on('change', function (e) {
