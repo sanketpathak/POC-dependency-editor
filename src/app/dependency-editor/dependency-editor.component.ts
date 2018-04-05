@@ -115,10 +115,6 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   public doContinue() {
-    console.log(DependencySnapshot.DEP_FULL_ADDED, DependencySnapshot.DEP_SNAPSHOT_ADDED);
-    console.log('metadata', this.metadata);
-    this.depSnapshot.emit(DependencySnapshot.DEP_SNAPSHOT_ADDED);
-    this.emitMetadata.emit(this.metadata);
   }
 
   public callDepServices(eventData: EventDataModel) {
@@ -129,6 +125,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       this.isDepSelectedFromSearch = false;
     }
     this.dependenciesAdded = DependencySnapshot.DEP_FULL_ADDED;
+    this.depSnapshot.emit(DependencySnapshot.DEP_SNAPSHOT_ADDED);
     const payload = this.service.getPayload();
     this.getDependencyInsights(payload);
     this.getCveData(payload);
@@ -157,6 +154,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
 
   public getMetadata(event: any): void {
    this.metadata = event;
+   this.emitMetadata.emit(this.metadata);
 }
 
   public showDependencyModal(event: Event) {

@@ -24,30 +24,37 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
   public isOpen = false;
   public upDown = 'fa fa-angle-up';
   public metadata: any = {};
+  public start: number = 1;
 
   constructor(
     public dom: DomSanitizer
   ) { }
 
   ngOnInit() {
-  this.metadata['groupId'] = 'io.openshift.booster';
-  this.metadata['artifactId'] = 'vertx.http';
-  this.metadata['version'] = '1.0.0.SNAPSHOT';
 }
 
   ngOnChanges() {
+    if (this.boosterInfo.mission && this.start > 0) {
+      this.start = 0;
+      this.metadata['groupId'] = 'io.openshift.booster';
+      this.metadata['artifactId'] = this.boosterInfo.runtime.id + '.' + this.boosterInfo.mission.id;
+      this.metadata['version'] = '1.0.0.SNAPSHOT';
+    }
     this.getMetadata.emit(this.metadata);
   }
 
   public getGroupId(event: any) {
     this.metadata['groupId'] = event.target.value ;
+    this.getMetadata.emit(this.metadata);
   }
 
   public getArtifactId(event: any) {
     this.metadata['artifactId'] = event.target.value ;
+    this.getMetadata.emit(this.metadata);
   }
 
   public getVersion(event: any) {
     this.metadata['version'] = event.target.value ;
+    this.getMetadata.emit(this.metadata);
   }
 }
