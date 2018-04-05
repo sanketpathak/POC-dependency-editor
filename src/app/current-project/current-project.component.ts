@@ -23,7 +23,7 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
   public projectDependencies: string[];
   public isOpen = false;
   public upDown = 'fa fa-angle-up';
-  public metadata = {};
+  public metadata: any = {};
 
   constructor(
     public dom: DomSanitizer

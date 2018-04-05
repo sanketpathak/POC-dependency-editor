@@ -45,6 +45,9 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
 export class DependencyEditorComponent implements OnInit, OnChanges {
   @Input() githubUrl = '';
   @Input() boosterInfo: BoosterInfo;
+
+  @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
+  @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();
   @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
   public dependencies: Array < DependencySnapshotItem > ;
@@ -114,6 +117,8 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public doContinue() {
     console.log(DependencySnapshot.DEP_FULL_ADDED, DependencySnapshot.DEP_SNAPSHOT_ADDED);
     console.log('metadata', this.metadata);
+    this.depSnapshot.emit(DependencySnapshot.DEP_SNAPSHOT_ADDED);
+    this.emitMetadata.emit(this.metadata);
   }
 
   public callDepServices(eventData: EventDataModel) {

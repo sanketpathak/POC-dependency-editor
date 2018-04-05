@@ -20,7 +20,8 @@ import {
   DependencySearchItem,
   DependencySnapshotItem,
   CategorySearchItem,
-  CveResponseModel
+  CveResponseModel,
+  BoosterInfo
 } from '../model/data.model';
 import {
   DependencyEditorService
@@ -37,6 +38,7 @@ import { FilterPipe } from './add-dependency.pipe';
 })
 
 export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() boosterInfo: BoosterInfo;
   @Input() dependencies: Array < ComponentInformationModel > ;
   @Input() dependencyAdded: Array < DependencySnapshotItem > ;
   @Input() existDependencies: Array < DependencySnapshotItem > ;
@@ -91,7 +93,15 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
 
   getCategories() {
     this.isLoading = true;
-    this.service.getCategories('vertx')
+    let runtime = '';
+    if (this.boosterInfo.runtime.id === 'vert.x') {
+      runtime = 'vertx';
+    } else if (this.boosterInfo.runtime.id === 'spring-boot') {
+      runtime = 'springboot';
+    } else if (this.boosterInfo.runtime.id === 'wildfly-swarm') {
+      runtime = 'wildflyswarm';
+    }
+    this.service.getCategories(runtime)
       .subscribe((response: any) => {
         this.categorySearchResult = response['categories'];
         this.isLoading = false;
@@ -110,11 +120,13 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   getCategoryPayload() {
     const payload: any = {};
     let j = 0;
-    let category: any = {};
+    let category: any = [];
     this.categoryResult.forEach(i => {
       i.package.map((k: any) => {
-        category['package'] = k.name;
-        category['version'] = k.version;
+        category.push({
+          'package' : k.name,
+          'version' : k.version
+        });
       });
     });
     payload['_resolved'] = category;
@@ -255,7 +267,8 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
           'category' : x.category,
           'type' : false,
           'grouped' : false,
-          'security' : null
+          'security' : null,
+          'present' : false
         });
       });
     });
@@ -264,5 +277,28 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
           this.saveTagname.push({'name' : x, 'type' : false});
       });
   });
+  for (let i = 0; i < this.masterTags.length; i++) {
+    this.masterTags[i].present = false;
+  }
+  if (DependencySnapshot.DEP_FULL_ADDED.length === 0) {
+    for (let i = 0; i < this.masterTags.length; i++) {
+      this.masterTags[i].grouped = false;
+    }
+  } else {
+    DependencySnapshot.DEP_FULL_ADDED.forEach((depAdded) => {
+      for (let i = 0; i < this.masterTags.length; i++) {
+        if (this.masterTags[i].name === depAdded.name && this.masterTags[i].version === depAdded.version) {
+          this.masterTags[i].grouped = true;
+          this.masterTags[i].present = true;
+        } else {
+          if (this.masterTags[i].present === true) {
+            continue;
+          } else {
+            this.masterTags[i].grouped = false;
+          }
+        }
+      }
+    });
+  }
   }
 }
