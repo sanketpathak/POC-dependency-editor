@@ -39,8 +39,9 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
       this.metadata['groupId'] = 'io.openshift.booster';
       this.metadata['artifactId'] = this.boosterInfo.runtime.id + '.' + this.boosterInfo.mission.id;
       this.metadata['version'] = '1.0.0.SNAPSHOT';
+      this.getMetadata.emit(this.metadata);
     }
-    this.getMetadata.emit(this.metadata);
+    // this.getMetadata.emit(this.metadata);
   }
 
   public getGroupId(event: any) {
