@@ -11,8 +11,8 @@ import {
     RequestOptions
 } from '@angular/http';
 import {
-    TokenProvider
-} from './token-provider';
+    DependencyEditorTokenProvider
+} from './depeditor-tokenprovider';
 import { URLProvider } from './url-provider';
 import {
     Observable
@@ -46,9 +46,10 @@ export class DependencyEditorService {
 
     constructor(
         private http: Http,
-        private tokenProvider: TokenProvider,
+        private tokenProvider: DependencyEditorTokenProvider,
         private urlProvider: URLProvider
     ) {
+        debugger;
         this.LICENSE_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getLicenseAPIUrl());
         this.RECOMMENDER_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getRecommenderAPIUrl());
         this.URLS_HASH = {
@@ -175,6 +176,7 @@ export class DependencyEditorService {
 
     private get options(): Observable<RequestOptions> {
         let headers = new Headers();
+        debugger;
         return Observable.fromPromise(this.tokenProvider.token.then((token) => {
             headers.append('Authorization', 'Bearer ' + token);
             return new RequestOptions({
