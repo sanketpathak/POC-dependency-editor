@@ -4,6 +4,9 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap';
 
+import { URLProvider } from '../shared/url-provider';
+import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
+import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { ListElementComponent } from './list-element.component';
 
 
@@ -20,6 +23,10 @@ import { ListElementComponent } from './list-element.component';
  exports: [
     ListElementComponent
 ],
-    providers: []
+    providers: [
+        URLProvider,
+        DependencyEditorTokenProvider,
+        DependencyEditorService
+    ]
 })
 export class ListElementModule {}

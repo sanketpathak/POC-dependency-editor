@@ -15,6 +15,7 @@ import {
 import {
   AccordionModule
 } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-modal';
 import * as _ from 'lodash';
 
 import {
@@ -36,6 +37,8 @@ import {
   DependencySnapshot
 } from '../utils/dependency-snapshot';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import 'rxjs/add/operator/takeWhile';
+
 
 @Component({
   selector: 'app-dependency-editor',

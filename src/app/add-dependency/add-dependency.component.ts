@@ -5,16 +5,23 @@ import {
   Input,
   Output,
   EventEmitter,
+  NgModule,
   ViewEncapsulation,
   OnDestroy,
   ViewChild
 } from '@angular/core';
+import {
+  CommonModule
+} from '@angular/common';
 import {
   FormsModule
 } from '@angular/forms';
 import {
   AccordionModule
 } from 'ngx-bootstrap';
+import {
+  ModalModule
+} from 'ngx-modal';
 import {
   ComponentInformationModel,
   DependencySearchItem,

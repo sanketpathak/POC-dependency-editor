@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Broadcaster } from 'ngx-base';
 import { AnalyticsUrlService } from './shared/analytics-url.service';
 import { AppComponent } from './app.component';
@@ -20,6 +21,8 @@ import { URLProvider } from './shared/url-provider';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    FormsModule,
     DependencyEditorModule
   ],
   providers: [

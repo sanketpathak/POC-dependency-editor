@@ -1,14 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InsightComponent } from './insights.component';
+import { CommonModule } from '@angular/common';
+import { AccordionModule } from 'ngx-bootstrap';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { ListElementModule } from '../list-element/list-element.module';
 
-describe('CurrentprojectComponent', () => {
+describe('InsightComponent', () => {
   let component: InsightComponent;
   let fixture: ComponentFixture<InsightComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InsightComponent ]
+      imports: [
+          CommonModule,
+          AccordionModule.forRoot(),
+          HttpModule,
+          FormsModule,
+          ListElementModule
+      ],
+      declarations: [
+          InsightComponent
+      ]
     })
     .compileComponents();
   }));

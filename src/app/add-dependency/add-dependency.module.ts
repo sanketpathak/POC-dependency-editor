@@ -8,6 +8,9 @@ import { ModalModule } from 'ngx-modal';
 import { FilterPipe } from './add-dependency.pipe';
 import { AddDependencyComponent } from './add-dependency.component';
 import { ListElementModule } from '../list-element/list-element.module';
+import { URLProvider } from '../shared/url-provider';
+import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
+import { DependencyEditorService } from '../shared/dependency-editor.service';
 
 
 @NgModule({
@@ -25,6 +28,10 @@ import { ListElementModule } from '../list-element/list-element.module';
  exports: [
     AddDependencyComponent
 ],
- providers: []
+ providers: [
+    URLProvider,
+    DependencyEditorTokenProvider,
+    DependencyEditorService
+ ]
 })
 export class AddDependencyModule {}

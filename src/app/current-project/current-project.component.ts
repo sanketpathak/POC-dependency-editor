@@ -34,7 +34,7 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
 }
 
   ngOnChanges() {
-    if (this.boosterInfo.mission && this.start > 0) {
+    if (this.boosterInfo && this.boosterInfo.mission && this.start > 0) {
       this.start = 0;
       this.metadata['groupId'] = 'io.openshift.booster';
       this.metadata['artifactId'] = this.boosterInfo.runtime.id + '.' + this.boosterInfo.mission.id;

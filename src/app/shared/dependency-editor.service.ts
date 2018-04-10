@@ -19,6 +19,7 @@ import {
 } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/operators/map';
+import 'rxjs/add/observable/fromPromise';
 import * as _ from 'lodash';
 
 import {
@@ -49,7 +50,6 @@ export class DependencyEditorService {
         private tokenProvider: DependencyEditorTokenProvider,
         private urlProvider: URLProvider
     ) {
-        debugger;
         this.LICENSE_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getLicenseAPIUrl());
         this.RECOMMENDER_API_BASE = this.checkForTrailingSlashes(this.urlProvider.getRecommenderAPIUrl());
         this.URLS_HASH = {
@@ -120,7 +120,7 @@ export class DependencyEditorService {
     getCategories(runtime: string): Observable < any > {
         if (!runtime) return;
 
-        let url: string = this.RECOMMENDER_API_BASE = `api/v1/categories/${runtime}`;
+        let url: string = this.RECOMMENDER_API_BASE + `api/v1/categories/${runtime}`;
         return this.options.flatMap((option) => {
             return this.http.get(url, option)
                 .map(this.extractData)
@@ -176,7 +176,6 @@ export class DependencyEditorService {
 
     private get options(): Observable<RequestOptions> {
         let headers = new Headers();
-        debugger;
         return Observable.fromPromise(this.tokenProvider.token.then((token) => {
             headers.append('Authorization', 'Bearer ' + token);
             return new RequestOptions({

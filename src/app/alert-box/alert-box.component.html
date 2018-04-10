@@ -1,7 +1,7 @@
 <div class=" alert-box">
   <div class=" alert-heading">
     <h2 class="alert-title">
-      <span id="symbol" [class]="issueSymbol"></span>{{title}}
+      <span id="symbol" [class]="issueSymbol"></span><span id="font-opensans">{{title}}</span>
       <span class="if-security" *ngIf="itSecurity || secureIssue">
         <span id="security-status">{{issueStatus}}</span>
       </span>
