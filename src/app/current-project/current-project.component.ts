@@ -12,7 +12,7 @@ import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, Li
 
 export class CurrentprojectComponent implements OnInit, OnChanges {
   @Input() dependencies: Array<DependencySnapshotItem>;
-  @Input() boosterInfo: BoosterInfo;
+  @Input() boosterInfo: BoosterInfo = null;
   @Input() licenseData: StackLicenseAnalysisModel;
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() cveData: CveResponseModel;

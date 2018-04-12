@@ -16,7 +16,7 @@ import {
 import * as _ from 'lodash';
 
 import {
-  ComponentInformationModel, EventDataModel
+  ComponentInformationModel, EventDataModel, BoosterInfo
 } from '../model/data.model';
 
 @Component({
@@ -26,6 +26,7 @@ import {
 })
 
 export class InsightComponent implements OnInit, OnChanges {
+  @Input() boosterInfo: BoosterInfo;
   @Input() companions: Array < ComponentInformationModel > ;
   @Input() alternate: Array < ComponentInformationModel > ;
   @Output() companionAdded = new EventEmitter < any > ();

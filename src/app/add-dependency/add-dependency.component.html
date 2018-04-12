@@ -34,7 +34,8 @@
                 </a>
               </li>
             </ul>
-            <div class="col-sm-5 browse" (click)="showPackageModal($event)">Browse All Dependencies</div>
+            <div class="col-sm-5 browse" (click)="showPackageModal($event)" *ngIf="existDependencies?.length">Browse All Dependencies</div>
+            <div class="col-sm-5 browse ubrowse" *ngIf="!existDependencies">Browse All Dependencies</div>
           </div>
         </h2>
         <section class="fit dependency-strech">
@@ -42,7 +43,7 @@
             <span *ngFor="let dependency of existDependencies" class="package-chip">{{dependency.package}}</span>
           </div>
           <div *ngIf="!existDependencies?.length" class="pre-loader">
-            <div class="pre-loader-spinner spinner spinner-lg"></div>
+            <!-- <div class="pre-loader-spinner spinner spinner-lg"></div> -->
           </div>
         </section>
         <section class="fit dependency-strech">

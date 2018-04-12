@@ -16,7 +16,8 @@ import {
 } from 'ngx-bootstrap';
 import {
   StackLicenseAnalysisModel,
-  LicenseStackAnalysisModel
+  LicenseStackAnalysisModel,
+  BoosterInfo
 } from '../model/data.model';
 import {
   AlertBoxComponent
@@ -32,6 +33,7 @@ export class LicenseComponent implements OnInit, OnChanges {
   @Input() licenseData: StackLicenseAnalysisModel;
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() allLicenses: Array < any > = [];
+  @Input() boosterInfo: BoosterInfo;
   @ViewChild(AlertBoxComponent) alertBoxComponent: AlertBoxComponent;
 
   public title = 'License';

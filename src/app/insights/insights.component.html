@@ -13,25 +13,33 @@
         </span>
       </p>
     </div>
-    <div class="col-sm-12 fit">
-      <div class="card-pf-body" *ngIf="companions?.length">
-        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion"
-          (companionRemoved)="removeCompanion($event)" (tagAdded)="addTag($event)" (companionReleased)="releaseCompanion($event)"></app-list-element>
-      </div>
-      <div class="card-pf-body" *ngIf="alternate?.length">
-        <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of alternate" [dependency]="companion"
-          (companionRemoved)="removeCompanion($event)" (tagAdded)="addTag($event)" (companionReleased)="releaseCompanion($event)"></app-list-element>
-      </div>
-      <div class="card-pf-body">
-        <div class="pre-loader" *ngIf="!companions||!alternate">
-          <div class="pre-loader-spinner spinner spinner-lg"></div>
+    <div class="card-pf-aggregate-status-notifications" *ngIf="!boosterInfo">
+        <span class="card-pf-aggregate-status-notification">
+          <span class="pficon pficon-info"></span>
+          <span class="insight-info">No Insights Found</span>
+        </span>
+    </div>
+    <div *ngIf="boosterInfo">
+      <div class="col-sm-12 fit">
+        <div class="card-pf-body" *ngIf="companions?.length">
+          <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of companions" [dependency]="companion"
+            (companionRemoved)="removeCompanion($event)" (tagAdded)="addTag($event)" (companionReleased)="releaseCompanion($event)"></app-list-element>
         </div>
-        <p class="card-pf-aggregate-status-notifications" *ngIf="companions?.length === 0 && alternate?.length === 0">
-          <span class="card-pf-aggregate-status-notification">
-            <span class="pficon pficon-info"></span>
-            <span class="insight-info">No Insights Found</span>
-          </span>
-        </p>
+        <div class="card-pf-body" *ngIf="alternate?.length">
+          <app-list-element (companionAdded)="companionWasAdded($event)" *ngFor="let companion of alternate" [dependency]="companion"
+            (companionRemoved)="removeCompanion($event)" (tagAdded)="addTag($event)" (companionReleased)="releaseCompanion($event)"></app-list-element>
+        </div>
+        <div class="card-pf-body">
+          <div class="pre-loader" *ngIf="!companions||!alternate">
+            <div class="pre-loader-spinner spinner spinner-lg"></div>
+          </div>
+          <p class="card-pf-aggregate-status-notifications" *ngIf="companions?.length === 0 && alternate?.length === 0">
+            <span class="card-pf-aggregate-status-notification">
+              <span class="pficon pficon-info"></span>
+              <span class="insight-info">No Insights Found</span>
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   </div>

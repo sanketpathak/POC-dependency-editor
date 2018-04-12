@@ -14,7 +14,7 @@ import {
   AccordionModule
 } from 'ngx-bootstrap';
 import {
-  CveResponseModel
+  CveResponseModel, BoosterInfo
 } from '../model/data.model';
 
 @Component({
@@ -25,6 +25,7 @@ import {
 
 export class SecurityComponent implements OnInit, OnChanges {
   @Input() cveData: CveResponseModel;
+  @Input() boosterInfo: BoosterInfo;
 
   public title = 'Security Alert';
   public icon = 'fa fa-shield';

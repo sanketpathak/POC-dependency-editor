@@ -9,7 +9,7 @@
       <div class="col-xs-7 dependencies-container">
         <div class="row row-inside">
           <app-add-dependency [boosterInfo]="boosterInfo" [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
-          <app-insights (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
+          <app-insights [boosterInfo]="boosterInfo" (companionAdded)="callDepServices($event)" [companions]="companions" [alternate]="alternate"></app-insights>
         </div>
       </div>
       <div class="col-xs-5 padding-right-10 app-summary-container">

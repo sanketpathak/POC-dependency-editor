@@ -47,7 +47,7 @@ import 'rxjs/add/operator/takeWhile';
 })
 export class DependencyEditorComponent implements OnInit, OnChanges {
   @Input() githubUrl = '';
-  @Input() boosterInfo: BoosterInfo;
+  @Input() boosterInfo: BoosterInfo = null;
 
   @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
   @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();

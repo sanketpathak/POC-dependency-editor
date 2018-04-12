@@ -15,7 +15,7 @@ import {
 } from 'ngx-bootstrap';
 import * as c3 from 'c3';
 import {
-  StackLicenseAnalysisModel
+  StackLicenseAnalysisModel, BoosterInfo
 } from '../model/data.model';
 
 @Component({
@@ -39,13 +39,16 @@ export class AlertBoxComponent implements OnInit, OnChanges {
   @Input() cveName: Array<any> = [];
   @Input() liData: Array<any> = [];
   @Input() charts: any = {};
-  public isLoading = true;
+  @Input() boosterInfo: BoosterInfo;
+
+  public isLoading: boolean;
   public cveId: Array<any> = [];
   public cvePackage: Array<any> = [];
 
   constructor() {}
 
   ngOnInit() {
+    this.isLoading = null;
   }
 
   ngOnChanges() {
