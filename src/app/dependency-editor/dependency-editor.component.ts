@@ -77,18 +77,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
 
   constructor(
     private service: DependencyEditorService
-  ) {
-    this.stackUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/stack-analyses/';
-    // this.stackUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/stack-analyses/';
-    this.getDepInsightsUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-analyses/';
-    // this.getDepInsightsUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-analyses';
-    // this.getDepInsightsUrl = 'https://gist.githubusercontent.com/sanketpathak/94bac9aa6997eac5f32016e74cd8dc6c/raw/ddf40dbc0bb12a1a9338c008b8d980047546af5b/stack_analyses';
-    this.getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
-    // this.getCveUrl = 'http://bayesian-api-rratnawa-fabric8-analytics.dev.rdu2c.fabric8.io/api/v1/depeditor-cve-analyses/';
-    // this.getCveUrl = 'https://gist.githubusercontent.com/sanketpathak/c0a7ccb4f6420fb783754f9454c347a0/raw/3d661bf010d6fe8b7adc23c305097334c10f510e/dependency%2520cve%2520analysis';
-    // this.getLicenseUrl = 'http://f8a-license-analysis-license-api.dev.rdu2c.fabric8.io/api/v1/license-recommender';
-    this.getLicenseUrl = 'https://license-analysis.api.prod-preview.openshift.io/api/v1/license-recommender';
-  }
+  ) {}
 
     ngOnInit() {
     this.service.dependencySelected

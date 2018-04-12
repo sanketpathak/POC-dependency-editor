@@ -74,13 +74,6 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public tags: Array < DependencySearchItem > = [];
   public toast: boolean = false;
 
-
-  // private searchDepsUrl = 'https://recommender.api.openshift.io/api/v1/component-search/';
-  private searchDepsUrl = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/component-search/';
-  private categoryUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/categories/';
-  // private categoryUrl = 'https://gist.githubusercontent.com/sanketpathak/9c431733f0b75623e6c88ae239e9813b/raw/494965a93039376f40116378c23404c1a5aeb5dd/vertx_package.json';
-  private getCveUrl = 'https://recommender.api.prod-preview.openshift.io/api/v1/depeditor-cve-analyses/';
-
   constructor(private service: DependencyEditorService) {}
 
   ngOnInit() {
