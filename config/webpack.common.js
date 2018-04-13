@@ -23,6 +23,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const precss = require('precss');
+const AotPlugin = require('@ngtools/webpack').AotPlugin; // Angular 4
 
 // ExtractTextPlugin
 const extractCSS = new ExtractTextPlugin({
@@ -45,6 +46,8 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.js', '.json'],
+
+    symlinks: false,
 
     // An array of directory names to be resolved to the current directory
     modules: [helpers.root('src'), helpers.root('node_modules')],
@@ -387,13 +390,12 @@ module.exports = {
       files: '**/*.less',
       failOnError: true,
       quiet: false,
-    })
+    }),
 
-    // new ngcWebpack.NgcWebpackPlugin({
-    //   disabled: !AOT,
-    //   tsConfig: helpers.root('tsconfig.webpack.json'),
-    //   resourceOverride: helpers.root('config/resource-override.js')
-    // })
+    new AotPlugin({
+      entryModule: helpers.root('src/app/app.module.ts#AppModule'),
+      tsConfigPath: helpers.root('tsconfig-aot.json')
+    })
 
   ]
 };
