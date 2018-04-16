@@ -1,11 +1,6 @@
 <div class="container-default dependencyEditorComponent">
   <div class="row row-main">
-    <div class="row-element col-xs-12">
-      <h1 class="title">Select Dependencies</h1>
-      <p id="description">Choose a mission and runtime to create a booster, or sample application, You set up a booster to generate source code
-        and specifications for your new applications.</p>
-    </div>
-    <div class="row-defination col-xs-12">
+    <div class="row-definition col-xs-12" *ngIf="boosterInfo">
       <div class="col-xs-7 dependencies-container">
         <div class="row row-inside">
           <app-add-dependency [boosterInfo]="boosterInfo" [dependencies]="dependenciesAdded" [dependencyAdded]="dependencyAdded" [existDependencies]="dependencies"></app-add-dependency>
@@ -16,6 +11,14 @@
         <app-current-project [boosterInfo]="boosterInfo" [dependencies]="dependencies" [licenseData]="licenseData" [lisData]="lisData"
           [allLicenses]="allLicenses" [cveData]="cveData" (getMetadata)="getMetadata($event)"></app-current-project>
       </div>
+    </div>
+    <div class="noDependency-label" *ngIf="!boosterInfo">
+      <h2>
+        <b>No New Dependencies selected</b>
+      </h2>
+      <p>To proceed with selecting new dependencies to this application, Select Mission and Runtime section must be completed.</p>
+      <button class="btn btn-default btn-lg f8launcher-authorize-account"
+              (click)="navToStep('MissionRuntime')">Complete Section</button>
     </div>
   </div>
 </div>

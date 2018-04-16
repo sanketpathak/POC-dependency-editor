@@ -51,6 +51,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
 
   @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
   @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();
+  @Output() navId: EventEmitter <string> = new EventEmitter <string>();
   @ViewChild('dependencyPreview') modalDependencyPreview: any;
 
   public dependencies: Array < DependencySnapshotItem > ;
@@ -157,6 +158,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
 
   public closemodal() {
     this.modalDependencyPreview.close();
+  }
+
+  public navToStep(id: string) {
+    this.navId.emit(id);
   }
 
   private reset() {
