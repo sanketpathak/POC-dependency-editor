@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DependencyEditorTokenProvider } from './depeditor-tokenprovider';
 @Injectable()
 export class MockAuthenticationService extends DependencyEditorTokenProvider {

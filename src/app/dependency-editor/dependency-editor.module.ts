@@ -14,6 +14,7 @@ import { LicenseModule } from '../license/license.module';
 import { CurrentprojectModule } from '../current-project/current-project.module';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { URLProvider } from '../shared/url-provider';
+import { ErrorMessageHandler } from '../shared/error-message-handler';
 
 @NgModule({
  imports: [
@@ -37,7 +38,8 @@ import { URLProvider } from '../shared/url-provider';
  providers: [
     URLProvider,
     DependencyEditorTokenProvider,
-    DependencyEditorService
+    DependencyEditorService,
+    ErrorMessageHandler
  ]
 })
 export class DependencyEditorModule {}

@@ -22,6 +22,9 @@ import {
   DependencyEditorService
 } from '../shared/dependency-editor.service';
 import {
+  ErrorMessageHandler
+}from '../shared/error-message-handler';
+import {
   StackReportModel,
   DependencySnapshotItem,
   ComponentInformationModel,
@@ -67,6 +70,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public addPackageLength = 0;
   public listView = 'View Dependency List';
   public metadata = {};
+  public errorStack: any;
+  public errorPostStack: any;
+  public errorLicense: any;
+  public errorSecurity: any;
+  public errorInsight: any;
 
   private stackUrl: string;
   private stackUrlDev: string;
@@ -77,7 +85,8 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   private depToAdd: DependencySearchItem;
 
   constructor(
-    private service: DependencyEditorService
+    private service: DependencyEditorService,
+    private errorMessageHandler: ErrorMessageHandler
   ) {}
 
     ngOnInit() {
@@ -148,7 +157,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   public getMetadata(event: any): void {
    this.metadata = event;
    this.emitMetadata.emit(this.metadata);
-}
+  }
 
   public showDependencyModal(event: Event) {
     this.modalDependencyPreview.open();
@@ -224,12 +233,20 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         this.setAlternate(result);
         this.setLicenseData(result);
         this.getCveData(this.service.getPayload());
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorStack = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error stack get - ', this.errorStack);
+    });
       if (counter ++ > 4) {
         alive = false;
     }
     });
-    });
+    }, (error: any) => {
+      // Handle server errors here
+        this.errorPostStack = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error stack post - ', this.errorPostStack);
+  });
   }
 
   private getLicenseData(payload: any) {
@@ -237,7 +254,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
       .subscribe((response: LicenseStackAnalysisModel) => {
         this.lisData = response;
         this.allLicenses = response.distinct_licenses;
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorLicense = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error stack license', this.errorLicense, error);
+    });
   }
 
   private getDependencyInsights(payload: any) {
@@ -263,7 +284,11 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
         this.setAlternate(response.result[0]);
         this.checkIfAlternatePresent(response.result[0].recommendation.alternate);
         this.checkIfSecurityPresent(response.result[0].user_stack_info.analyzed_dependencies);
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorInsight = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error stack insight - ', this.errorInsight);
+    });
       if (counter ++ > 4) {
         alive = false;
     }
@@ -274,6 +299,10 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     this.service.getDependencyData('CVE', payload)
       .subscribe((response: CveResponseModel) => {
         this.cveData = response;
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorSecurity = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error stack security - ', this.errorSecurity);
+    });
   }
 }

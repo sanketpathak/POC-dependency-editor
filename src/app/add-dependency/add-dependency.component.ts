@@ -34,6 +34,9 @@ import {
   DependencyEditorService
 } from '../shared/dependency-editor.service';
 import {
+  ErrorMessageHandler
+} from '../shared/error-message-handler';
+import {
   DependencySnapshot
 } from '../utils/dependency-snapshot';
 import { FilterPipe } from './add-dependency.pipe';
@@ -58,6 +61,9 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public categorySearchResult: Array < CategorySearchItem > = [];
   public categoryResult: Array<any> = [];
   public tagZero = 0;
+  public errorSecurity: string;
+  public errorCategories: string;
+  public errorComponentSearch: string;
 
   public searchKey = '';
   public selected: string;
@@ -74,7 +80,9 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
   public tags: Array < DependencySearchItem > = [];
   public toast: boolean = false;
 
-  constructor(private service: DependencyEditorService) {}
+  constructor(
+    private service: DependencyEditorService,
+    private errorMessageHandler: ErrorMessageHandler) {}
 
   ngOnInit() {
   }
@@ -88,7 +96,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe((response: any) => {
         this.dependencySearchResult = response['result'];
         this.isLoading = false;
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorComponentSearch = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error component search - ', this.errorComponentSearch);
+    });
   }
 
   getCategories() {
@@ -114,7 +126,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
         const p = this.getCategoryPayload();
         this.getCategoriesSecurity(p);
         this.addedTags();
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorCategories =  this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error categories - ', this.errorCategories);
+    });
   }
 
   getCategoryPayload() {
@@ -153,7 +169,11 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
             }
           });
         }
-      });
+      }, (error: any) => {
+        // Handle server errors here
+        this.errorSecurity = this.errorMessageHandler.getErrorMessage(error.status);
+        console.log('error add security - ', this.errorSecurity);
+    });
       this.masterTags.forEach( (i: any) => {
         for (let j = 0; j < this.cveName.length; j++)
         if (i.name === this.cveName['j'].package) {

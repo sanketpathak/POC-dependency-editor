@@ -11,6 +11,7 @@ import { ListElementModule } from '../list-element/list-element.module';
 import { URLProvider } from '../shared/url-provider';
 import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
+import { ErrorMessageHandler } from '../shared/error-message-handler';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DependencyEditorService } from '../shared/dependency-editor.service';
  providers: [
     URLProvider,
     DependencyEditorTokenProvider,
-    DependencyEditorService
+    DependencyEditorService,
+    ErrorMessageHandler
  ]
 })
 export class AddDependencyModule {}
