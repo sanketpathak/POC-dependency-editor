@@ -51,6 +51,7 @@ import 'rxjs/add/operator/takeWhile';
 export class DependencyEditorComponent implements OnInit, OnChanges {
   @Input() githubUrl = '';
   @Input() boosterInfo: BoosterInfo = null;
+  @Input() githubRef = '';
 
   @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
   @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();
@@ -111,6 +112,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('in dependency editor github reference', this.githubRef);
     if (changes['githubUrl'] && changes['githubUrl']['currentValue']) {
       this.postStackAnalyses(this.githubUrl);
     }
