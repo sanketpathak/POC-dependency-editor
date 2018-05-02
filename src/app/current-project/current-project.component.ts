@@ -13,6 +13,7 @@ import { DependencySnapshotItem, CveResponseModel, StackLicenseAnalysisModel, Li
 export class CurrentprojectComponent implements OnInit, OnChanges {
   @Input() dependencies: Array<DependencySnapshotItem>;
   @Input() boosterInfo: BoosterInfo = null;
+  @Input() metadataInfo: any = null;
   @Input() licenseData: StackLicenseAnalysisModel;
   @Input() lisData: LicenseStackAnalysisModel;
   @Input() cveData: CveResponseModel;
@@ -34,11 +35,11 @@ export class CurrentprojectComponent implements OnInit, OnChanges {
 }
 
   ngOnChanges() {
-    if (this.boosterInfo && this.boosterInfo.mission && this.start > 0) {
+    if (this.metadataInfo && this.start > 0) {
       this.start = 0;
-      this.metadata['groupId'] = 'io.openshift.booster';
-      this.metadata['artifactId'] = this.boosterInfo.runtime.id + '.' + this.boosterInfo.mission.id;
-      this.metadata['version'] = '1.0.0.SNAPSHOT';
+      this.metadata['groupId'] = this.metadataInfo.groupId;
+      this.metadata['artifactId'] = this.metadataInfo.mavenArtifact;
+      this.metadata['version'] = this.metadataInfo.projectVersion;
       this.getMetadata.emit(this.metadata);
     }
     // this.getMetadata.emit(this.metadata);

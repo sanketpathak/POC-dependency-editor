@@ -59,10 +59,13 @@ export class DependencyEditorService {
         };
     }
 
-    postStackAnalyses(githubUrl: string): Observable<any> {
+    postStackAnalyses(githubUrl: string, githubRef: string): Observable<any> {
         const url = this.RECOMMENDER_API_BASE + 'api/v1/stack-analyses';
         return this.options.flatMap((option) => {
-            const payload = 'github_url=' + githubUrl;
+            // const payload = 'github_url=' + githubUrl;
+            const payload: any = {};
+            payload['github_url'] = githubUrl;
+            payload['github_ref'] = githubRef;
             option.headers.append('Content-Type', 'application/x-www-form-urlencoded');
             return this.http.post(url, payload, option)
                 .map(this.extractData)

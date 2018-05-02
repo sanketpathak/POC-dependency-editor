@@ -52,6 +52,7 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
   @Input() githubUrl = '';
   @Input() boosterInfo: BoosterInfo = null;
   @Input() githubRef = '';
+  @Input() metadataInfo: any = null;
 
   @Output() depSnapshot: EventEmitter <any> = new EventEmitter <any>();
   @Output() emitMetadata: EventEmitter <any> = new EventEmitter <any>();
@@ -113,8 +114,8 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('in dependency editor github reference', this.githubRef);
-    if (changes['githubUrl'] && changes['githubUrl']['currentValue']) {
-      this.postStackAnalyses(this.githubUrl);
+    if (changes['githubUrl'] && changes['githubUrl']['currentValue'] && changes['githubRef'] && changes['githubRef']['currentValue']) {
+      this.postStackAnalyses(this.githubUrl, this.githubRef);
     }
   }
 
@@ -206,8 +207,8 @@ export class DependencyEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  private postStackAnalyses(githubUrl: string) {
-    this.service.postStackAnalyses(githubUrl)
+  private postStackAnalyses(githubUrl: string, githubRef: string) {
+    this.service.postStackAnalyses(githubUrl, githubRef)
     .subscribe((data: any) => {
         // });
       let subs: any = null;
