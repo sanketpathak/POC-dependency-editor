@@ -4,7 +4,7 @@
       <p class="insights">
         <span class="pficon-zone"></span>
         <span class="title">Insights</span>
-        <span class="count" *ngIf="companions">
+        <span class="count" *ngIf="companions || alternate">
           <span class="count-number">{{companions?.length + alternate?.length}}</span>
         </span>
         <span class="add">
@@ -17,6 +17,7 @@
         <span class="card-pf-aggregate-status-notification">
           <span class="pficon pficon-info"></span>
           <span class="insight-info">No Insights Found</span>
+          <span>The Analytics engine has not identified any insights for your stack.</span>
         </span>
     </div>
     <div *ngIf="boosterInfo">
@@ -37,6 +38,7 @@
             <span class="card-pf-aggregate-status-notification">
               <span class="pficon pficon-info"></span>
               <span class="insight-info">No Insights Found</span>
+              <span>The Analytics engine has not identified any insights for your stack.</span>
             </span>
           </p>
         </div>

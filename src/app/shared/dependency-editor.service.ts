@@ -64,7 +64,7 @@ export class DependencyEditorService {
         return this.options.flatMap((option) => {
             // const payload = 'github_url=' + githubUrl;
             const payload: any = {};
-            payload['github_url'] = githubUrl;
+            payload['github_url'] = githubUrl + '&source=osio';
             payload['github_ref'] = githubRef;
             option.headers.append('Content-Type', 'application/x-www-form-urlencoded');
             return this.http.post(url, payload, option)
