@@ -57,7 +57,7 @@ export class LicenseComponent implements OnInit, OnChanges {
     if (this.licenseData) {
       if (this.licenseData.status.toLowerCase() === 'successful') {
         this.hasIssue = false;
-        this.stackLicense = this.licenseData.current_stack_license;
+        this.stackLicense = this.licenseData.f8a_stack_licenses[0];
         this.stackStatus = this.licenseData.status;
       } else if (this.licenseData.status.toLowerCase() === 'failure') {
         this.hasIssue = 'na';

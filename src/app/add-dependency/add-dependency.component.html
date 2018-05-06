@@ -101,13 +101,13 @@
             </div>
             <div class="list-group-item tag-list-item-n" *ngFor="let tags of categoryResult">
               <div class="list-view-pf-actions">
-                <label class="mix-label">{{tags.count}}</label>
+                <label class="mix-label">{{tags.pkg_count}}</label>
               </div>
-              <div class="list-view-pf-main-info">
+              <div class="list-view-pf-main-info" *ngIf="tags.packages">
                 <div class="list-view-pf-body">
                   <div class="list-view-pf-description">
                     <div class="list-group-item-heading">
-                      {{tags.package[0].category}}
+                      {{tags.packages[0].category}}
                     </div>
                   </div>
                 </div>

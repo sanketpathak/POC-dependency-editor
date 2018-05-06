@@ -123,7 +123,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
             this.categoryResult.push(this.categorySearchResult[key]);
           }
         }
-        const p = this.getCategoryPayload();
+        const p = this.getCategoryPayload(this.categoryResult);
         this.getCategoriesSecurity(p);
         this.addedTags();
       }, (error: any) => {
@@ -133,12 +133,12 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  getCategoryPayload() {
+  getCategoryPayload(categoryResult: any) {
     const payload: any = {};
     let j = 0;
     let category: any = [];
-    this.categoryResult.forEach(i => {
-      i.package.map((k: any) => {
+    categoryResult.forEach((i: any) => {
+      i.packages.forEach((k: any) => {
         category.push({
           'package' : k.name,
           'version' : k.version
@@ -279,7 +279,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
     this.categoryResult.forEach((i: any) => {
       count++;
       this.tagZero = count;
-      i.package.forEach((x: any) => {
+      i.packages.forEach((x: any) => {
         this.masterTags.push({
           'ecosystem' : DependencySnapshot.ECOSYSTEM,
           'version' : x.version,
@@ -293,7 +293,7 @@ export class AddDependencyComponent implements OnInit, OnDestroy, OnChanges {
       });
     });
     this.categoryResult.forEach((i: any) => {
-      i.package.forEach((x: any) => {
+      i.packages.forEach((x: any) => {
           this.saveTagname.push({'name' : x, 'type' : false});
       });
   });
