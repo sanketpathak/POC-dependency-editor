@@ -4,12 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DependencyEditorModule } from './dependency-editor/dependency-editor.module';
-import { Broadcaster } from 'ngx-base';
 import { ApiLocatorService } from './shared/api-locator.service';
-import { witApiUrlProvider } from './shared/wit-api.provider';
-import { authApiUrlProvider } from './shared/auth-api.provider';
-import { ssoApiUrlProvider } from './shared/sso-api.provider';
-import { realmProvider } from './shared/realm-token.provider';
 import { URLProvider } from './shared/url-provider';
 import { AnalyticsUrlService } from './shared/analytics-url.service';
 import { DependencyEditorTokenProvider } from './shared/depeditor-tokenprovider';
@@ -27,12 +22,7 @@ describe('AppComponent', () => {
         DependencyEditorModule
       ],
       providers: [
-        Broadcaster,
         ApiLocatorService,
-        witApiUrlProvider,
-        authApiUrlProvider,
-        ssoApiUrlProvider,
-        realmProvider,
         { provide: URLProvider, useClass: AnalyticsUrlService },
         { provide: DependencyEditorTokenProvider, useClass: MockAuthenticationService }
       ]

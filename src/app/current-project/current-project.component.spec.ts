@@ -24,6 +24,8 @@ describe('CurrentprojectComponent', () => {
      ],
       declarations: [
          CurrentprojectComponent
+     ],
+     providers: [
      ]
     }).compileComponents();
   }));

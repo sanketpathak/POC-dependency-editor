@@ -11,6 +11,7 @@ import { FilterPipe } from './add-dependency.pipe';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
 import { URLProvider } from '../shared/url-provider';
 import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
+import { ErrorMessageHandler } from '../shared/error-message-handler';
 
 describe('CurrentprojectComponent', () => {
   let component: AddDependencyComponent;
@@ -33,7 +34,8 @@ describe('CurrentprojectComponent', () => {
      providers: [
       URLProvider,
       DependencyEditorTokenProvider,
-      DependencyEditorService
+      DependencyEditorService,
+      ErrorMessageHandler
      ]
      }).compileComponents();
   }));

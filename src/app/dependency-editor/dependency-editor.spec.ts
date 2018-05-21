@@ -14,6 +14,7 @@ import { CurrentprojectModule } from '../current-project/current-project.module'
 import { URLProvider } from '../shared/url-provider';
 import { DependencyEditorTokenProvider } from '../shared/depeditor-tokenprovider';
 import { DependencyEditorService } from '../shared/dependency-editor.service';
+import { ErrorMessageHandler } from '../shared/error-message-handler';
 
 describe('DependencyEditorComponent', () => {
   let component: DependencyEditorComponent;
@@ -39,7 +40,8 @@ describe('DependencyEditorComponent', () => {
      providers: [
         URLProvider,
         DependencyEditorTokenProvider,
-        DependencyEditorService
+        DependencyEditorService,
+        ErrorMessageHandler
      ]
     }).compileComponents();
   }));
