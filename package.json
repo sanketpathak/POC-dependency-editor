@@ -23,7 +23,7 @@
     "remove-dist": "rimraf dist dist-watch",
     "rimraf": "rimraf",
     "setup": "npm install && npm run validate",
-    "semantic-release": "semantic-release pre && npm run build && cp -r .git dist && npm publish dist/ && semantic-release post",
+    "semantic-release": "semantic-release pre && npm run build && cp -r .git dist && npm publish dist",
     "start": "webpack-dev-server --config config/webpack.dev.js --progress --host 0.0.0.0 --port 8000 --profile --watch --content-base src/",
     "start-dev": "webpack-dashboard -t almighty -- webpack-dev-server --inline --progress --host 0.0.0.0 --port 8000",
     "stats": "webpack --profile --json > stats.json",
