@@ -3,7 +3,7 @@
     <div class="list-group-item-header" [ngStyle]="{'background': isOpen === true ? '#def3ff' : '#fff'}">
       <div class="check">
         <div class="list-view-pf-checkbox" *ngIf="fromAddDependency !== 'true'">
-          <input #dependency.name type="checkbox" class="check-dep" [ngStyle]="{'top': fromAddDependency === 'true' ? '29px' : '30px'}"
+          <input #dependency.name type="checkbox" class="check-dep"
             [checked]="saveTagname" (change)="changeTagname(saveTagname)">
         </div>
         <div class="list-view-pf-expand">
