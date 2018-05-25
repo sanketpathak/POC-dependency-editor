@@ -1,6 +1,6 @@
 {
   "name": "fabric8-analytics-dependency-editor",
-  "version": "0.0.1-development",
+  "version": "0.0.0-development",
   "description": "Dependency editor",
   "main": "bundles/fabric8-analytics-dep-editor.umd.js",
   "module": "index.js",
